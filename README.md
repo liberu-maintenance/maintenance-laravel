@@ -1,3 +1,14 @@
+# Liberu Maintenance (CMMS)
+
+### Other active projects
+* https://github.com/liberu-accounting/accounting-laravel
+* https://github.com/liberu-automation/automation-laravel
+* https://github.com/liberu-cms/cms-laravel
+* https://github.com/liberu-crm/crm-laravel
+* https://github.com/liberu-ecommerce/ecommerce-laravel
+* https://github.com/liberu-real-estate/real-estate-laravel
+
+
 ### Description
 Welcome to Liberu Maintenance, our groundbreaking open-source project that reshapes the landscape of maintenance management through the integration of Laravel 11, PHP 8.3, Livewire 3, and Filament 3. Liberu Maintenance is not just a tool for tracking repairs and schedules; it's a dynamic solution designed to streamline and optimize maintenance processes, ensuring efficiency and reliability.
 
