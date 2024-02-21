@@ -1,66 +1,41 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### Description
+Welcome to Liberu Maintenance, our groundbreaking open-source project that reshapes the landscape of maintenance management through the integration of Laravel 11, PHP 8.3, Livewire 3, and Filament 3. Liberu Maintenance is not just a tool for tracking repairs and schedules; it's a dynamic solution designed to streamline and optimize maintenance processes, ensuring efficiency and reliability.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Key Features:**
 
-## About Laravel
+1. **Intuitive Maintenance Tracking:** Liberu Maintenance offers an intuitive interface for tracking and managing maintenance tasks. From equipment repairs to scheduled maintenance, our project simplifies the complexities of upkeep, ensuring a smooth and organized process.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+2. **Dynamic Livewire Interactions:** Built on Laravel 11 and PHP 8.3, Liberu Maintenance leverages Livewire 3 to provide dynamic and real-time interactions. Update maintenance records, track progress, and communicate seamlessly with your maintenance teams without the need for page refreshes.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+3. **Efficient Admin Panel:** Filament 3, our admin panel built on Laravel, provides administrators with powerful tools to manage maintenance schedules, customize settings, and oversee the entire maintenance ecosystem. Liberu Maintenance ensures that your equipment and facilities operate seamlessly, adapting to your organization's evolving needs.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+4. **Task Assignment and Notifications:** Streamline task assignment and stay informed with Liberu Maintenance's task management features. Assign maintenance tasks, track their status, and receive real-time notifications, ensuring timely response to maintenance requirements.
 
-## Learning Laravel
+5. **Customizable Forms:** Tailor maintenance request forms and checklists to capture specific information relevant to your industry. Liberu Maintenance empowers users to create custom forms that align with their unique maintenance processes, ensuring comprehensive data collection.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Liberu Maintenance is open source, released under the permissive MIT license. We invite facility managers, maintenance teams, and developers to contribute to the evolution of maintenance management. Together, let's redefine the standards of upkeep and create a platform that adapts to the unique needs of every user.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Welcome to Liberu Maintenance – where innovation meets reliability, and the possibilities of maintenance management are limitless. Join us on this journey to transform the way we maintain and optimize our facilities in the digital age.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Licensed under MIT, use for any personal or commercial project.
 
-## Laravel Sponsors
+## Demostration website
+<!--/h-->
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Contributions
 
-### Premium Partners
+We warmly welcome new contributions from the community! We believe in the power of collaboration and appreciate any involvement you'd like to have in improving our project. Whether you prefer submitting pull requests with code enhancements or raising issues to help us identify areas of improvement, we value your participation.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+If you have code changes or feature enhancements to propose, pull requests are a fantastic way to share your ideas with us. We encourage you to fork the project, make the necessary modifications, and submit a pull request for our review. Our team will diligently review your changes and work together with you to ensure the highest quality outcome.
 
-## Contributing
+However, we understand that not everyone is comfortable with submitting code directly. If you come across any issues or have suggestions for improvement, we greatly appreciate your input. By raising an issue, you provide valuable insights that help us identify and address potential problems or opportunities for growth.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Whether through pull requests or issues, your contributions play a vital role in making our project even better. We believe in fostering an inclusive and collaborative environment where everyone's ideas are valued and respected.
 
-## Code of Conduct
+We look forward to your involvement, and together, we can create a vibrant and thriving project. Thank you for considering contributing to our community!
+<!--/h-->
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### License
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT license, granting you the freedom to utilize it for both personal and commercial projects. The MIT license ensures that you have the flexibility to adapt, modify, and distribute the project as per your needs. Feel free to incorporate it into your own ventures, whether they are personal endeavors or part of a larger commercial undertaking. The permissive nature of the MIT license empowers you to leverage this project without any unnecessary restrictions. Enjoy the benefits of this open and accessible license as you embark on your creative and entrepreneurial pursuits.
+<!--/h-->
