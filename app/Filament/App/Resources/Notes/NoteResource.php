@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\App\Resources;
+namespace App\Filament\App\Resources\Notes;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\NoteResource\Pages\ListNotes;
-use App\Filament\App\Resources\NoteResource\Pages\CreateNote;
-use App\Filament\App\Resources\NoteResource\Pages\EditNote;
+use App\Filament\App\Resources\Notes\Pages\ListNotes;
+use App\Filament\App\Resources\Notes\Pages\CreateNote;
+use App\Filament\App\Resources\Notes\Pages\EditNote;
 use Filament\Forms;
 use App\Models\Note;
 use Filament\Tables;

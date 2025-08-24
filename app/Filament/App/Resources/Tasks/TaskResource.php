@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\App\Resources;
+namespace App\Filament\App\Resources\Tasks;
 
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\TaskResource\Pages\ListTasks;
-use App\Filament\App\Resources\TaskResource\Pages\CreateTask;
-use App\Filament\App\Resources\TaskResource\Pages\EditTask;
+use App\Filament\App\Resources\Tasks\Pages\ListTasks;
+use App\Filament\App\Resources\Tasks\Pages\CreateTask;
+use App\Filament\App\Resources\Tasks\Pages\EditTask;
 use Filament\Forms;
 use App\Models\Task;
 use Filament\Tables;

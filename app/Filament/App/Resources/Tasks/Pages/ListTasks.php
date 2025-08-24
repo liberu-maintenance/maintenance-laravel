@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\App\Resources\TaskResource\Pages;
+namespace App\Filament\App\Resources\Tasks\Pages;
 
 use Filament\Actions\CreateAction;
-use App\Filament\App\Resources\TaskResource;
+use App\Filament\App\Resources\Tasks\TaskResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

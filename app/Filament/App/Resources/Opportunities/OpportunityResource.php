@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\App\Resources;
+namespace App\Filament\App\Resources\Opportunities;
 
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\OpportunityResource\Pages\ListOpportunities;
-use App\Filament\App\Resources\OpportunityResource\Pages\CreateOpportunity;
-use App\Filament\App\Resources\OpportunityResource\Pages\EditOpportunity;
+use App\Filament\App\Resources\Opportunities\Pages\ListOpportunities;
+use App\Filament\App\Resources\Opportunities\Pages\CreateOpportunity;
+use App\Filament\App\Resources\Opportunities\Pages\EditOpportunity;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Tables\Table;
