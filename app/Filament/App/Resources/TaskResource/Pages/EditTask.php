@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\TaskResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\App\Resources\TaskResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -13,7 +14,7 @@ class EditTask extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }
