@@ -19,6 +19,7 @@ class CustomForm extends Model
         'is_public',
         'created_by',
         'settings',
+        'team_id',
     ];
 
     protected $casts = [
@@ -40,6 +41,11 @@ class CustomForm extends Model
     public function submissions(): HasMany
     {
         return $this->hasMany(CustomFormSubmission::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     public function scopeActive($query)

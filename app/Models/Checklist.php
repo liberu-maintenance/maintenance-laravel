@@ -19,6 +19,7 @@ class Checklist extends Model
         'is_template',
         'status',
         'created_by',
+        'team_id',
     ];
 
     protected $casts = [
@@ -48,6 +49,11 @@ class Checklist extends Model
     public function workOrders(): HasMany
     {
         return $this->hasMany(WorkOrder::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     public function scopeTemplates($query)

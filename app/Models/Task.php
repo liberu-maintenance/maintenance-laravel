@@ -20,6 +20,7 @@ class Task extends Model
         'company_id',
         'opportunity_id',
         'assigned_to',
+        'team_id',
     ];
 
     public function contact()
@@ -40,5 +41,10 @@ class Task extends Model
     public function assignedUser()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }
