@@ -25,7 +25,8 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive', 'under_maintenance', 'retired'])->default('active');
             $table->enum('criticality', ['low', 'medium', 'high', 'critical'])->default('medium');
             $table->text('notes')->nullable();
-            $table->foreignId('company_id')->nullable()->constrained()->onDelete('cascade');
+            $table->integer('company_id')->nullable();
+            $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade');
             $table->timestamps();
 
             $table->index(['status', 'criticality']);
