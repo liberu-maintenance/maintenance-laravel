@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\WorkOrder;
 use App\Models\User;
 use App\Models\Equipment;
+use App\Models\Team;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -17,6 +18,7 @@ class WorkOrderSeeder extends Seeder
     {
         $users = User::all();
         $equipment = Equipment::all();
+        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
 
         if ($users->isEmpty()) {
             $this->command->warn('No users found. Please run UserSeeder first.');
@@ -181,6 +183,9 @@ class WorkOrderSeeder extends Seeder
 
             // Set submitted_at timestamp
             $workOrderData['submitted_at'] = Carbon::now()->subHours(rand(1, 168)); // Random time within last week
+
+            // Assign default team
+            $workOrderData['team_id'] = $defaultTeam?->id;
 
             WorkOrder::create($workOrderData);
         }

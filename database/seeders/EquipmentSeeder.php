@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Equipment;
 use App\Models\Company;
+use App\Models\Team;
 
 class EquipmentSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class EquipmentSeeder extends Seeder
     public function run(): void
     {
         $company = Company::first();
+        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
 
         $equipment = [
             [
@@ -31,6 +33,7 @@ class EquipmentSeeder extends Seeder
                 'criticality' => 'critical',
                 'notes' => 'Primary HVAC system serving 50+ offices',
                 'company_id' => $company?->id,
+                'team_id' => $defaultTeam?->id,
             ],
             [
                 'name' => 'Emergency Generator',
@@ -46,6 +49,7 @@ class EquipmentSeeder extends Seeder
                 'criticality' => 'critical',
                 'notes' => 'Monthly testing required',
                 'company_id' => $company?->id,
+                'team_id' => $defaultTeam?->id,
             ],
             [
                 'name' => 'Water Pump System',
@@ -61,6 +65,7 @@ class EquipmentSeeder extends Seeder
                 'criticality' => 'high',
                 'notes' => 'Requires quarterly maintenance',
                 'company_id' => $company?->id,
+                'team_id' => $defaultTeam?->id,
             ],
             [
                 'name' => 'Fire Safety Panel',
@@ -76,6 +81,7 @@ class EquipmentSeeder extends Seeder
                 'criticality' => 'critical',
                 'notes' => 'Annual inspection required by law',
                 'company_id' => $company?->id,
+                'team_id' => $defaultTeam?->id,
             ],
             [
                 'name' => 'Elevator System - East Wing',
@@ -91,6 +97,7 @@ class EquipmentSeeder extends Seeder
                 'criticality' => 'high',
                 'notes' => 'Monthly safety inspections required',
                 'company_id' => $company?->id,
+                'team_id' => $defaultTeam?->id,
             ],
         ];
 

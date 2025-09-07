@@ -6,6 +6,7 @@ use App\Models\Checklist;
 use App\Models\ChecklistItem;
 use App\Models\Equipment;
 use App\Models\User;
+use App\Models\Team;
 use Illuminate\Database\Seeder;
 
 class ChecklistSeeder extends Seeder
@@ -17,6 +18,7 @@ class ChecklistSeeder extends Seeder
     {
         $equipment = Equipment::all();
         $users = User::all();
+        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
 
         if ($users->isEmpty()) {
             $this->command->warn('No users found. Please run UserSeeder first.');
@@ -213,6 +215,9 @@ class ChecklistSeeder extends Seeder
 
             // Assign random creator
             $checklistData['created_by'] = $users->random()->id;
+
+            // Assign default team
+            $checklistData['team_id'] = $defaultTeam?->id;
 
             $checklist = Checklist::create($checklistData);
 

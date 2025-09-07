@@ -6,6 +6,7 @@ use App\Models\MaintenanceSchedule;
 use App\Models\Equipment;
 use App\Models\User;
 use App\Models\Checklist;
+use App\Models\Team;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -19,6 +20,7 @@ class MaintenanceScheduleSeeder extends Seeder
         $equipment = Equipment::all();
         $users = User::all();
         $checklists = Checklist::all();
+        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
 
         if ($equipment->isEmpty()) {
             $this->command->warn('No equipment found. Please run EquipmentSeeder first.');
@@ -187,6 +189,9 @@ class MaintenanceScheduleSeeder extends Seeder
             if ($checklists->isNotEmpty() && rand(0, 1)) {
                 $scheduleData['checklist_id'] = $checklists->random()->id;
             }
+
+            // Assign default team
+            $scheduleData['team_id'] = $defaultTeam?->id;
 
             MaintenanceSchedule::create($scheduleData);
         }
