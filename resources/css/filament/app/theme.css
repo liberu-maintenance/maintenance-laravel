@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Import Filament's base styles */
+@import url("../../../public/css/filament/filament/app.css");
+@import url("../../../public/css/filament/forms/forms.css");
+@import url("../../../public/css/filament/support/support.css");
+
 /* ==========================================================================
    Liberu Maintenance CMMS - App Panel Styles
    ========================================================================== */
