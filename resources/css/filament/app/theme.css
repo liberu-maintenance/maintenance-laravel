@@ -68,8 +68,8 @@
    ========================================================================== */
 
 .fi-sidebar {
-    background: linear-gradient(180deg, var(--liberu-secondary) 0%, #047857 100%) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: white !important;
+    border-right: 1px solid var(--liberu-gray-200) !important;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1) !important;
 }
 
@@ -80,12 +80,13 @@
 /* Sidebar Logo Area */
 .fi-sidebar-header {
     padding: 1.5rem 1rem !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 1px solid var(--liberu-gray-200) !important;
     margin-bottom: 1rem !important;
+    background: white !important;
 }
 
 .fi-sidebar-header .fi-logo {
-    filter: brightness(0) invert(1) !important;
+    filter: none !important;
 }
 
 /* Navigation Items */
@@ -96,17 +97,17 @@
 }
 
 .fi-sidebar-nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+    background-color: var(--liberu-gray-100) !important;
     transform: translateX(4px) !important;
 }
 
 .fi-sidebar-nav-item.fi-active {
-    background: linear-gradient(135deg, var(--liberu-secondary) 0%, #047857 100%) !important;
-    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3) !important;
+    background: linear-gradient(135deg, var(--liberu-primary) 0%, var(--liberu-secondary) 100%) !important;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3) !important;
 }
 
 .fi-sidebar-nav-item-label {
-    color: white !important;
+    color: var(--liberu-gray-700) !important;
     font-weight: 500 !important;
 }
 
@@ -116,7 +117,7 @@
 }
 
 .fi-sidebar-nav-item-icon {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: var(--liberu-gray-600) !important;
 }
 
 .fi-sidebar-nav-item.fi-active .fi-sidebar-nav-item-icon {
@@ -125,34 +126,34 @@
 
 /* Visited Navigation Links */
 .fi-sidebar-nav-item a:visited .fi-sidebar-nav-item-label {
-    color: white !important;
+    color: var(--liberu-gray-600) !important;
 }
 
 .fi-sidebar-nav-item a:visited .fi-sidebar-nav-item-icon {
-    color: white !important;
+    color: var(--liberu-gray-500) !important;
 }
 
 .fi-sidebar-nav-item a:visited {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: white !important;
+    background-color: var(--liberu-gray-50) !important;
+    color: var(--liberu-gray-600) !important;
 }
 
-/* Navigation Links - All White */
+/* Navigation Links - Dark for White Background */
 .fi-sidebar-nav-item a {
-    color: white !important;
+    color: var(--liberu-gray-700) !important;
     text-decoration: none !important;
 }
 
 .fi-sidebar-nav-item a:hover {
-    color: white !important;
+    color: var(--liberu-gray-800) !important;
 }
 
 .fi-sidebar-nav-item a:focus {
-    color: white !important;
+    color: var(--liberu-gray-800) !important;
 }
 
 .fi-sidebar-nav-item a:active {
-    color: white !important;
+    color: var(--liberu-gray-800) !important;
 }
 
 /* Visited links in topbar and other areas */
@@ -1173,7 +1174,7 @@ a:visited {
 
 /* Navigation Group Headers */
 .fi-sidebar-nav-group-label {
-    color: white !important;
+    color: var(--liberu-gray-600) !important;
     font-weight: 600 !important;
     font-size: 0.75rem !important;
     text-transform: uppercase !important;
@@ -1200,7 +1201,7 @@ a:visited {
     top: 0 !important;
     bottom: 0 !important;
     width: 3px !important;
-    background: var(--liberu-secondary) !important;
+    background: var(--liberu-primary) !important;
     transform: scaleY(0) !important;
     transition: transform 0.2s ease-in-out !important;
 }
