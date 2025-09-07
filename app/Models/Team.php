@@ -220,4 +220,35 @@ class Team extends JetstreamTeam
     {
         return $this->hasMany(Tree::class);
     }
+
+    // Maintenance System Relations
+    public function equipment(): HasMany
+    {
+        return $this->hasMany(Equipment::class);
+    }
+
+    public function workOrders(): HasMany
+    {
+        return $this->hasMany(WorkOrder::class);
+    }
+
+    public function maintenanceSchedules(): HasMany
+    {
+        return $this->hasMany(MaintenanceSchedule::class);
+    }
+
+    public function checklists(): HasMany
+    {
+        return $this->hasMany(Checklist::class);
+    }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function customForms(): HasMany
+    {
+        return $this->hasMany(CustomForm::class);
+    }
 }

@@ -25,6 +25,7 @@ class MaintenanceSchedule extends Model
         'assigned_to',
         'instructions',
         'checklist_id',
+        'team_id',
     ];
 
     protected $casts = [
@@ -51,6 +52,11 @@ class MaintenanceSchedule extends Model
     public function workOrders(): HasMany
     {
         return $this->hasMany(WorkOrder::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     public function scopeOverdue($query)

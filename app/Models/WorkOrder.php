@@ -19,7 +19,6 @@ class WorkOrder extends Model
         'guest_email',
         'guest_phone',
         'location',
-        'equipment',
         'equipment_id',
         'maintenance_schedule_id',
         'checklist_id',
@@ -27,10 +26,7 @@ class WorkOrder extends Model
         'reviewed_by',
         'reviewed_at',
         'notes',
-        'guest_name',
-        'guest_email',
-        'guest_phone',
-        'equipment'
+        'team_id'
     ];
 
     protected $casts = [
@@ -56,6 +52,11 @@ class WorkOrder extends Model
     public function checklist(): BelongsTo
     {
         return $this->belongsTo(Checklist::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     public function scopePending($query)

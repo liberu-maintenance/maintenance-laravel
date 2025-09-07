@@ -25,6 +25,7 @@ class Equipment extends Model
         'criticality',
         'notes',
         'company_id',
+        'team_id',
     ];
 
     protected $casts = [
@@ -50,6 +51,11 @@ class Equipment extends Model
     public function checklists(): HasMany
     {
         return $this->hasMany(Checklist::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     public function scopeActive($query)
