@@ -24,6 +24,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Schemas\Schema;
 
 class WorkOrderResource extends Resource
 {
