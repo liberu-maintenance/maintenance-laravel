@@ -14,7 +14,7 @@
 
     <style>
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         }
         .hero-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -25,6 +25,15 @@
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .staff-portal-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .staff-portal-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -53,7 +62,7 @@
                             Submit Request
                         </a>
                         <a href="{{ route('login') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md text-sm font-semibold transition duration-150 ease-in-out shadow-md">
-                            Staff Login
+                            Staff Portal
                         </a>
                     @endauth
                 </div>
@@ -67,9 +76,9 @@
             <div class="text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
                     Professional Maintenance
-                    <span class="block text-indigo-200">Management System</span>
+                    <span class="block text-gray-100">Management System</span>
                 </h1>
-                <p class="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+                <p class="text-xl text-gray-100 mb-8 max-w-3xl mx-auto">
                     Streamline your maintenance operations with our comprehensive CMMS solution. 
                     Track equipment, schedule maintenance, and manage work orders efficiently.
                 </p>
@@ -77,7 +86,7 @@
                     <a href="#submit-request" class="bg-white text-indigo-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-50 transition duration-150 ease-in-out shadow-lg">
                         Submit Maintenance Request
                     </a>
-                    <a href="{{ route('login') }}" class="border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-indigo-600 transition duration-150 ease-in-out">
+                    <a href="{{ route('login') }}" class="staff-portal-btn text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-150 ease-in-out">
                         Staff Portal
                     </a>
                 </div>
