@@ -75,12 +75,18 @@ class RecentWorkOrdersWidget extends BaseWidget
             ->actions([
                 Action::make('view')
                     ->icon('heroicon-m-eye')
-                    ->url(fn (WorkOrder $record): string => route('filament.app.resources.work-orders.work-orders.view', $record))
+                    ->url(fn (WorkOrder $record): string => route('filament.app.resources.work-orders.view', [
+                        'tenant' => filament()->getTenant(),
+                        'record' => $record
+                    ]))
                     ->openUrlInNewTab(),
 
                 Action::make('edit')
                     ->icon('heroicon-m-pencil')
-                    ->url(fn (WorkOrder $record): string => route('filament.app.resources.work-orders.work-orders.edit', $record))
+                    ->url(fn (WorkOrder $record): string => route('filament.app.resources.work-orders.edit', [
+                        'tenant' => filament()->getTenant(),
+                        'record' => $record
+                    ]))
                     ->visible(fn (WorkOrder $record): bool => $record->status !== 'completed'),
             ])
             ->emptyStateHeading('No work orders yet')
