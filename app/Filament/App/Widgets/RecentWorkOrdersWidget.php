@@ -11,7 +11,7 @@ use Filament\Tables\Actions\Action;
 
 class RecentWorkOrdersWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Recent Work Orders';
+    protected ?string $heading = 'Recent Work Orders';
 
     protected int | string | array $columnSpan = 'full';
 

@@ -48,19 +48,30 @@ class AppPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
                 'primary' => Color::Teal,
-                'secondary' => Color::Orange,
+                'secondary' => Color::Emerald,
                 'success' => Color::Green,
                 'warning' => Color::Amber,
                 'danger' => Color::Red,
-                'info' => Color::Blue,
+                'info' => Color::Sky,
+                'gray' => Color::Slate,
             ])
             ->brandName('Liberu Maintenance')
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('2rem')
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
+                'Dashboard' => [
+                    'label' => 'Dashboard',
+                    'icon' => 'heroicon-o-home',
+                    'collapsed' => false,
+                ],
+                'Work Management' => [
+                    'label' => 'Work Management',
+                    'icon' => 'heroicon-o-clipboard-document-list',
+                    'collapsed' => false,
+                ],
                 'Maintenance' => [
-                    'label' => 'Maintenance Management',
+                    'label' => 'Maintenance',
                     'icon' => 'heroicon-o-wrench-screwdriver',
                     'collapsed' => false,
                 ],
@@ -68,6 +79,16 @@ class AppPanelProvider extends PanelProvider
                     'label' => 'Asset Management', 
                     'icon' => 'heroicon-o-building-office',
                     'collapsed' => false,
+                ],
+                'Quality' => [
+                    'label' => 'Quality & Inspection',
+                    'icon' => 'heroicon-o-shield-check',
+                    'collapsed' => false,
+                ],
+                'CRM' => [
+                    'label' => 'Customer Relations',
+                    'icon' => 'heroicon-o-users',
+                    'collapsed' => true,
                 ],
                 'Reports' => [
                     'label' => 'Reports & Analytics',

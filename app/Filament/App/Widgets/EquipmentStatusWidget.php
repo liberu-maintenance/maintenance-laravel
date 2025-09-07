@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class EquipmentStatusWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Equipment Status Overview';
+    protected ?string $heading = 'Equipment Status Overview';
 
     protected static ?string $pollingInterval = '60s';
 

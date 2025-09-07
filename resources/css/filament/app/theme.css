@@ -473,6 +473,213 @@
 }
 
 /* ==========================================================================
+   Dashboard Specific Enhancements
+   ========================================================================== */
+
+/* Welcome Section Styling */
+.dashboard-welcome {
+    background: linear-gradient(135deg, var(--liberu-secondary) 0%, #047857 100%) !important;
+    border-radius: 1rem !important;
+    padding: 2rem !important;
+    color: white !important;
+    box-shadow: 0 10px 25px rgba(5, 150, 105, 0.2) !important;
+    margin-bottom: 2rem !important;
+}
+
+.dashboard-welcome h1 {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.dashboard-welcome p {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1.125rem !important;
+}
+
+/* Quick Actions Grid */
+.quick-actions-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.quick-action-card {
+    background: white !important;
+    border-radius: 0.75rem !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid var(--liberu-gray-100) !important;
+    transition: all 0.2s ease-in-out !important;
+    text-decoration: none !important;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+    border-color: var(--liberu-secondary) !important;
+}
+
+.quick-action-icon {
+    width: 3rem !important;
+    height: 3rem !important;
+    border-radius: 0.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 1rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.quick-action-card:hover .quick-action-icon {
+    transform: scale(1.1) !important;
+}
+
+/* Enhanced Widget Styling */
+.fi-wi-maintenance-stats .fi-wi-header {
+    background: linear-gradient(135deg, var(--liberu-primary) 0%, var(--liberu-secondary) 100%) !important;
+}
+
+.fi-wi-equipment-status .fi-wi-header {
+    background: linear-gradient(135deg, var(--liberu-success) 0%, #15803d 100%) !important;
+}
+
+.fi-wi-work-order-trends .fi-wi-header {
+    background: linear-gradient(135deg, var(--liberu-info) 0%, #0369a1 100%) !important;
+}
+
+.fi-wi-maintenance-calendar .fi-wi-header {
+    background: linear-gradient(135deg, var(--liberu-warning) 0%, #c2410c 100%) !important;
+}
+
+/* Calendar Widget Specific Styling */
+.maintenance-calendar-day {
+    border-radius: 0.5rem !important;
+    padding: 0.75rem !important;
+    transition: all 0.2s ease-in-out !important;
+    border: 1px solid transparent !important;
+}
+
+.maintenance-calendar-day:hover {
+    background-color: var(--liberu-gray-50) !important;
+    border-color: var(--liberu-gray-200) !important;
+}
+
+.maintenance-calendar-day.today {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%) !important;
+    border-color: #3b82f6 !important;
+}
+
+.maintenance-calendar-day.weekend {
+    background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+.maintenance-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.5rem !important;
+    border-radius: 0.375rem !important;
+    margin-bottom: 0.25rem !important;
+    background: white !important;
+    border: 1px solid var(--liberu-gray-100) !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.maintenance-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    transform: translateX(2px) !important;
+}
+
+.maintenance-item-indicator {
+    width: 0.5rem !important;
+    height: 0.5rem !important;
+    border-radius: 50% !important;
+    margin-right: 0.75rem !important;
+    flex-shrink: 0 !important;
+}
+
+.maintenance-item-indicator.overdue {
+    background-color: #ef4444 !important;
+    animation: pulse 2s infinite !important;
+}
+
+.maintenance-item-indicator.today {
+    background-color: #f59e0b !important;
+}
+
+.maintenance-item-indicator.upcoming {
+    background-color: #10b981 !important;
+}
+
+/* ==========================================================================
+   Enhanced Navigation & Sidebar
+   ========================================================================== */
+
+/* Navigation Group Headers */
+.fi-sidebar-nav-group-label {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 0.5rem !important;
+    margin-top: 1.5rem !important;
+    padding: 0 0.75rem !important;
+}
+
+.fi-sidebar-nav-group:first-child .fi-sidebar-nav-group-label {
+    margin-top: 0 !important;
+}
+
+/* Enhanced Navigation Items */
+.fi-sidebar-nav-item {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.fi-sidebar-nav-item::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 3px !important;
+    background: var(--liberu-secondary) !important;
+    transform: scaleY(0) !important;
+    transition: transform 0.2s ease-in-out !important;
+}
+
+.fi-sidebar-nav-item.fi-active::before {
+    transform: scaleY(1) !important;
+}
+
+/* Enhanced Topbar */
+.fi-topbar {
+    backdrop-filter: blur(8px) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.fi-topbar-item {
+    border-radius: 0.5rem !important;
+}
+
+/* Global Search Enhancement */
+.fi-global-search-field {
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 2px solid transparent !important;
+    border-radius: 2rem !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.fi-global-search-field:focus {
+    background: white !important;
+    border-color: var(--liberu-secondary) !important;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important;
+}
+
+/* ==========================================================================
    Enhanced UX Features
    ========================================================================== */
 
@@ -626,6 +833,215 @@
 
     .fi-sidebar {
         background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+    }
+}
+
+/* ==========================================================================
+   Advanced Animations & Micro-interactions
+   ========================================================================== */
+
+/* Smooth Page Transitions */
+.fi-main {
+    animation: fadeInUp 0.4s ease-out !important;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Widget Loading Animation */
+.fi-wi[wire\\:loading] {
+    position: relative !important;
+}
+
+.fi-wi[wire\\:loading]::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(2px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: inherit !important;
+}
+
+/* Enhanced Button Interactions */
+.fi-btn {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.fi-btn::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    transition: width 0.3s ease, height 0.3s ease !important;
+}
+
+.fi-btn:active::before {
+    width: 300px !important;
+    height: 300px !important;
+}
+
+/* Enhanced Form Field Focus */
+.fi-input:focus,
+.fi-select:focus,
+.fi-textarea:focus {
+    transform: translateY(-1px) !important;
+}
+
+/* Staggered Animation for Lists */
+.fi-ta-row {
+    animation: slideInLeft 0.3s ease-out !important;
+    animation-fill-mode: both !important;
+}
+
+.fi-ta-row:nth-child(1) { animation-delay: 0.1s !important; }
+.fi-ta-row:nth-child(2) { animation-delay: 0.2s !important; }
+.fi-ta-row:nth-child(3) { animation-delay: 0.3s !important; }
+.fi-ta-row:nth-child(4) { animation-delay: 0.4s !important; }
+.fi-ta-row:nth-child(5) { animation-delay: 0.5s !important; }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced Stats Cards */
+.fi-stats-overview-stat {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.fi-stats-overview-stat::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, transparent, var(--liberu-secondary), transparent) !important;
+    animation: shimmerTop 3s infinite !important;
+}
+
+@keyframes shimmerTop {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+/* Enhanced Modal Animations */
+.fi-modal {
+    animation: modalSlideIn 0.3s ease-out !important;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Enhanced Notification Animations */
+.fi-no {
+    animation: notificationSlideIn 0.4s ease-out !important;
+}
+
+@keyframes notificationSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced Dropdown Animations */
+.fi-dropdown-panel {
+    animation: dropdownFadeIn 0.2s ease-out !important;
+    transform-origin: top !important;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: scaleY(0.95) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Accessibility Enhancements
+   ========================================================================== */
+
+/* Enhanced Focus Indicators */
+.fi-btn:focus-visible,
+.fi-input:focus-visible,
+.fi-select:focus-visible {
+    outline: 3px solid var(--liberu-secondary) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2) !important;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .fi-sidebar {
+        background: #000000 !important;
+        border-right: 2px solid #ffffff !important;
+    }
+
+    .fi-sidebar-nav-item-label {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+
+    .fi-btn-primary {
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: 2px solid #ffffff !important;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
 
