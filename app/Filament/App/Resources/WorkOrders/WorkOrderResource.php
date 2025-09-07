@@ -13,18 +13,16 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Schemas\Schema;
 
 class WorkOrderResource extends Resource
 {
@@ -164,23 +162,27 @@ class WorkOrderResource extends Resource
                     ->sortable()
                     ->weight(FontWeight::Bold),
 
-                BadgeColumn::make('status')
-                    ->colors([
-                        'warning' => 'pending',
-                        'success' => 'approved',
-                        'danger' => 'rejected',
-                        'info' => 'in_progress',
-                        'success' => 'completed',
-                    ])
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        'in_progress' => 'info',
+                        'completed' => 'success',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
-                BadgeColumn::make('priority')
-                    ->colors([
-                        'gray' => 'low',
-                        'warning' => 'medium',
-                        'danger' => 'high',
-                        'danger' => 'urgent',
-                    ])
+                TextColumn::make('priority')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'low' => 'gray',
+                        'medium' => 'warning',
+                        'high' => 'danger',
+                        'urgent' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
 
                 TextColumn::make('location')
