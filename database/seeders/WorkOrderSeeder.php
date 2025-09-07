@@ -34,7 +34,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Emergency Facilities',
                 'guest_email' => 'emergency@building-a.com',
                 'guest_phone' => '+44 20 1234 5678',
-                'equipment' => 'Carrier 30XA Chiller Unit - Serial: CU2023001',
+                'notes' => 'Equipment: Carrier 30XA Chiller Unit - Serial: CU2023001',
             ],
             [
                 'title' => 'Water Leak in Server Room',
@@ -45,7 +45,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'IT Manager',
                 'guest_email' => 'it.manager@company.com',
                 'guest_phone' => '+44 20 1234 5679',
-                'equipment' => 'Ceiling mounted sprinkler system',
+                'notes' => 'Equipment: Ceiling mounted sprinkler system',
             ],
 
             // High Priority Work Orders
@@ -58,7 +58,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Building Security',
                 'guest_email' => 'security@mainbuilding.com',
                 'guest_phone' => '+44 20 1234 5680',
-                'equipment' => 'Otis Gen2 Elevator - Unit A1',
+                'notes' => 'Equipment: Otis Gen2 Elevator - Unit A1',
             ],
             [
                 'title' => 'Fire Alarm System Malfunction',
@@ -69,7 +69,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Safety Officer',
                 'guest_email' => 'safety@buildingc.com',
                 'guest_phone' => '+44 20 1234 5681',
-                'equipment' => 'Honeywell Fire Alarm Panel - Model FA-2000',
+                'notes' => 'Equipment: Honeywell Fire Alarm Panel - Model FA-2000',
             ],
 
             // Medium Priority Work Orders
@@ -82,7 +82,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Department Manager',
                 'guest_email' => 'accounting.manager@office.com',
                 'guest_phone' => '+44 20 1234 5682',
-                'equipment' => 'Philips T8 Fluorescent Fixtures',
+                'notes' => 'Equipment: Philips T8 Fluorescent Fixtures',
             ],
             [
                 'title' => 'Parking Garage Gate Malfunction',
@@ -93,7 +93,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Parking Attendant',
                 'guest_email' => 'parking@building.com',
                 'guest_phone' => '+44 20 1234 5683',
-                'equipment' => 'FAAC Barrier Gate System - Model 615',
+                'notes' => 'Equipment: FAAC Barrier Gate System - Model 615',
             ],
             [
                 'title' => 'Conference Room AV Equipment Issues',
@@ -104,7 +104,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Executive Assistant',
                 'guest_email' => 'exec.assistant@office.com',
                 'guest_phone' => '+44 20 1234 5684',
-                'equipment' => 'Epson PowerLite Projector - Model 5050UB',
+                'notes' => 'Equipment: Epson PowerLite Projector - Model 5050UB',
             ],
 
             // Low Priority Work Orders
@@ -117,7 +117,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Property Manager',
                 'guest_email' => 'property.manager@building.com',
                 'guest_phone' => '+44 20 1234 5685',
-                'equipment' => 'Garden maintenance tools required',
+                'notes' => 'Equipment: Garden maintenance tools required',
             ],
             [
                 'title' => 'Office Paint Touch-ups Needed',
@@ -128,7 +128,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Office Manager',
                 'guest_email' => 'office.manager@building.com',
                 'guest_phone' => '+44 20 1234 5686',
-                'equipment' => 'Paint supplies and brushes',
+                'notes' => 'Equipment: Paint supplies and brushes',
             ],
             [
                 'title' => 'Replace Air Fresheners in Restrooms',
@@ -139,7 +139,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Cleaning Supervisor',
                 'guest_email' => 'cleaning@building.com',
                 'guest_phone' => '+44 20 1234 5687',
-                'equipment' => 'Automatic air freshener dispensers',
+                'notes' => 'Equipment: Automatic air freshener dispensers',
             ],
 
             // Guest Submitted Work Orders
@@ -152,7 +152,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Jane Smith',
                 'guest_email' => 'jane.smith@tenant.com',
                 'guest_phone' => '+44 20 1234 5688',
-                'equipment' => 'Vertical window blinds',
+                'notes' => 'Equipment: Vertical window blinds',
             ],
             [
                 'title' => 'Noisy Ventilation Fan in Kitchen',
@@ -163,7 +163,7 @@ class WorkOrderSeeder extends Seeder
                 'guest_name' => 'Kitchen Staff',
                 'guest_email' => 'kitchen@building.com',
                 'guest_phone' => '+44 20 1234 5689',
-                'equipment' => 'Broan Kitchen Exhaust Fan - 6 inch',
+                'notes' => 'Equipment: Broan Kitchen Exhaust Fan - 6 inch',
             ],
         ];
 
