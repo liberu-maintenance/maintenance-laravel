@@ -6,7 +6,7 @@ export default {
     "./resources/**/*.vue",
     "./app/Filament/**/*.php",
     "./resources/views/filament/**/*.blade.php",
-    "./vendor/filament/**/*.blade.php",
+    "./public/css/filament/**/*.css",
   ],
   theme: {
     extend: {

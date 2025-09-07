@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Filament base styles are included via TailwindCSS v4 */
+
 /* ==========================================================================
    Liberu Maintenance CMMS - Custom Filament Admin Styles
    ========================================================================== */
