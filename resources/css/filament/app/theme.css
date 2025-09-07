@@ -1,10 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@import '../../../../vendor/filament/filament/resources/css/theme.css';
-
-@config 'tailwind.config.js';
+/* Filament will automatically include its base styles */
 
 /* ==========================================================================
    Liberu Maintenance CMMS - App Panel Styles
