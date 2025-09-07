@@ -26,6 +26,9 @@ return new class extends Migration
             $table->enum('criticality', ['low', 'medium', 'high', 'critical'])->default('medium');
             $table->text('notes')->nullable();
             $table->integer('company_id')->nullable();
+
+            // Create foreign key constraint manually since companies table uses custom primary key
+            $table->index('company_id');
             $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade');
             $table->timestamps();
 
