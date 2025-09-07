@@ -9,9 +9,11 @@ use App\Models\Equipment;
 use App\Models\MaintenanceSchedule;
 use App\Models\Checklist;
 use App\Models\User;
-use Filament\Schemas\Schema;
+
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Grid;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
