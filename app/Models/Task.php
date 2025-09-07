@@ -19,6 +19,7 @@ class Task extends Model
         'contact_id',
         'company_id',
         'opportunity_id',
+        'assigned_to',
     ];
 
     public function contact()
@@ -34,5 +35,10 @@ class Task extends Model
     public function opportunity()
     {
         return $this->belongsTo(Opportunity::class);
+    }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

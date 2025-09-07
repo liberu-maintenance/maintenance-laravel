@@ -105,5 +105,10 @@ class MaintenanceSchedule extends Model
             'last_completed_date' => now(),
             'next_due_date' => $this->calculateNextDueDate(),
         ]);
+
+        // Send notification to assigned user about completion
+        if ($this->assignedUser) {
+            $this->assignedUser->notify(new \App\Notifications\TaskAssignedNotification($this, 'maintenance_schedule'));
+        }
     }
 }

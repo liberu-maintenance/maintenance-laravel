@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\App\Resources\TaskResource\Pages;
 use App\Filament\App\Resources\TaskResource\RelationManagers;
+use App\Notifications\TaskAssignedNotification;
 
 class TaskResource extends Resource
 {
@@ -54,6 +55,20 @@ class TaskResource extends Resource
                 Select::make('opportunity_id')
                     ->relationship('opportunity', 'name')
                     ->label('Opportunity'),
+                Select::make('assigned_to')
+                    ->relationship('assignedUser', 'name')
+                    ->label('Assigned To')
+                    ->searchable()
+                    ->preload()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, $record) {
+                        if ($state && $record) {
+                            $user = \App\Models\User::find($state);
+                            if ($user) {
+                                $user->notify(new TaskAssignedNotification($record, 'task'));
+                            }
+                        }
+                    }),
             ]);
     }
 
