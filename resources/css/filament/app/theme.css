@@ -473,22 +473,183 @@
 }
 
 /* ==========================================================================
-   Dark Mode Support (Optional)
+   Enhanced UX Features
+   ========================================================================== */
+
+/* Loading States */
+.fi-loading {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.fi-loading::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+    animation: shimmer 1.5s infinite !important;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Focus States for Accessibility */
+.fi-btn:focus,
+.fi-input:focus,
+.fi-select:focus {
+    outline: 2px solid var(--liberu-secondary) !important;
+    outline-offset: 2px !important;
+}
+
+/* Improved Tooltips */
+.fi-tooltip {
+    background: var(--liberu-gray-900) !important;
+    color: white !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Enhanced Dropdown Menus */
+.fi-dropdown-panel {
+    border-radius: 0.75rem !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid var(--liberu-gray-100) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* Improved Search */
+.fi-global-search-input {
+    border-radius: 2rem !important;
+    background: var(--liberu-gray-50) !important;
+    border: 2px solid transparent !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.fi-global-search-input:focus {
+    background: white !important;
+    border-color: var(--liberu-secondary) !important;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important;
+}
+
+/* Enhanced Breadcrumbs */
+.fi-breadcrumbs {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px) !important;
+    border-radius: 2rem !important;
+    padding: 0.5rem 1rem !important;
+    border: 1px solid var(--liberu-gray-100) !important;
+}
+
+/* Improved Pagination */
+.fi-pagination {
+    border-radius: 0.75rem !important;
+    background: white !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.fi-pagination-item {
+    border-radius: 0.5rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.fi-pagination-item:hover {
+    background: var(--liberu-secondary) !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Enhanced Stats Cards */
+.fi-stats-card {
+    background: linear-gradient(135deg, white 0%, var(--liberu-gray-50) 100%) !important;
+    border: 1px solid var(--liberu-gray-100) !important;
+    border-radius: 1rem !important;
+    padding: 1.5rem !important;
+    transition: all 0.2s ease-in-out !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.fi-stats-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, var(--liberu-secondary), var(--liberu-primary)) !important;
+}
+
+.fi-stats-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ==========================================================================
+   Dark Mode Support (Enhanced)
    ========================================================================== */
 
 @media (prefers-color-scheme: dark) {
+    :root {
+        --liberu-primary: #3b82f6;
+        --liberu-secondary: #10b981;
+        --liberu-gray-50: #1f2937;
+        --liberu-gray-100: #374151;
+        --liberu-gray-200: #4b5563;
+        --liberu-gray-700: #d1d5db;
+        --liberu-gray-800: #e5e7eb;
+        --liberu-gray-900: #f9fafb;
+    }
+
     .fi-body {
-        background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
     }
 
     .fi-section,
     .fi-card {
-        background: #374151 !important;
-        border-color: #4b5563 !important;
+        background: rgba(30, 41, 59, 0.8) !important;
+        border-color: #475569 !important;
+        backdrop-filter: blur(8px) !important;
     }
 
     .fi-topbar {
-        background: #374151 !important;
-        border-color: #4b5563 !important;
+        background: rgba(15, 23, 42, 0.9) !important;
+        border-color: #475569 !important;
+        backdrop-filter: blur(8px) !important;
+    }
+
+    .fi-sidebar {
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+    .fi-sidebar,
+    .fi-topbar,
+    .fi-btn,
+    .fi-pagination {
+        display: none !important;
+    }
+
+    .fi-main {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .fi-section,
+    .fi-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        break-inside: avoid !important;
     }
 }

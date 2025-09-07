@@ -47,8 +47,44 @@ class AppPanelProvider extends PanelProvider
             ->emailVerification()
             ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
-                'primary' => Color::Gray,
+                'primary' => Color::Teal,
+                'secondary' => Color::Orange,
+                'success' => Color::Green,
+                'warning' => Color::Amber,
+                'danger' => Color::Red,
+                'info' => Color::Blue,
             ])
+            ->brandName('Liberu Maintenance')
+            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogoHeight('2rem')
+            ->favicon(asset('images/favicon.ico'))
+            ->navigationGroups([
+                'Maintenance' => [
+                    'label' => 'Maintenance Management',
+                    'icon' => 'heroicon-o-wrench-screwdriver',
+                    'collapsed' => false,
+                ],
+                'Assets' => [
+                    'label' => 'Asset Management', 
+                    'icon' => 'heroicon-o-building-office',
+                    'collapsed' => false,
+                ],
+                'Reports' => [
+                    'label' => 'Reports & Analytics',
+                    'icon' => 'heroicon-o-chart-bar',
+                    'collapsed' => true,
+                ],
+                'Settings' => [
+                    'label' => 'System Settings',
+                    'icon' => 'heroicon-o-cog-6-tooth',
+                    'collapsed' => true,
+                ],
+            ])
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarFullyCollapsibleOnDesktop()
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Profile')
@@ -63,10 +99,12 @@ class AppPanelProvider extends PanelProvider
                 Dashboard::class,
                 Pages\EditProfile::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/App/Widgets/Home'), for: 'App\\Filament\\App\\Widgets\\Home')
+            ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
+                \App\Filament\App\Widgets\MaintenanceStatsWidget::class,
+                \App\Filament\App\Widgets\EquipmentStatusWidget::class,
+                \App\Filament\App\Widgets\RecentWorkOrdersWidget::class,
                 Widgets\AccountWidget::class,
-                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
