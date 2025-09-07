@@ -132,7 +132,7 @@ class QuickStatsWidget extends Widget
                 'type' => 'critical',
                 'message' => "{$metrics['urgent_work_orders']} urgent work orders require immediate attention",
                 'action' => 'View Work Orders',
-                'url' => route('filament.app.resources.work-orders.work-orders.index', ['tableFilters[priority][value]' => 'urgent']),
+                'url' => route('filament.app.resources.work-orders.index', ['tableFilters[priority][value]' => 'urgent']),
             ];
         }
 
@@ -141,7 +141,7 @@ class QuickStatsWidget extends Widget
                 'type' => 'warning',
                 'message' => "{$metrics['overdue_maintenance']} maintenance schedules are overdue",
                 'action' => 'View Schedules',
-                'url' => route('filament.app.resources.maintenance-schedules.maintenance-schedules.index'),
+                'url' => route('filament.app.resources.maintenance-schedules.index'),
             ];
         }
 
