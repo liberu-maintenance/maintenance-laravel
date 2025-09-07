@@ -123,6 +123,60 @@
     color: white !important;
 }
 
+/* Visited Navigation Links */
+.fi-sidebar-nav-item a:visited .fi-sidebar-nav-item-label {
+    color: white !important;
+}
+
+.fi-sidebar-nav-item a:visited .fi-sidebar-nav-item-icon {
+    color: white !important;
+}
+
+.fi-sidebar-nav-item a:visited {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: white !important;
+}
+
+/* Navigation Links - All White */
+.fi-sidebar-nav-item a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.fi-sidebar-nav-item a:hover {
+    color: white !important;
+}
+
+.fi-sidebar-nav-item a:focus {
+    color: white !important;
+}
+
+.fi-sidebar-nav-item a:active {
+    color: white !important;
+}
+
+/* Visited links in topbar and other areas */
+.fi-topbar a:visited {
+    color: var(--liberu-primary-dark) !important;
+}
+
+/* Breadcrumb visited links */
+.fi-breadcrumbs a:visited {
+    color: var(--liberu-primary) !important;
+}
+
+/* General visited links that should complement the green theme */
+a:visited {
+    color: var(--liberu-primary-dark) !important;
+}
+
+/* Table and content area visited links */
+.fi-ta a:visited,
+.fi-section a:visited,
+.fi-card a:visited {
+    color: var(--liberu-secondary) !important;
+}
+
 /* ==========================================================================
    Header & Navigation
    ========================================================================== */
