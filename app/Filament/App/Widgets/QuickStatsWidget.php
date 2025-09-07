@@ -81,9 +81,9 @@ class QuickStatsWidget extends Widget
     {
         $workOrders = WorkOrder::query()
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
-            ->whereNotNull('approved_at')
+            ->whereNotNull('reviewed_at')
             ->where('submitted_at', '>=', now()->subDays(30))
-            ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, submitted_at, approved_at)) as avg_hours')
+            ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, submitted_at, reviewed_at)) as avg_hours')
             ->first();
 
         return round($workOrders->avg_hours ?? 0, 1);
