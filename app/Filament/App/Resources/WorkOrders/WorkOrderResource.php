@@ -19,8 +19,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\Action;
-use Filament\Components\Section;
-use Filament\Components\Grid;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Support\Enums\FontWeight;
@@ -42,9 +40,9 @@ class WorkOrderResource extends Resource
     {
         return $schema
                 ->schema([
-                Section::make('Work Order Details')
+                Forms\Components\Section::make('Work Order Details')
                     ->schema([
-                        Grid::make(2)
+                        Forms\Components\Grid::make(2)
                             ->schema([
                                 Forms\Components\TextInput::make('title')
                                     ->required()
@@ -79,9 +77,9 @@ class WorkOrderResource extends Resource
                             ]),
                     ]),
 
-                Section::make('Location & Equipment')
+                Forms\Components\Section::make('Location & Equipment')
                     ->schema([
-                        Grid::make(2)
+                        Forms\Components\Grid::make(2)
                             ->schema([
                                 Forms\Components\TextInput::make('location')
                                     ->maxLength(255),
@@ -94,9 +92,9 @@ class WorkOrderResource extends Resource
                             ]),
                     ]),
 
-                Section::make('Related Records')
+                Forms\Components\Section::make('Related Records')
                     ->schema([
-                        Grid::make(2)
+                        Forms\Components\Grid::make(2)
                             ->schema([
                                 Forms\Components\Select::make('maintenance_schedule_id')
                                     ->label('Maintenance Schedule')
@@ -112,9 +110,9 @@ class WorkOrderResource extends Resource
                             ]),
                     ]),
 
-                Section::make('Guest Information')
+                Forms\Components\Section::make('Guest Information')
                     ->schema([
-                        Grid::make(3)
+                        Forms\Components\Grid::make(3)
                             ->schema([
                                 Forms\Components\TextInput::make('guest_name')
                                     ->label('Guest Name')
@@ -133,9 +131,9 @@ class WorkOrderResource extends Resource
                     ])
                     ->collapsible(),
 
-                Section::make('Review Information')
+                Forms\Components\Section::make('Review Information')
                     ->schema([
-                        Grid::make(2)
+                        Forms\Components\Grid::make(2)
                             ->schema([
                                 Forms\Components\Select::make('reviewed_by')
                                     ->label('Reviewed By')
