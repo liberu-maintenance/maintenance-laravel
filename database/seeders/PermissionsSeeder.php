@@ -12,6 +12,6 @@ class PermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        Artisan::call('permissions:sync');
+       // Artisan::call('permissions:sync');
     }
 }
