@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Opportunity extends Model
 {
@@ -15,10 +16,16 @@ class Opportunity extends Model
         'deal_size',
         'stage',
         'closing_date',
+        'team_id',
     ];
 
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 }

@@ -251,4 +251,14 @@ class Team extends JetstreamTeam
     {
         return $this->hasMany(CustomForm::class);
     }
+
+    public function opportunities(): HasMany
+    {
+        return $this->hasMany(Opportunity::class);
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
 }
