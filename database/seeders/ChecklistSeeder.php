@@ -220,10 +220,11 @@ class ChecklistSeeder extends Seeder
             foreach ($items as $index => $itemDescription) {
                 ChecklistItem::create([
                     'checklist_id' => $checklist->id,
+                    'title' => $itemDescription,
                     'description' => $itemDescription,
                     'order' => $index + 1,
-                    'is_required' => true,
-                    'item_type' => 'checkbox',
+                    'required' => true,
+                    'type' => 'checkbox',
                 ]);
             }
         }
