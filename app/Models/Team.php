@@ -121,11 +121,6 @@ class Team extends JetstreamTeam
         return $this->hasMany(Message::class);
     }
 
-    public function notes(): HasMany
-    {
-        return $this->hasMany(Note::class);
-    }
-
     public function persons(): HasMany
     {
         return $this->hasMany(Person::class);
