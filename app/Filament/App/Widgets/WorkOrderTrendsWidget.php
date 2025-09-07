@@ -10,11 +10,11 @@ class WorkOrderTrendsWidget extends ChartWidget
 {
     protected ?string $heading = 'Work Order Trends (Last 30 Days)';
 
-    protected static ?string $pollingInterval = '300s';
+    protected ?string $pollingInterval = '300s';
 
     protected int | string | array $columnSpan = 1;
 
-    protected static ?string $maxHeight = '300px';
+    protected ?string $maxHeight = '300px';
 
     protected function getData(): array
     {

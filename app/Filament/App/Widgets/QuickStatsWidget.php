@@ -9,11 +9,11 @@ use Filament\Widgets\Widget;
 
 class QuickStatsWidget extends Widget
 {
-    protected static string $view = 'filament.app.widgets.quick-stats';
+    protected string $view = 'filament.app.widgets.quick-stats';
 
     protected int | string | array $columnSpan = 'full';
 
-    protected static ?string $pollingInterval = '60s';
+    protected ?string $pollingInterval = '60s';
 
     public function getViewData(): array
     {

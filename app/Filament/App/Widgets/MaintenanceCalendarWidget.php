@@ -15,7 +15,7 @@ class MaintenanceCalendarWidget extends Widget
 
     protected int | string | array $columnSpan = 1;
 
-    protected static ?string $pollingInterval = '300s';
+    protected ?string $pollingInterval = '300s';
 
     public function getViewData(): array
     {
