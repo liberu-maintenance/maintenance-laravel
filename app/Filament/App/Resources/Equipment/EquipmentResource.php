@@ -27,9 +27,9 @@ class EquipmentResource extends Resource
 {
     protected static ?string $model = Equipment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
-    protected static ?string $navigationGroup = 'Asset Management';
+    protected static string | \UnitEnum | null $navigationGroup = 'Asset Management';
 
     protected static ?int $navigationSort = 1;
 
