@@ -37,4 +37,9 @@ class Company extends Model
     {
         return $this->hasMany(Opportunity::class);
     }
+
+    public function equipment()
+    {
+        return $this->hasMany(Equipment::class);
+    }
 }
