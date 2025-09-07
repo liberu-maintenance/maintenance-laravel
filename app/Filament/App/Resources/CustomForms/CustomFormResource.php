@@ -29,7 +29,7 @@ class CustomFormResource extends Resource
 {
     protected static ?string $model = CustomForm::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationGroup = 'Form Management';
 

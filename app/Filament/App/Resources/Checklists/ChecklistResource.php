@@ -29,7 +29,7 @@ class ChecklistResource extends Resource
 {
     protected static ?string $model = Checklist::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?string $navigationGroup = 'Maintenance Management';
 

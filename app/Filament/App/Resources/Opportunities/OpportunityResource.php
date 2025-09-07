@@ -26,7 +26,7 @@ class OpportunityResource extends Resource
 {
     protected static ?string $model = Opportunity::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-currency-dollar';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Schema $schema): Schema
     {
