@@ -10,11 +10,11 @@ class EquipmentHealthWidget extends ChartWidget
 {
     protected ?string $heading = 'Equipment Health Score';
 
-    protected static ?string $pollingInterval = '60s';
+    protected ?string $pollingInterval = '60s';
 
     protected int | string | array $columnSpan = 1;
 
-    protected static ?string $maxHeight = '300px';
+    protected ?string $maxHeight = '300px';
 
     protected function getData(): array
     {
