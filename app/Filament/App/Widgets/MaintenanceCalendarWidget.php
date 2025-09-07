@@ -11,7 +11,7 @@ class MaintenanceCalendarWidget extends Widget
 {
     protected string $view = 'filament.app.widgets.maintenance-calendar';
 
-    protected ?string $heading = 'Upcoming Maintenance';
+    protected static ?string $heading = 'Upcoming Maintenance';
 
     protected int | string | array $columnSpan = 1;
 
