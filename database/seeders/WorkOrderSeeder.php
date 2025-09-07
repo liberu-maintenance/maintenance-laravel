@@ -101,13 +101,10 @@ class WorkOrderSeeder extends Seeder
                 'priority' => 'medium',
                 'status' => 'completed',
                 'location' => 'Office Building - Floor 4 - Conference Room A',
-                'contact_name' => 'Executive Assistant',
-                'contact_email' => 'exec.assistant@office.com',
-                'contact_phone' => '+44 20 1234 5684',
-                'equipment_details' => 'Epson PowerLite Projector - Model 5050UB',
-                'preferred_date' => Carbon::now()->subDays(3),
-                'submitted_by_guest' => false,
-                'company_id' => 1,
+                'guest_name' => 'Executive Assistant',
+                'guest_email' => 'exec.assistant@office.com',
+                'guest_phone' => '+44 20 1234 5684',
+                'equipment' => 'Epson PowerLite Projector - Model 5050UB',
             ],
 
             // Low Priority Work Orders

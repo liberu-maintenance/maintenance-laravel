@@ -28,11 +28,10 @@ class GuestWorkOrderController extends Controller
             'description' => 'required|string|max:2000',
             'priority' => 'required|in:low,medium,high,critical',
             'location' => 'required|string|max:255',
-            'contact_name' => 'required|string|max:255',
-            'contact_email' => 'required|email|max:255',
-            'contact_phone' => 'nullable|string|max:20',
-            'equipment_details' => 'nullable|string|max:500',
-            'preferred_date' => 'nullable|date|after:today',
+            'guest_name' => 'required|string|max:255',
+            'guest_email' => 'required|email|max:255',
+            'guest_phone' => 'nullable|string|max:20',
+            'equipment' => 'nullable|string|max:500',
         ]);
 
         if ($validator->fails()) {
@@ -50,13 +49,10 @@ class GuestWorkOrderController extends Controller
                 'priority' => $request->priority,
                 'status' => 'pending',
                 'location' => $request->location,
-                'contact_name' => $request->contact_name,
-                'contact_email' => $request->contact_email,
-                'contact_phone' => $request->contact_phone,
-                'equipment_details' => $request->equipment_details,
-                'preferred_date' => $request->preferred_date,
-                'submitted_by_guest' => true,
-                'company_id' => 1, // Default company for guest submissions
+                'guest_name' => $request->guest_name,
+                'guest_email' => $request->guest_email,
+                'guest_phone' => $request->guest_phone,
+                'equipment' => $request->equipment,
             ]);
 
             // Send notification email to admin (optional)
