@@ -37,10 +37,10 @@ class WorkOrderResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+                ->schema([
                 Section::make('Work Order Details')
                     ->schema([
                         Grid::make(2)
