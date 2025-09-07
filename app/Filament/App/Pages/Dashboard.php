@@ -13,7 +13,7 @@ use App\Filament\App\Widgets\WorkOrderTrendsWidget;
 
 class Dashboard extends BaseDashboard
 {
-    protected static ?string $navigationIcon = 'heroicon-o-home';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
 
     protected static string $view = 'filament.app.pages.dashboard';
 
