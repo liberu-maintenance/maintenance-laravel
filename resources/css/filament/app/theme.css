@@ -106,7 +106,7 @@
 }
 
 .fi-sidebar-nav-item-label {
-    color: rgba(255, 255, 255, 0.9) !important;
+    color: white !important;
     font-weight: 500 !important;
 }
 
@@ -1119,7 +1119,7 @@
 
 /* Navigation Group Headers */
 .fi-sidebar-nav-group-label {
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: white !important;
     font-weight: 600 !important;
     font-size: 0.75rem !important;
     text-transform: uppercase !important;
