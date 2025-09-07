@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\WorkOrders;
 
+use Filament\Schemas\Schema;
 use App\Filament\App\Resources\WorkOrders\WorkOrderResource\Pages;
 use App\Models\WorkOrder;
 use App\Models\Equipment;
