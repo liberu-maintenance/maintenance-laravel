@@ -10,6 +10,7 @@ use App\Models\MaintenanceSchedule;
 use App\Models\Checklist;
 use App\Models\User;
 
+use Filament\Schema\Schema;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Section;
