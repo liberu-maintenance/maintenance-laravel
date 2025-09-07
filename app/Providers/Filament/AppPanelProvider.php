@@ -15,6 +15,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -60,46 +61,14 @@ class AppPanelProvider extends PanelProvider
             ->brandLogoHeight('2rem')
             ->favicon(asset('images/favicon.ico'))
             ->navigationGroups([
-                'Dashboard' => [
-                    'label' => 'Dashboard',
-                    'icon' => 'heroicon-o-home',
-                    'collapsed' => false,
-                ],
-                'Work Management' => [
-                    'label' => 'Work Management',
-                    'icon' => 'heroicon-o-clipboard-document-list',
-                    'collapsed' => false,
-                ],
-                'Maintenance' => [
-                    'label' => 'Maintenance',
-                    'icon' => 'heroicon-o-wrench-screwdriver',
-                    'collapsed' => false,
-                ],
-                'Assets' => [
-                    'label' => 'Asset Management', 
-                    'icon' => 'heroicon-o-building-office',
-                    'collapsed' => false,
-                ],
-                'Quality' => [
-                    'label' => 'Quality & Inspection',
-                    'icon' => 'heroicon-o-shield-check',
-                    'collapsed' => false,
-                ],
-                'CRM' => [
-                    'label' => 'Customer Relations',
-                    'icon' => 'heroicon-o-users',
-                    'collapsed' => true,
-                ],
-                'Reports' => [
-                    'label' => 'Reports & Analytics',
-                    'icon' => 'heroicon-o-chart-bar',
-                    'collapsed' => true,
-                ],
-                'Settings' => [
-                    'label' => 'System Settings',
-                    'icon' => 'heroicon-o-cog-6-tooth',
-                    'collapsed' => true,
-                ],
+                NavigationGroup::make('Dashboard'),
+                NavigationGroup::make('Work Management'),
+                NavigationGroup::make('Maintenance'),
+                NavigationGroup::make('Assets'),
+                NavigationGroup::make('Quality'),
+                NavigationGroup::make('CRM'),
+                NavigationGroup::make('Reports'),
+                NavigationGroup::make('Settings'),
             ])
             ->sidebarCollapsibleOnDesktop()
             ->sidebarFullyCollapsibleOnDesktop()
