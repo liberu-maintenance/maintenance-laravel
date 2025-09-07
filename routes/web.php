@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-require __DIR__.'/socialstream.php';require __DIR__.'/socialstream.php';
+    return view('home');
+})->name('home');
+
+// Guest work order routes
+Route::get('/submit-request', [App\Http\Controllers\GuestWorkOrderController::class, 'create'])->name('guest.work-order.create');
+Route::post('/submit-request', [App\Http\Controllers\GuestWorkOrderController::class, 'store'])->name('guest.work-order.store');
+Route::get('/request-submitted', [App\Http\Controllers\GuestWorkOrderController::class, 'success'])->name('guest.work-order.success');
+
+require __DIR__.'/socialstream.php';

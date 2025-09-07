@@ -26,7 +26,14 @@ class WorkOrder extends Model
         'submitted_at',
         'reviewed_by',
         'reviewed_at',
-        'notes'
+        'notes',
+        'contact_name',
+        'contact_email',
+        'contact_phone',
+        'equipment_details',
+        'preferred_date',
+        'submitted_by_guest',
+        'company_id'
     ];
 
     protected $casts = [
