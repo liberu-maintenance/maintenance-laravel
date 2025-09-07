@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* Filament will automatically include its base styles */
-
 /* ==========================================================================
    Liberu Maintenance CMMS - Custom Filament Admin Styles
    ========================================================================== */
@@ -17,6 +15,8 @@
     --liberu-info: #0284c7;
     --liberu-gray-50: #f9fafb;
     --liberu-gray-100: #f3f4f6;
+    --liberu-gray-200: #e5e7eb;
+    --liberu-gray-700: #374151;
     --liberu-gray-800: #1f2937;
     --liberu-gray-900: #111827;
 }
