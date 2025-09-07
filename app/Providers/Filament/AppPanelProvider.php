@@ -48,13 +48,14 @@ class AppPanelProvider extends PanelProvider
             ->emailVerification()
             ->viteTheme('resources/css/filament/app/theme.css')
             ->colors([
-                'primary' => Color::Teal,
-                'secondary' => Color::Emerald,
-                'success' => Color::Green,
-                'warning' => Color::Amber,
-                'danger' => Color::Red,
-                'info' => Color::Sky,
-                'gray' => Color::Slate,
+                'primary' => Color::hex('#0f766e'), // Deep teal for primary actions
+                'secondary' => Color::hex('#059669'), // Emerald for secondary elements
+                'success' => Color::hex('#16a34a'), // Vibrant green for success states
+                'warning' => Color::hex('#ea580c'), // Orange for warnings
+                'danger' => Color::hex('#dc2626'), // Red for errors/danger
+                'info' => Color::hex('#0284c7'), // Sky blue for information
+                'gray' => Color::hex('#64748b'), // Balanced gray for neutral elements
+                'accent' => Color::hex('#7c3aed'), // Purple accent for highlights
             ])
             ->brandName('Liberu Maintenance')
             ->brandLogo(asset('images/logo.svg'))
