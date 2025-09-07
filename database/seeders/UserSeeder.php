@@ -108,19 +108,16 @@ class UserSeeder extends Seeder
                 'name' => 'Demo Tenant',
                 'email' => 'tenant@demo.com',
                 'password' => Hash::make('demo123'),
-                'role' => 'tenant',
             ],
             [
                 'name' => 'Demo Contractor',
                 'email' => 'contractor@demo.com',
                 'password' => Hash::make('demo123'),
-                'role' => 'contractor',
             ],
             [
                 'name' => 'Demo Landlord',
                 'email' => 'landlord@demo.com',
                 'password' => Hash::make('demo123'),
-                'role' => 'landlord',
             ],
         ];
 
