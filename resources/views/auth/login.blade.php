@@ -42,5 +42,103 @@
                 <a href="/forgot-password" class="underline text-sm text-gray-600 hover:text-gray-900" >Forgot password?</a>
             </form>
         </div>
+
+        <!-- Demo Credentials Section -->
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-blue-50 border border-blue-200 shadow-md overflow-hidden sm:rounded-lg">
+            <h3 class="text-lg font-semibold text-blue-900 mb-3">Demo Credentials</h3>
+            <p class="text-sm text-blue-700 mb-4">Use these credentials to test different user roles:</p>
+
+            <div class="space-y-4">
+                <!-- Admin Users -->
+                <div>
+                    <h4 class="font-medium text-blue-800 mb-2">🔧 Administrative Users</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">System Administrator</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">admin@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Maintenance Manager</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">manager@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technicians -->
+                <div>
+                    <h4 class="font-medium text-blue-800 mb-2">🔨 Maintenance Technicians</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">John Smith</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">john.smith@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Sarah Johnson</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">sarah.johnson@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Mike Wilson</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">mike.wilson@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Emma Davis</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">emma.davis@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Facility Managers -->
+                <div>
+                    <h4 class="font-medium text-blue-800 mb-2">🏢 Facility Managers</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Robert Brown</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">robert.brown@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Lisa Anderson</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">lisa.anderson@liberu.co.uk</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">password</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo Role Users -->
+                <div>
+                    <h4 class="font-medium text-blue-800 mb-2">👥 Demo Role Users</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Demo Tenant</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">tenant@demo.com</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">demo123</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Demo Contractor</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">contractor@demo.com</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">demo123</span></div>
+                        </div>
+                        <div class="bg-white p-2 rounded border">
+                            <div class="font-medium text-gray-900">Demo Landlord</div>
+                            <div class="text-gray-600">Email: <span class="font-mono">landlord@demo.com</span></div>
+                            <div class="text-gray-600">Password: <span class="font-mono">demo123</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                <p class="text-xs text-yellow-800">
+                    <strong>Note:</strong> These are demo credentials for testing purposes. 
+                    In production, remove this section and use secure passwords.
+                </p>
+            </div>
+        </div>
     </div>
 @endsection
