@@ -14,6 +14,7 @@ use App\Models\Checklist;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -39,7 +40,7 @@ class ChecklistResource extends Resource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Checklist Information')
+                Section::make('Checklist Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()
@@ -64,7 +65,7 @@ class ChecklistResource extends Resource
                             ->helperText('Optional: Link this checklist to specific equipment'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Settings')
+                Section::make('Settings')
                     ->schema([
                         Toggle::make('is_template')
                             ->label('Is Template')
@@ -79,7 +80,7 @@ class ChecklistResource extends Resource
                             ->required(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Checklist Items')
+                Section::make('Checklist Items')
                     ->schema([
                         Repeater::make('items')
                             ->relationship()

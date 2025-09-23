@@ -14,6 +14,7 @@ use App\Models\CustomForm;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -39,7 +40,7 @@ class CustomFormResource extends Resource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Form Information')
+                Section::make('Form Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()
@@ -59,7 +60,7 @@ class CustomFormResource extends Resource
                             ->searchable(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Settings')
+                Section::make('Settings')
                     ->schema([
                         Toggle::make('is_active')
                             ->label('Active')
@@ -73,7 +74,7 @@ class CustomFormResource extends Resource
                             ->valueLabel('Setting Value'),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Form Fields')
+                Section::make('Form Fields')
                     ->schema([
                         Repeater::make('fields')
                             ->relationship()

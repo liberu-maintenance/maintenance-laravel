@@ -14,6 +14,8 @@ use App\Models\MaintenanceSchedule;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -39,7 +41,7 @@ class MaintenanceScheduleResource extends Resource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Schedule Information')
+                Section::make('Schedule Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()
@@ -53,7 +55,7 @@ class MaintenanceScheduleResource extends Resource
                             ->required(),
                     ])->columns(1),
 
-                Forms\Components\Section::make('Frequency Settings')
+                Section::make('Frequency Settings')
                     ->schema([
                         Grid::make(3)
                             ->schema([
@@ -79,7 +81,7 @@ class MaintenanceScheduleResource extends Resource
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Scheduling')
+                Section::make('Scheduling')
                     ->schema([
                         Grid::make(2)
                             ->schema([
@@ -89,7 +91,7 @@ class MaintenanceScheduleResource extends Resource
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Assignment & Priority')
+                Section::make('Assignment & Priority')
                     ->schema([
                         Grid::make(3)
                             ->schema([
@@ -117,7 +119,7 @@ class MaintenanceScheduleResource extends Resource
                             ]),
                     ]),
 
-                Forms\Components\Section::make('Instructions & Checklist')
+                Section::make('Instructions & Checklist')
                     ->schema([
                         Textarea::make('instructions')
                             ->rows(4)

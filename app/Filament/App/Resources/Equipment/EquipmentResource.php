@@ -14,6 +14,7 @@ use App\Models\Equipment;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -37,7 +38,7 @@ class EquipmentResource extends Resource
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Basic Information')
+                Section::make('Basic Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()
@@ -53,7 +54,7 @@ class EquipmentResource extends Resource
                             ->maxLength(255),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Classification')
+                Section::make('Classification')
                     ->schema([
                         Select::make('category')
                             ->options([
@@ -89,7 +90,7 @@ class EquipmentResource extends Resource
                             ->required(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Purchase Information')
+                Section::make('Purchase Information')
                     ->schema([
                         DatePicker::make('purchase_date'),
                         DatePicker::make('warranty_expiry'),
@@ -99,7 +100,7 @@ class EquipmentResource extends Resource
                             ->preload(),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Additional Notes')
+                Section::make('Additional Notes')
                     ->schema([
                         Textarea::make('notes')
                             ->rows(4),
