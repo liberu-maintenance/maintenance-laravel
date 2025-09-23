@@ -26,6 +26,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Support\Enums\FontWeight;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select as FormsSelect;
+use Filament\Forms\Components\TextInput as FormsTextInput;
+use App\Models\InventoryTransaction;
 
 class WorkOrderResource extends Resource
 {
@@ -151,6 +155,36 @@ class WorkOrderResource extends Resource
                         Forms\Components\Textarea::make('notes')
                             ->rows(3)
                             ->columnSpanFull(),
+                    ])
+                    ->collapsible(),
+
+                Section::make('Materials Used')
+                    ->schema([
+                        Repeater::make('items')
+                            ->relationship()
+                            ->schema([
+                                FormsSelect::make('inventory_item_id')
+                                    ->label('Item')
+                                    ->relationship('inventoryItem', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required(),
+                                FormsTextInput::make('quantity')
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->default(1)
+                                    ->required(),
+                                FormsTextInput::make('unit_cost')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->step('0.01')
+                                    ->label('Unit Cost')
+                                    ->nullable(),
+                            ])
+                            ->columns(3)
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['inventory_item_id'] ? 'Item #' . $state['inventory_item_id'] : null)
+                            ->addActionLabel('Add Item'),
                     ])
                     ->collapsible(),
             ]);
@@ -280,6 +314,31 @@ class WorkOrderResource extends Resource
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
                     ->action(function (WorkOrder $record) {
+                        // Issue inventory for used materials
+                        $record->loadMissing('items.inventoryItem');
+                        foreach ($record->items as $item) {
+                            $inv = $item->inventoryItem;
+                            if (! $inv) {
+                                continue;
+                            }
+
+                            $newQty = max(0, (int) $inv->quantity_on_hand - (int) $item->quantity);
+                            $change = $newQty - (int) $inv->quantity_on_hand; // negative value
+                            if ($change !== 0) {
+                                $inv->update(['quantity_on_hand' => $newQty]);
+
+                                InventoryTransaction::create([
+                                    'inventory_item_id' => $inv->id,
+                                    'type' => 'issue',
+                                    'quantity_change' => $change, // negative
+                                    'reference_type' => 'work_order',
+                                    'reference_id' => $record->id,
+                                    'note' => 'Materials issued on work order completion',
+                                    'team_id' => $record->team_id,
+                                ]);
+                            }
+                        }
+
                         $record->update(['status' => 'completed']);
                     })
                     ->visible(fn (WorkOrder $record) => $record->status === 'in_progress'),
