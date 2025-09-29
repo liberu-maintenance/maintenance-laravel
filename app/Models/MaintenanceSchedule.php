@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\TaskAssignedNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -114,7 +115,7 @@ class MaintenanceSchedule extends Model
 
         // Send notification to assigned user about completion
         if ($this->assignedUser) {
-            $this->assignedUser->notify(new \App\Notifications\TaskAssignedNotification($this, 'maintenance_schedule'));
+            $this->assignedUser->notify(new TaskAssignedNotification($this, 'maintenance_schedule'));
         }
     }
 }

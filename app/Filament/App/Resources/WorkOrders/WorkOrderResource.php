@@ -3,6 +3,13 @@
 namespace App\Filament\App\Resources\WorkOrders;
 
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DateTimePicker;
+use App\Filament\App\Resources\WorkOrders\WorkOrderResource\Pages\ListWorkOrders;
+use App\Filament\App\Resources\WorkOrders\WorkOrderResource\Pages\CreateWorkOrder;
+use App\Filament\App\Resources\WorkOrders\WorkOrderResource\Pages\EditWorkOrder;
 use App\Filament\App\Resources\WorkOrders\WorkOrderResource\Pages;
 use App\Models\WorkOrder;
 use App\Models\Equipment;
@@ -42,22 +49,22 @@ class WorkOrderResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
-                ->schema([
+                ->components([
                 Section::make('Work Order Details')
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('title')
+                                TextInput::make('title')
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpanFull(),
 
-                                Forms\Components\Textarea::make('description')
+                                Textarea::make('description')
                                     ->required()
                                     ->rows(3)
                                     ->columnSpanFull(),
 
-                                Forms\Components\Select::make('priority')
+                                Select::make('priority')
                                     ->options([
                                         'low' => 'Low',
                                         'medium' => 'Medium',
@@ -67,7 +74,7 @@ class WorkOrderResource extends Resource
                                     ->required()
                                     ->default('medium'),
 
-                                Forms\Components\Select::make('status')
+                                Select::make('status')
                                     ->options([
                                         'pending' => 'Pending',
                                         'approved' => 'Approved',
@@ -84,10 +91,10 @@ class WorkOrderResource extends Resource
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Forms\Components\TextInput::make('location')
+                                TextInput::make('location')
                                     ->maxLength(255),
 
-                                Forms\Components\Select::make('equipment_id')
+                                Select::make('equipment_id')
                                     ->label('Equipment')
                                     ->relationship('equipment', 'name')
                                     ->searchable()
@@ -99,13 +106,13 @@ class WorkOrderResource extends Resource
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('maintenance_schedule_id')
+                                Select::make('maintenance_schedule_id')
                                     ->label('Maintenance Schedule')
                                     ->relationship('maintenanceSchedule', 'name')
                                     ->searchable()
                                     ->preload(),
 
-                                Forms\Components\Select::make('checklist_id')
+                                Select::make('checklist_id')
                                     ->label('Checklist')
                                     ->relationship('checklist', 'name')
                                     ->searchable()
@@ -117,16 +124,16 @@ class WorkOrderResource extends Resource
                     ->schema([
                         Grid::make(3)
                             ->schema([
-                                Forms\Components\TextInput::make('guest_name')
+                                TextInput::make('guest_name')
                                     ->label('Guest Name')
                                     ->maxLength(255),
 
-                                Forms\Components\TextInput::make('guest_email')
+                                TextInput::make('guest_email')
                                     ->label('Guest Email')
                                     ->email()
                                     ->maxLength(255),
 
-                                Forms\Components\TextInput::make('guest_phone')
+                                TextInput::make('guest_phone')
                                     ->label('Guest Phone')
                                     ->tel()
                                     ->maxLength(255),
@@ -138,17 +145,17 @@ class WorkOrderResource extends Resource
                     ->schema([
                         Grid::make(2)
                             ->schema([
-                                Forms\Components\Select::make('reviewed_by')
+                                Select::make('reviewed_by')
                                     ->label('Reviewed By')
                                     ->relationship('reviewer', 'name')
                                     ->searchable()
                                     ->preload(),
 
-                                Forms\Components\DateTimePicker::make('reviewed_at')
+                                DateTimePicker::make('reviewed_at')
                                     ->label('Reviewed At'),
                             ]),
 
-                        Forms\Components\Textarea::make('notes')
+                        Textarea::make('notes')
                             ->rows(3)
                             ->columnSpanFull(),
                     ])
@@ -242,7 +249,7 @@ class WorkOrderResource extends Resource
                     ->searchable()
                     ->preload(),
             ])
-            ->actions([
+            ->recordActions([
                 Action::make('approve')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
@@ -286,7 +293,7 @@ class WorkOrderResource extends Resource
 
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
@@ -304,9 +311,9 @@ class WorkOrderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWorkOrders::route('/'),
-            'create' => Pages\CreateWorkOrder::route('/create'),
-            'edit' => Pages\EditWorkOrder::route('/{record}/edit'),
+            'index' => ListWorkOrders::route('/'),
+            'create' => CreateWorkOrder::route('/create'),
+            'edit' => EditWorkOrder::route('/{record}/edit'),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -61,7 +62,7 @@ class GuestWorkOrderController extends Controller
             return redirect()->route('guest.work-order.success')
                 ->with('success', 'Your maintenance request has been submitted successfully! We will contact you soon.');
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()
                 ->withInput()
                 ->with('error', 'There was an error submitting your request. Please try again.');

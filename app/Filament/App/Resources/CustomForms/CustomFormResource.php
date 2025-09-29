@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources\CustomForms;
 
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
@@ -23,7 +25,6 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
-use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\KeyValue;
 
 class CustomFormResource extends Resource
@@ -183,9 +184,9 @@ class CustomFormResource extends Resource
                         'Feedback' => 'Feedback',
                         'Other' => 'Other',
                     ]),
-                Tables\Filters\TernaryFilter::make('is_active')
+                TernaryFilter::make('is_active')
                     ->label('Active'),
-                Tables\Filters\TernaryFilter::make('is_public')
+                TernaryFilter::make('is_public')
                     ->label('Public'),
             ])
             ->recordActions([

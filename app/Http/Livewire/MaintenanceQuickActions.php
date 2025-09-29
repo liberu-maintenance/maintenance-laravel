@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Equipment;
 use App\Models\MaintenanceSchedule;
@@ -145,7 +146,7 @@ class MaintenanceQuickActions extends Component
             'assigned_to' => $this->quickTaskAssignee ?: null,
             'created_by' => Auth::id(),
             'company_id' => Auth::user()->currentTeam->id,
-            'due_date' => $this->quickTaskDueDate ? \Carbon\Carbon::parse($this->quickTaskDueDate) : now()->addDays(7),
+            'due_date' => $this->quickTaskDueDate ? Carbon::parse($this->quickTaskDueDate) : now()->addDays(7),
         ]);
 
         // Send notification if assigned to someone

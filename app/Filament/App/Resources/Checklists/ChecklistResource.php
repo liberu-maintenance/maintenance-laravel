@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources\Checklists;
 
+use Filament\Tables\Filters\TernaryFilter;
+use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
@@ -23,7 +25,6 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
-use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 
 class ChecklistResource extends Resource
@@ -181,7 +182,7 @@ class ChecklistResource extends Resource
                         'Emergency Procedure' => 'Emergency Procedure',
                         'Other' => 'Other',
                     ]),
-                Tables\Filters\TernaryFilter::make('is_template')
+                TernaryFilter::make('is_template')
                     ->label('Is Template'),
             ])
             ->recordActions([

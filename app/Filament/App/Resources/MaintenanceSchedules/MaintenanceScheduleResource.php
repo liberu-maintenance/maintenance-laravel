@@ -2,6 +2,8 @@
 
 namespace App\Filament\App\Resources\MaintenanceSchedules;
 
+use Filament\Tables\Filters\Filter;
+use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
@@ -23,7 +25,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 
 class MaintenanceScheduleResource extends Resource
@@ -189,10 +190,10 @@ class MaintenanceScheduleResource extends Resource
                         'high' => 'High',
                         'critical' => 'Critical',
                     ]),
-                Tables\Filters\Filter::make('overdue')
+                Filter::make('overdue')
                     ->query(fn (Builder $query): Builder => $query->overdue())
                     ->label('Overdue'),
-                Tables\Filters\Filter::make('due_soon')
+                Filter::make('due_soon')
                     ->query(fn (Builder $query): Builder => $query->dueSoon())
                     ->label('Due Soon (7 days)'),
             ])

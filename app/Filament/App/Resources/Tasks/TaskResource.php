@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\Tasks;
 
+use App\Models\User;
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
@@ -64,7 +65,7 @@ class TaskResource extends Resource
                     ->reactive()
                     ->afterStateUpdated(function ($state, $record) {
                         if ($state && $record) {
-                            $user = \App\Models\User::find($state);
+                            $user = User::find($state);
                             if ($user) {
                                 $user->notify(new TaskAssignedNotification($record, 'task'));
                             }

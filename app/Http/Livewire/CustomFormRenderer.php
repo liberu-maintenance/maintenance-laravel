@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Exception;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\CustomForm;
@@ -46,7 +47,7 @@ class CustomFormRenderer extends Component
             $this->submitted = true;
             $this->emit('formSubmitted', $submission->id);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addError('submission', 'There was an error submitting your form. Please try again.');
         }
     }
