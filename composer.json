@@ -11,6 +11,7 @@
         "php": "^8.3",
         "bezhansalleh/filament-shield": "~4.0",
         "filament/filament": "^4.0",
+        "filament/spatie-laravel-settings-plugin": "^4.0",
         "guzzlehttp/guzzle": "^7.8",
         "joelbutcher/socialstream": "^6.0",
         "laravel/framework": "^12",
@@ -18,7 +19,6 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
-        "raza9798/siteconfig": "*",
         "spatie/laravel-menu": "^4.2"
     },
     "require-dev": {
