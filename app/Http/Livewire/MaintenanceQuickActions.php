@@ -38,24 +38,27 @@ class MaintenanceQuickActions extends Component
     public $quickWorkOrderPriority = 'medium';
     public $quickWorkOrderEquipment = null;
 
-    protected $rules = [
-        'quickMaintenanceEquipment' => 'required|exists:equipment,id',
-        'quickMaintenanceType' => 'required|in:inspection,repair,cleaning,calibration,preventive',
-        'quickMaintenanceNotes' => 'required|min:10',
-        'quickMaintenancePriority' => 'required|in:low,medium,high,critical',
+    public function rules()
+    {
+        return [
+            'quickMaintenanceEquipment' => 'required|exists:equipment,id',
+            'quickMaintenanceType' => 'required|in:inspection,repair,cleaning,calibration,preventive',
+            'quickMaintenanceNotes' => 'required|min:10',
+            'quickMaintenancePriority' => 'required|in:low,medium,high,critical',
 
-        'quickTaskTitle' => 'required|string|max:255',
-        'quickTaskDescription' => 'required|string|min:10',
-        'quickTaskPriority' => 'required|in:low,medium,high,urgent',
-        'quickTaskEquipment' => 'nullable|exists:equipment,id',
-        'quickTaskAssignee' => 'nullable|exists:users,id',
-        'quickTaskDueDate' => 'nullable|date|after:today',
+            'quickTaskTitle' => 'required|string|max:255',
+            'quickTaskDescription' => 'required|string|min:10',
+            'quickTaskPriority' => 'required|in:low,medium,high,urgent',
+            'quickTaskEquipment' => 'nullable|exists:equipment,id',
+            'quickTaskAssignee' => 'nullable|exists:users,id',
+            'quickTaskDueDate' => 'nullable|date|after:today',
 
-        'quickWorkOrderTitle' => 'required|string|max:255',
-        'quickWorkOrderDescription' => 'required|string|min:10',
-        'quickWorkOrderPriority' => 'required|in:low,medium,high,urgent',
-        'quickWorkOrderEquipment' => 'nullable|exists:equipment,id',
-    ];
+            'quickWorkOrderTitle' => 'required|string|max:255',
+            'quickWorkOrderDescription' => 'required|string|min:10',
+            'quickWorkOrderPriority' => 'required|in:low,medium,high,urgent',
+            'quickWorkOrderEquipment' => 'nullable|exists:equipment,id',
+        ];
+    }
 
     public function mount()
     {
@@ -246,3 +249,4 @@ class MaintenanceQuickActions extends Component
         ]);
     }
 }
+
