@@ -376,10 +376,7 @@ class WorkOrderResource extends Resource
                     ->icon('heroicon-o-play')
                     ->color('info')
                     ->action(function (WorkOrder $record) {
-                        $record->update([
-                            'status' => 'in_progress',
-                            'started_at' => now(),
-                        ]);
+                        $record->update(['status' => 'in_progress']);
                     })
                     ->visible(fn (WorkOrder $record) => $record->status === 'approved'),
 
@@ -387,10 +384,7 @@ class WorkOrderResource extends Resource
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
                     ->action(function (WorkOrder $record) {
-                        $record->update([
-                            'status' => 'completed',
-                            'completed_at' => now(),
-                        ]);
+                        $record->update(['status' => 'completed']);
                     })
                     ->visible(fn (WorkOrder $record) => $record->status === 'in_progress'),
 
