@@ -96,4 +96,13 @@ class WorkOrderFactory extends Factory
             'due_date' => now()->subDays(rand(1, 7)),
         ]);
     }
+            'title' => $this->faker->sentence(4),
+            'description' => $this->faker->paragraph(),
+            'priority' => $this->faker->randomElement(['low', 'medium', 'high', 'urgent']),
+            'status' => $this->faker->randomElement(['pending', 'approved', 'in_progress', 'completed', 'rejected']),
+            'location' => $this->faker->address(),
+            'submitted_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
+            'notes' => $this->faker->optional()->paragraph(),
+        ];
+    }
 }

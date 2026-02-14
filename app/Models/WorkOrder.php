@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class WorkOrder extends Model
 {
@@ -74,6 +75,13 @@ class WorkOrder extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function inventoryParts(): BelongsToMany
+    {
+        return $this->belongsToMany(InventoryPart::class, 'work_order_parts')
+            ->withPivot(['quantity_planned', 'quantity_used', 'unit_cost', 'notes'])
+            ->withTimestamps();
     }
 
     public function scopePending($query)
