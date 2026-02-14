@@ -103,6 +103,55 @@ class WorkOrderResource extends Resource
                             ]),
                     ]),
 
+                Section::make('Assignment & Schedule')
+                    ->schema([
+                        Grid::make(2)
+                            ->schema([
+                                Select::make('team_id')
+                                    ->label('Team')
+                                    ->relationship('team', 'name')
+                                    ->searchable()
+                                    ->preload(),
+
+                                Select::make('assigned_to')
+                                    ->label('Assigned To')
+                                    ->relationship('assignedTo', 'name')
+                                    ->searchable()
+                                    ->preload(),
+
+                                DateTimePicker::make('due_date')
+                                    ->label('Due Date'),
+
+                                DateTimePicker::make('started_at')
+                                    ->label('Started At')
+                                    ->disabled(fn ($get) => !in_array($get('status'), ['in_progress', 'completed'])),
+
+                                DateTimePicker::make('completed_at')
+                                    ->label('Completed At')
+                                    ->disabled(fn ($get) => $get('status') !== 'completed'),
+                            ]),
+                    ]),
+
+                Section::make('Labor Hours')
+                    ->schema([
+                        Grid::make(2)
+                            ->schema([
+                                TextInput::make('estimated_hours')
+                                    ->label('Estimated Hours')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->suffix('hours'),
+
+                                TextInput::make('actual_hours')
+                                    ->label('Actual Hours')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->suffix('hours')
+                                    ->disabled(fn ($get) => $get('status') !== 'completed'),
+                            ]),
+                    ])
+                    ->collapsible(),
+
                 Section::make('Related Records')
                     ->schema([
                         Grid::make(2)
@@ -205,6 +254,25 @@ class WorkOrderResource extends Resource
                     ->searchable()
                     ->toggleable(),
 
+                TextColumn::make('assignedTo.name')
+                    ->label('Assigned To')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('due_date')
+                    ->label('Due Date')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable()
+                    ->color(fn ($record) => 
+                        $record->due_date && 
+                        $record->due_date < now() && 
+                        !in_array($record->status, ['completed', 'rejected']) 
+                            ? 'danger' 
+                            : null
+                    ),
+
                 TextColumn::make('guest_name')
                     ->label('Guest')
                     ->searchable()
@@ -220,6 +288,28 @@ class WorkOrderResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(),
+
+                TextColumn::make('started_at')
+                    ->label('Started')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('completed_at')
+                    ->label('Completed')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('estimated_hours')
+                    ->label('Est. Hours')
+                    ->suffix(' hrs')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('actual_hours')
+                    ->label('Actual Hours')
+                    ->suffix(' hrs')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -247,6 +337,12 @@ class WorkOrderResource extends Resource
                 SelectFilter::make('equipment_id')
                     ->label('Equipment')
                     ->relationship('equipment', 'name')
+                    ->searchable()
+                    ->preload(),
+
+                SelectFilter::make('assigned_to')
+                    ->label('Assigned To')
+                    ->relationship('assignedTo', 'name')
                     ->searchable()
                     ->preload(),
             ])
@@ -280,7 +376,10 @@ class WorkOrderResource extends Resource
                     ->icon('heroicon-o-play')
                     ->color('info')
                     ->action(function (WorkOrder $record) {
-                        $record->update(['status' => 'in_progress']);
+                        $record->update([
+                            'status' => 'in_progress',
+                            'started_at' => now(),
+                        ]);
                     })
                     ->visible(fn (WorkOrder $record) => $record->status === 'approved'),
 
@@ -288,7 +387,10 @@ class WorkOrderResource extends Resource
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
                     ->action(function (WorkOrder $record) {
-                        $record->update(['status' => 'completed']);
+                        $record->update([
+                            'status' => 'completed',
+                            'completed_at' => now(),
+                        ]);
                     })
                     ->visible(fn (WorkOrder $record) => $record->status === 'in_progress'),
 
@@ -320,11 +422,24 @@ class WorkOrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', 'pending')->count();
+        $pendingCount = static::getModel()::where('status', 'pending')->count();
+        $overdueCount = static::getModel()::overdue()->count();
+        
+        if ($overdueCount > 0) {
+            return (string) $overdueCount . ' overdue';
+        }
+        
+        return $pendingCount > 0 ? (string) $pendingCount : null;
     }
 
     public static function getNavigationBadgeColor(): string|array|null
     {
+        $overdueCount = static::getModel()::overdue()->count();
+        
+        if ($overdueCount > 0) {
+            return 'danger';
+        }
+        
         return static::getModel()::where('status', 'pending')->count() > 0 ? 'warning' : 'success';
     }
 }
