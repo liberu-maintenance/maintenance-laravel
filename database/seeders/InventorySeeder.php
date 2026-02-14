@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\InventoryPart;
 use App\Models\InventoryStockLevel;
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 
 class InventorySeeder extends Seeder
@@ -13,6 +14,18 @@ class InventorySeeder extends Seeder
      */
     public function run(): void
     {
+        // Get suppliers for mapping
+        $suppliers = [
+            'HVAC Supply Co.' => Company::where('name', 'HVAC Supply Warehouse')->first(),
+            'Bearing Depot' => Company::where('name', 'Bearing & Fastener Depot')->first(),
+            'Electrical Supplies Inc.' => Company::where('name', 'Industrial Parts Supply Co.')->first(),
+            'Industrial Lubricants' => Company::where('name', 'Industrial Parts Supply Co.')->first(),
+            'Fastener World' => Company::where('name', 'Bearing & Fastener Depot')->first(),
+            'Hydraulic Parts Supply' => Company::where('name', 'Industrial Parts Supply Co.')->first(),
+            'Safety First Inc.' => Company::where('name', 'Industrial Parts Supply Co.')->first(),
+            'Janitorial Supplies Co.' => Company::where('name', 'Industrial Parts Supply Co.')->first(),
+        ];
+
         $parts = [
             [
                 'part_number' => 'HVAC-FILTER-001',
@@ -121,6 +134,11 @@ class InventorySeeder extends Seeder
         ];
 
         foreach ($parts as $partData) {
+            // Add supplier_id based on supplier name mapping
+            if (isset($partData['supplier']) && isset($suppliers[$partData['supplier']])) {
+                $partData['supplier_id'] = $suppliers[$partData['supplier']]?->company_id;
+            }
+            
             $part = InventoryPart::create($partData);
 
             // Create initial stock levels for each part
