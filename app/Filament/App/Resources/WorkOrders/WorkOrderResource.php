@@ -420,7 +420,7 @@ class WorkOrderResource extends Resource
         $overdueCount = static::getModel()::overdue()->count();
         
         if ($overdueCount > 0) {
-            return (string) $overdueCount . ' overdue';
+            return "{$overdueCount} overdue";
         }
         
         return $pendingCount > 0 ? (string) $pendingCount : null;
