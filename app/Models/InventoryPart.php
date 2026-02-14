@@ -23,6 +23,7 @@ class InventoryPart extends Model
         'reorder_quantity',
         'location',
         'supplier',
+        'supplier_id',
         'lead_time_days',
         'notes',
         'team_id',
@@ -38,6 +39,11 @@ class InventoryPart extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function supplierCompany(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'supplier_id');
     }
 
     public function stockLevels(): HasMany

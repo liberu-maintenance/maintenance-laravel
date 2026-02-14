@@ -100,6 +100,34 @@ class WorkOrderResource extends Resource
                                     ->relationship('equipment', 'name')
                                     ->searchable()
                                     ->preload(),
+
+                                Select::make('customer_id')
+                                    ->label('Customer')
+                                    ->relationship('customer', 'name', function ($query) {
+                                        $query->customers()->active();
+                                    })
+                                    ->searchable()
+                                    ->preload()
+                                    ->createOptionForm([
+                                        TextInput::make('name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Select::make('type')
+                                            ->options([
+                                                'customer' => 'Customer',
+                                                'both' => 'Both (Customer & Supplier)',
+                                            ])
+                                            ->default('customer')
+                                            ->required(),
+                                        TextInput::make('contact_person')
+                                            ->maxLength(255),
+                                        TextInput::make('email')
+                                            ->email()
+                                            ->maxLength(255),
+                                        TextInput::make('phone_number')
+                                            ->tel()
+                                            ->maxLength(255),
+                                    ]),
                             ]),
                     ]),
 
@@ -253,6 +281,11 @@ class WorkOrderResource extends Resource
                     ->label('Equipment')
                     ->searchable()
                     ->toggleable(),
+
+                TextColumn::make('customer.name')
+                    ->label('Customer')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('assignedTo.name')
                     ->label('Assigned To')
