@@ -29,6 +29,7 @@ class WorkOrder extends Model
         'reviewed_at',
         'notes',
         'team_id',
+        'customer_id',
         'assigned_to',
         'due_date',
         'started_at',
@@ -75,6 +76,11 @@ class WorkOrder extends Model
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'customer_id');
     }
 
     public function inventoryParts(): BelongsToMany

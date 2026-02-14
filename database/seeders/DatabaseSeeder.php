@@ -21,10 +21,12 @@ class DatabaseSeeder extends Seeder
 
             // Application data seeders
             UserSeeder::class,
+            CompanySeeder::class,
             EquipmentSeeder::class,
             ChecklistSeeder::class,
             MaintenanceScheduleSeeder::class,
             WorkOrderSeeder::class,
+            InventorySeeder::class,
         ]);
 
         $this->command->info('All seeders completed successfully!');

@@ -98,8 +98,33 @@ class InventoryPartResource extends Resource
 
                 Section::make('Supplier Information')
                     ->schema([
-                        TextInput::make('supplier')
-                            ->maxLength(255),
+                        Select::make('supplier_id')
+                            ->label('Supplier')
+                            ->relationship('supplierCompany', 'name', function ($query) {
+                                $query->suppliers()->active();
+                            })
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Select::make('type')
+                                    ->options([
+                                        'supplier' => 'Supplier',
+                                        'both' => 'Both (Customer & Supplier)',
+                                    ])
+                                    ->default('supplier')
+                                    ->required(),
+                                TextInput::make('contact_person')
+                                    ->maxLength(255),
+                                TextInput::make('email')
+                                    ->email()
+                                    ->maxLength(255),
+                                TextInput::make('phone_number')
+                                    ->tel()
+                                    ->maxLength(255),
+                            ]),
                         TextInput::make('lead_time_days')
                             ->numeric()
                             ->integer()
@@ -143,7 +168,8 @@ class InventoryPartResource extends Resource
                 TextColumn::make('location')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('supplier')
+                TextColumn::make('supplierCompany.name')
+                    ->label('Supplier')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('reorder_level')
