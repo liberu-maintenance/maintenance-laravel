@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\WorkOrder;
 use App\Models\Team;
+use App\Models\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -187,5 +188,28 @@ class WorkOrderImprovementsTest extends TestCase
 
         // Observer should set submitted_at
         $this->assertNotNull($workOrder->fresh()->submitted_at);
+    }
+
+    /** @test */
+    public function work_order_can_be_associated_with_a_customer(): void
+    {
+        $customer = Company::create([
+            'name' => 'Test Customer',
+            'type' => 'customer',
+            'address' => '123 Test St',
+            'city' => 'Test City',
+            'state' => 'TS',
+            'zip' => '12345',
+            'phone_number' => '555-1234',
+        ]);
+
+        $workOrder = WorkOrder::factory()->create([
+            'customer_id' => $customer->company_id,
+            'team_id' => $this->team->id,
+        ]);
+
+        $this->assertNotNull($workOrder->customer_id);
+        $this->assertInstanceOf(Company::class, $workOrder->customer);
+        $this->assertEquals('Test Customer', $workOrder->customer->name);
     }
 }

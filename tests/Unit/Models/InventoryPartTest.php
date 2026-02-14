@@ -5,6 +5,7 @@ namespace Tests\Unit\Models;
 use App\Models\InventoryPart;
 use App\Models\InventoryStockLevel;
 use App\Models\WorkOrder;
+use App\Models\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,6 +27,7 @@ class InventoryPartTest extends TestCase
             'reorder_quantity',
             'location',
             'supplier',
+            'supplier_id',
             'lead_time_days',
             'notes',
             'team_id',
@@ -145,5 +147,26 @@ class InventoryPartTest extends TestCase
 
         $this->assertCount(1, $part->workOrders);
         $this->assertEquals(5, $part->workOrders->first()->pivot->quantity_planned);
+    }
+
+    /** @test */
+    public function it_can_be_associated_with_a_supplier()
+    {
+        $supplier = Company::create([
+            'name' => 'Test Supplier',
+            'type' => 'supplier',
+            'address' => '123 Test St',
+            'city' => 'Test City',
+            'state' => 'TS',
+            'zip' => '12345',
+            'phone_number' => '555-1234',
+        ]);
+
+        $part = InventoryPart::factory()->create([
+            'supplier_id' => $supplier->company_id,
+        ]);
+
+        $this->assertInstanceOf(Company::class, $part->supplierCompany);
+        $this->assertEquals('Test Supplier', $part->supplierCompany->name);
     }
 }
