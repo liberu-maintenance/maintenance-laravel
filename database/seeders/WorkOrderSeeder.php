@@ -176,6 +176,60 @@ class WorkOrderSeeder extends Seeder
                 $workOrderData['reviewed_at'] = Carbon::now()->subHours(rand(1, 48));
             }
 
+            // Assign a user to work orders that are not pending
+            if (in_array($workOrderData['status'], ['approved', 'in_progress', 'completed'])) {
+                $workOrderData['assigned_to'] = $users->random()->id;
+            }
+
+            // Set due date for active work orders
+            if (in_array($workOrderData['status'], ['pending', 'approved', 'in_progress'])) {
+                // Urgent items due within 24 hours
+                if ($workOrderData['priority'] === 'urgent') {
+                    $workOrderData['due_date'] = Carbon::now()->addHours(rand(2, 24));
+                }
+                // High priority items due within 3 days
+                elseif ($workOrderData['priority'] === 'high') {
+                    $workOrderData['due_date'] = Carbon::now()->addDays(rand(1, 3));
+                }
+                // Medium priority items due within a week
+                elseif ($workOrderData['priority'] === 'medium') {
+                    $workOrderData['due_date'] = Carbon::now()->addDays(rand(3, 7));
+                }
+                // Low priority items due within 2 weeks
+                else {
+                    $workOrderData['due_date'] = Carbon::now()->addDays(rand(7, 14));
+                }
+            }
+
+            // Set started_at for in_progress and completed work orders
+            if (in_array($workOrderData['status'], ['in_progress', 'completed'])) {
+                $workOrderData['started_at'] = Carbon::now()->subHours(rand(1, 24));
+            }
+
+            // Set completed_at for completed work orders
+            if ($workOrderData['status'] === 'completed') {
+                $startedAt = $workOrderData['started_at'] ?? Carbon::now()->subHours(8);
+                $workOrderData['completed_at'] = Carbon::parse($startedAt)->addHours(rand(1, 8));
+            }
+
+            // Add estimated and actual hours
+            if ($workOrderData['priority'] === 'urgent') {
+                $workOrderData['estimated_hours'] = rand(1, 4);
+            } elseif ($workOrderData['priority'] === 'high') {
+                $workOrderData['estimated_hours'] = rand(2, 8);
+            } elseif ($workOrderData['priority'] === 'medium') {
+                $workOrderData['estimated_hours'] = rand(4, 16);
+            } else {
+                $workOrderData['estimated_hours'] = rand(1, 8);
+            }
+
+            // Set actual hours for completed work orders (may differ from estimated)
+            if ($workOrderData['status'] === 'completed') {
+                $estimatedHours = $workOrderData['estimated_hours'];
+                // Actual hours might be 80% to 120% of estimated
+                $workOrderData['actual_hours'] = max(1, round($estimatedHours * (0.8 + (rand(0, 40) / 100))));
+            }
+
             // Assign equipment if available
             if ($equipment->isNotEmpty() && rand(0, 1)) {
                 $workOrderData['equipment_id'] = $equipment->random()->id;

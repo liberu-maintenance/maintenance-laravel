@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class WorkOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -27,17 +28,33 @@ class WorkOrder extends Model
         'reviewed_by',
         'reviewed_at',
         'notes',
-        'team_id'
+        'team_id',
+        'assigned_to',
+        'due_date',
+        'started_at',
+        'completed_at',
+        'estimated_hours',
+        'actual_hours',
     ];
 
     protected $casts = [
         'submitted_at' => 'datetime',
         'reviewed_at' => 'datetime',
+        'due_date' => 'datetime',
+        'started_at' => 'datetime',
+        'completed_at' => 'datetime',
+        'estimated_hours' => 'integer',
+        'actual_hours' => 'integer',
     ];
 
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    public function assignedTo(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
     public function equipment(): BelongsTo
@@ -90,5 +107,22 @@ class WorkOrder extends Model
     public function scopeCompleted($query)
     {
         return $query->where('status', 'completed');
+    }
+
+    public function scopeOverdue($query)
+    {
+        return $query->whereNotIn('status', ['completed', 'rejected'])
+            ->where('due_date', '<', now());
+    }
+
+    public function scopeAssignedTo($query, $userId)
+    {
+        return $query->where('assigned_to', $userId);
+    }
+
+    public function scopeDueWithin($query, $days)
+    {
+        return $query->whereNotIn('status', ['completed', 'rejected'])
+            ->whereBetween('due_date', [now(), now()->addDays($days)]);
     }
 }
