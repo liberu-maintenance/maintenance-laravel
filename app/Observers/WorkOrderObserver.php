@@ -3,9 +3,18 @@
 namespace App\Observers;
 
 use App\Models\WorkOrder;
+use Illuminate\Support\Facades\Cache;
 
 class WorkOrderObserver
 {
+    /**
+     * Clear cache when work order is updated.
+     */
+    protected function clearCache(): void
+    {
+        Cache::forget('work_orders.badge_counts');
+    }
+
     /**
      * Handle the WorkOrder "updating" event.
      */
@@ -33,6 +42,19 @@ class WorkOrderObserver
         if (!$workOrder->submitted_at) {
             $workOrder->update(['submitted_at' => now()]);
         }
+        
+        $this->clearCache();
+    }
+
+    /**
+     * Handle the WorkOrder "updated" event.
+     */
+    public function updated(WorkOrder $workOrder): void
+    {
+        // Clear cache if status or due_date changed
+        if ($workOrder->wasChanged(['status', 'due_date'])) {
+            $this->clearCache();
+        }
     }
 
     /**
@@ -40,7 +62,7 @@ class WorkOrderObserver
      */
     public function deleted(WorkOrder $workOrder): void
     {
-        //
+        $this->clearCache();
     }
 
     /**
@@ -48,7 +70,7 @@ class WorkOrderObserver
      */
     public function restored(WorkOrder $workOrder): void
     {
-        //
+        $this->clearCache();
     }
 
     /**
@@ -56,6 +78,6 @@ class WorkOrderObserver
      */
     public function forceDeleted(WorkOrder $workOrder): void
     {
-        //
+        $this->clearCache();
     }
 }
