@@ -31,6 +31,17 @@ class MaintenanceScheduleFactory extends Factory
             'next_due_date' => fake()->dateTimeBetween('now', '+30 days'),
             'last_completed_date' => fake()->optional()->dateTimeBetween('-60 days', '-1 day'),
             'estimated_duration' => fake()->optional()->numberBetween(15, 480),
+        $frequencyType = fake()->randomElement(['daily', 'weekly', 'monthly', 'yearly', 'hours']);
+        $nextDueDate = fake()->dateTimeBetween('-1 month', '+2 months');
+        
+        return [
+            'name' => fake()->words(3, true) . ' Maintenance',
+            'description' => fake()->sentence(),
+            'frequency_type' => $frequencyType,
+            'frequency_value' => fake()->numberBetween(1, 12),
+            'next_due_date' => $nextDueDate,
+            'last_completed_date' => fake()->optional()->dateTimeBetween('-3 months', '-1 day'),
+            'estimated_duration' => fake()->numberBetween(15, 240),
             'priority' => fake()->randomElement(['low', 'medium', 'high', 'critical']),
             'status' => fake()->randomElement(['active', 'inactive', 'completed']),
             'instructions' => fake()->optional()->paragraph(),
@@ -39,6 +50,7 @@ class MaintenanceScheduleFactory extends Factory
 
     /**
      * Indicate that the maintenance schedule is active.
+     * Indicate that the schedule is active.
      */
     public function active(): static
     {
@@ -49,6 +61,7 @@ class MaintenanceScheduleFactory extends Factory
 
     /**
      * Indicate that the maintenance schedule is overdue.
+     * Indicate that the schedule is overdue.
      */
     public function overdue(): static
     {
@@ -82,6 +95,23 @@ class MaintenanceScheduleFactory extends Factory
 
     /**
      * Indicate that the maintenance schedule has high priority.
+            'next_due_date' => fake()->dateTimeBetween('-2 weeks', '-1 day'),
+        ]);
+    }
+
+    /**
+     * Indicate that the schedule is due soon.
+     */
+    public function dueSoon(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'active',
+            'next_due_date' => fake()->dateTimeBetween('now', '+7 days'),
+        ]);
+    }
+
+    /**
+     * Indicate that the schedule is high priority.
      */
     public function highPriority(): static
     {

@@ -244,6 +244,7 @@ class WorkOrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withRelatedData())
             ->columns([
                 TextColumn::make('title')
                     ->searchable()
@@ -449,24 +450,37 @@ class WorkOrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $pendingCount = static::getModel()::where('status', 'pending')->count();
-        $overdueCount = static::getModel()::overdue()->count();
+        $cacheKey = 'work_orders.badge_counts';
         
-        if ($overdueCount > 0) {
-            return "{$overdueCount} overdue";
+        $counts = cache()->remember($cacheKey, now()->addMinutes(5), function () {
+            return [
+                'pending' => static::getModel()::where('status', 'pending')->count(),
+                'overdue' => static::getModel()::overdue()->count(),
+            ];
+        });
+        
+        if ($counts['overdue'] > 0) {
+            return "{$counts['overdue']} overdue";
         }
         
-        return $pendingCount > 0 ? (string) $pendingCount : null;
+        return $counts['pending'] > 0 ? (string) $counts['pending'] : null;
     }
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        $overdueCount = static::getModel()::overdue()->count();
+        $cacheKey = 'work_orders.badge_counts';
         
-        if ($overdueCount > 0) {
+        $counts = cache()->remember($cacheKey, now()->addMinutes(5), function () {
+            return [
+                'pending' => static::getModel()::where('status', 'pending')->count(),
+                'overdue' => static::getModel()::overdue()->count(),
+            ];
+        });
+        
+        if ($counts['overdue'] > 0) {
             return 'danger';
         }
         
-        return static::getModel()::where('status', 'pending')->count() > 0 ? 'warning' : 'success';
+        return $counts['pending'] > 0 ? 'warning' : 'success';
     }
 }
