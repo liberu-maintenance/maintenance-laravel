@@ -13,7 +13,7 @@ class EquipmentObserver
     {
         // When equipment status changes from under_maintenance to active,
         // ensure there are no active work orders
-        if ($equipment->isDirty('status') && $equipment->status === 'active') {
+        if ($equipment->wasChanged('status') && $equipment->status === 'active') {
             $hasActiveWorkOrders = $equipment->workOrders()
                 ->whereNotIn('status', ['completed', 'rejected'])
                 ->exists();
