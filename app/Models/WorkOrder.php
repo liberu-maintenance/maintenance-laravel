@@ -48,6 +48,13 @@ class WorkOrder extends Model
         'actual_hours' => 'integer',
     ];
 
+    /**
+     * The relationships that should be eagerly loaded.
+     *
+     * @var array
+     */
+    protected $with = [];
+
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
@@ -130,5 +137,37 @@ class WorkOrder extends Model
     {
         return $query->whereNotIn('status', ['completed', 'rejected'])
             ->whereBetween('due_date', [now(), now()->addDays($days)]);
+    }
+
+    /**
+     * Scope to get work orders with related data for listings
+     */
+    public function scopeWithRelatedData($query)
+    {
+        return $query->with([
+            'equipment:id,name,serial_number,status',
+            'customer:company_id,name',
+            'assignedTo:id,name',
+            'reviewer:id,name',
+            'team:id,name',
+        ]);
+    }
+
+    /**
+     * Scope for efficient counting by status
+     */
+    public function scopeCountByStatus($query)
+    {
+        return $query->selectRaw('status, COUNT(*) as count')
+            ->groupBy('status');
+    }
+
+    /**
+     * Scope for efficient counting by priority
+     */
+    public function scopeCountByPriority($query)
+    {
+        return $query->selectRaw('priority, COUNT(*) as count')
+            ->groupBy('priority');
     }
 }

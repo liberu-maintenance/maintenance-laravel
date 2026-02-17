@@ -136,6 +136,7 @@ class MaintenanceScheduleResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withRelatedData())
             ->columns([
                 TextColumn::make('name')
                     ->searchable()
