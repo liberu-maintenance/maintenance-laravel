@@ -29,15 +29,46 @@ class DocumentTag extends Model
 
         static::creating(function ($tag) {
             if (empty($tag->slug)) {
-                $tag->slug = Str::slug($tag->name);
+                $tag->slug = static::generateUniqueSlug($tag->name, $tag->team_id);
             }
         });
 
         static::updating(function ($tag) {
             if ($tag->isDirty('name')) {
-                $tag->slug = Str::slug($tag->name);
+                $tag->slug = static::generateUniqueSlug($tag->name, $tag->team_id, $tag->id);
             }
         });
+    }
+
+    /**
+     * Generate a unique slug for the tag within the team.
+     */
+    protected static function generateUniqueSlug(string $name, ?int $teamId, ?int $excludeId = null): string
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (static::slugExists($slug, $teamId, $excludeId)) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Check if a slug exists within the team.
+     */
+    protected static function slugExists(string $slug, ?int $teamId, ?int $excludeId = null): bool
+    {
+        $query = static::where('slug', $slug)->where('team_id', $teamId);
+
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+
+        return $query->exists();
     }
 
     /**

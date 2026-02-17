@@ -39,6 +39,21 @@ class DocumentResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    // Allowed file types for document upload
+    const ACCEPTED_FILE_TYPES = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'image/*',
+    ];
+
+    // Allowed documentable model classes
+    const ALLOWED_DOCUMENTABLE_TYPES = [
+        'App\\Models\\Equipment' => 'Equipment',
+        'App\\Models\\WorkOrder' => 'Work Order',
+        'App\\Models\\MaintenanceSchedule' => 'Maintenance Schedule',
+    ];
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -89,7 +104,7 @@ class DocumentResource extends Resource
                             ->required()
                             ->disk('local')
                             ->directory('documents')
-                            ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/*'])
+                            ->acceptedFileTypes(self::ACCEPTED_FILE_TYPES)
                             ->maxSize(10240) // 10MB
                             ->label('Upload Document')
                             ->helperText('Accepted formats: PDF, Word, Images (Max 10MB)'),
@@ -121,18 +136,18 @@ class DocumentResource extends Resource
                     ->schema([
                         Select::make('documentable_type')
                             ->label('Attach To')
-                            ->options([
-                                'App\\Models\\Equipment' => 'Equipment',
-                                'App\\Models\\WorkOrder' => 'Work Order',
-                                'App\\Models\\MaintenanceSchedule' => 'Maintenance Schedule',
-                            ])
+                            ->options(self::ALLOWED_DOCUMENTABLE_TYPES)
                             ->reactive()
                             ->searchable(),
                         Select::make('documentable_id')
                             ->label('Select Item')
                             ->options(function (callable $get) {
                                 $type = $get('documentable_type');
-                                if (!$type) {
+                                if (!$type || !array_key_exists($type, self::ALLOWED_DOCUMENTABLE_TYPES)) {
+                                    return [];
+                                }
+                                // Validate that the class exists and is a valid model
+                                if (!class_exists($type) || !is_subclass_of($type, \Illuminate\Database\Eloquent\Model::class)) {
                                     return [];
                                 }
                                 return $type::pluck('name', 'id')->toArray();

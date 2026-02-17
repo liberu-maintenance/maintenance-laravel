@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('document_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->string('name');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->string('color')->default('#3b82f6'); // Default blue color
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('cascade');
             $table->timestamps();
             
-            $table->index(['team_id', 'name']);
+            $table->unique(['team_id', 'name']);
+            $table->unique(['team_id', 'slug']);
         });
         
         // Pivot table for document-tag relationship
