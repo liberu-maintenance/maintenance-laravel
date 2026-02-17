@@ -36,6 +36,13 @@ class MaintenanceSchedule extends Model
         'estimated_duration' => 'integer',
     ];
 
+    /**
+     * The relationships that should be eagerly loaded.
+     *
+     * @var array
+     */
+    protected $with = [];
+
     public function equipment(): BelongsTo
     {
         return $this->belongsTo(Equipment::class);
@@ -114,6 +121,19 @@ class MaintenanceSchedule extends Model
             'next_due_date' => $this->calculateNextDueDate(),
         ]);
 
+        // Update equipment status if it was under maintenance
+        if ($this->equipment && $this->equipment->status === 'under_maintenance') {
+            // Check if there are any other active maintenance activities
+            $hasActiveWorkOrders = $this->equipment->workOrders()
+                ->whereIn('status', ['pending', 'approved', 'in_progress'])
+                ->exists();
+            
+            // If no active work orders, set equipment back to active
+            if (!$hasActiveWorkOrders) {
+                $this->equipment->update(['status' => 'active']);
+            }
+        }
+
         // Send notification to assigned user about completion
         if ($this->assignedUser) {
             $this->assignedUser->notify(new TaskAssignedNotification($this, 'maintenance_schedule'));
@@ -123,5 +143,39 @@ class MaintenanceSchedule extends Model
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'documentable');
+    /**
+     * Scope to get schedules with related data for listings
+     */
+    public function scopeWithRelatedData($query)
+    {
+        return $query->with([
+            'equipment:id,name,serial_number,status',
+            'assignedUser:id,name',
+            'checklist:id,name',
+            'team:id,name',
+        ]);
+    }
+
+    /**
+     * Scope to get schedules with work order count
+     */
+    public function scopeWithWorkOrderCount($query)
+    {
+        return $query->withCount([
+            'workOrders',
+            'workOrders as completed_work_orders_count' => function ($query) {
+                $query->where('status', 'completed');
+            }
+        ]);
+    }
+
+    /**
+     * Scope for upcoming maintenance (next 30 days)
+     */
+    public function scopeUpcoming($query, $days = 30)
+    {
+        return $query->where('status', 'active')
+            ->whereBetween('next_due_date', [now(), now()->addDays($days)])
+            ->orderBy('next_due_date');
     }
 }

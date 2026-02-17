@@ -80,6 +80,7 @@ Or use Laravel Sail for local development:
 ## What it provides
 
 - Equipment inventory and status
+- **Preventive Maintenance Scheduler with automated reminders** (NEW!)
 - Maintenance schedules and one-off maintenance
 - Work orders, tasks and assignment workflows
 - **Document management system** with version control, tagging, and compliance tracking
@@ -100,6 +101,16 @@ A comprehensive system for managing maintenance documentation:
 - Integration with Equipment, Work Orders, and Maintenance Schedules
 
 See [DOCUMENTATION_MANAGEMENT.md](docs/DOCUMENTATION_MANAGEMENT.md) for detailed documentation.
+### Preventive Maintenance Scheduler
+
+The system includes an automated scheduler for preventive maintenance:
+- **Daily automated checks** for overdue and upcoming maintenance
+- **Multi-stage reminders** (3 days, 1 day, same day before due)
+- **Priority-based notifications** with email and in-app alerts
+- **User-friendly Filament interface** for schedule management
+- **Recurring maintenance tracking** with automatic due date calculations
+
+See [Preventive Maintenance Scheduler Documentation](docs/PREVENTIVE_MAINTENANCE_SCHEDULER.md) for detailed usage instructions.
 
 ---
 
