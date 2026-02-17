@@ -12,8 +12,8 @@ class MaintenanceReminderNotification extends Notification implements ShouldQueu
 {
     use Queueable;
 
-    protected $maintenanceSchedule;
-    protected $daysUntilDue;
+    public $maintenanceSchedule;
+    public $daysUntilDue;
 
     public function __construct(MaintenanceSchedule $maintenanceSchedule, $daysUntilDue = 3)
     {
