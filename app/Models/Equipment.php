@@ -33,6 +33,13 @@ class Equipment extends Model
         'warranty_expiry' => 'date',
     ];
 
+    /**
+     * The relationships that should be eagerly loaded.
+     *
+     * @var array
+     */
+    protected $with = [];
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -111,5 +118,36 @@ class Equipment extends Model
         } elseif (!$this->hasActiveWorkOrders() && $this->status === 'under_maintenance') {
             $this->update(['status' => 'active']);
         }
+     * Scope to get equipment with work order counts
+     */
+    public function scopeWithWorkOrderCounts($query)
+    {
+        return $query->withCount([
+            'workOrders',
+            'workOrders as pending_work_orders_count' => function ($query) {
+                $query->where('status', 'pending');
+            },
+            'workOrders as active_work_orders_count' => function ($query) {
+                $query->whereIn('status', ['approved', 'in_progress']);
+            }
+        ]);
+    }
+
+    /**
+     * Scope to get equipment with maintenance schedule counts
+     */
+    public function scopeWithMaintenanceCounts($query)
+    {
+        return $query->withCount([
+            'maintenanceSchedules',
+            'maintenanceSchedules as overdue_schedules_count' => function ($query) {
+                $query->where('next_due_date', '<', now())
+                     ->where('status', 'active');
+            },
+            'maintenanceSchedules as due_soon_schedules_count' => function ($query) {
+                $query->whereBetween('next_due_date', [now(), now()->addDays(7)])
+                     ->where('status', 'active');
+            }
+        ]);
     }
 }
