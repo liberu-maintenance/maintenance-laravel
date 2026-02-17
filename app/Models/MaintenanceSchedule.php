@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class MaintenanceSchedule extends Model
 {
@@ -139,6 +140,9 @@ class MaintenanceSchedule extends Model
         }
     }
 
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
     /**
      * Scope to get schedules with related data for listings
      */

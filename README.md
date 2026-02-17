@@ -83,11 +83,24 @@ Or use Laravel Sail for local development:
 - **Preventive Maintenance Scheduler with automated reminders** (NEW!)
 - Maintenance schedules and one-off maintenance
 - Work orders, tasks and assignment workflows
+- **Document management system** with version control, tagging, and compliance tracking
 - Team and user management (Jetstream + Teams)
 - Notifications, reports and custom forms
 
 The codebase uses a modular architecture to make extensions and integrations straightforward.
 
+### Documentation Management
+
+A comprehensive system for managing maintenance documentation:
+- Centralized storage for manuals, service records, and compliance documents
+- Document versioning and history tracking
+- Tag-based organization and search capabilities
+- Compliance tracking with expiry dates and review schedules
+- Support for ISO 9001, OSHA, FDA, and other regulatory standards
+- File upload support (PDF, Word, Images)
+- Integration with Equipment, Work Orders, and Maintenance Schedules
+
+See [DOCUMENTATION_MANAGEMENT.md](docs/DOCUMENTATION_MANAGEMENT.md) for detailed documentation.
 ### Preventive Maintenance Scheduler
 
 The system includes an automated scheduler for preventive maintenance:

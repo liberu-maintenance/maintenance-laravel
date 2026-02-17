@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Equipment extends Model
 {
@@ -90,6 +91,9 @@ class Equipment extends Model
         return $query->where('criticality', 'high');
     }
 
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
     /**
      * Check if equipment has any active work orders
      */
