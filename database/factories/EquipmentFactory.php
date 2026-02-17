@@ -22,18 +22,18 @@ class EquipmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->words(3, true) . ' Equipment',
-            'description' => fake()->sentence(),
+            'name' => fake()->words(3, true),
+            'description' => fake()->optional()->paragraph(),
             'serial_number' => fake()->unique()->bothify('SN-####-????'),
-            'model' => fake()->bothify('Model-###?'),
+            'model' => fake()->word() . ' ' . fake()->numberBetween(100, 9999),
             'manufacturer' => fake()->company(),
-            'category' => fake()->randomElement(['HVAC', 'Electrical', 'Plumbing', 'Mechanical', 'IT Equipment', 'Safety Equipment', 'Vehicles', 'Other']),
-            'location' => fake()->randomElement(['Building A', 'Building B', 'Warehouse', 'Floor 1', 'Floor 2', 'Basement']),
-            'purchase_date' => fake()->dateTimeBetween('-5 years', '-1 year'),
-            'warranty_expiry' => fake()->dateTimeBetween('-1 year', '+2 years'),
+            'category' => fake()->randomElement(['HVAC', 'Electrical', 'Plumbing', 'Mechanical', 'IT', 'Other']),
+            'location' => fake()->optional()->address(),
+            'purchase_date' => fake()->optional()->dateTimeBetween('-10 years', '-1 year'),
+            'warranty_expiry' => fake()->optional()->dateTimeBetween('now', '+5 years'),
             'status' => fake()->randomElement(['active', 'inactive', 'under_maintenance', 'retired']),
             'criticality' => fake()->randomElement(['low', 'medium', 'high', 'critical']),
-            'notes' => fake()->optional()->sentence(),
+            'notes' => fake()->optional()->paragraph(),
         ];
     }
 
