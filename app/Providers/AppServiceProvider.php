@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Equipment;
 use App\Models\WorkOrder;
 use App\Modules\ModuleManager;
 use App\Modules\ModuleServiceProvider;
+use App\Observers\EquipmentObserver;
 use App\Observers\WorkOrderObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Register model observers
+        Equipment::observe(EquipmentObserver::class);
         WorkOrder::observe(WorkOrderObserver::class);
     }
 }
