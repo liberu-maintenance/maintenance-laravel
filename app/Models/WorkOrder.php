@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -30,6 +31,7 @@ class WorkOrder extends Model
         'notes',
         'team_id',
         'customer_id',
+        'vendor_id',
         'assigned_to',
         'due_date',
         'started_at',
@@ -81,6 +83,16 @@ class WorkOrder extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Company::class, 'customer_id');
+    }
+
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'vendor_id', 'company_id');
+    }
+
+    public function vendorPerformanceEvaluations(): HasMany
+    {
+        return $this->hasMany(VendorPerformanceEvaluation::class);
     }
 
     public function inventoryParts(): BelongsToMany
