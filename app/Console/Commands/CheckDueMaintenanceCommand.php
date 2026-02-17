@@ -31,7 +31,7 @@ class CheckDueMaintenanceCommand extends Command
     {
         $this->info('Checking for due maintenance schedules...');
 
-        $daysAhead = $this->option('days');
+        $daysAhead = (int) $this->option('days');
         
         // Check for overdue maintenance
         $overdueMaintenance = MaintenanceSchedule::overdue()->get();

@@ -72,7 +72,7 @@ class MaintenanceScheduleFactory extends Factory
     /**
      * Indicate that the maintenance schedule is due on a specific date.
      */
-    public function dueOn($date): static
+    public function dueOn(\Carbon\Carbon|\DateTime|string $date): static
     {
         return $this->state(fn (array $attributes) => [
             'status' => 'active',

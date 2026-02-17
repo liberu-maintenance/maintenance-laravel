@@ -28,7 +28,7 @@ class SendMaintenanceRemindersCommand extends Command
      */
     public function handle()
     {
-        $reminderDays = $this->option('days');
+        $reminderDays = (int) $this->option('days');
         $targetDate = now()->addDays($reminderDays);
         
         $this->info("Sending reminders for maintenance due on " . $targetDate->format('Y-m-d') . "...");

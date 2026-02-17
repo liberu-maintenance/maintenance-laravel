@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
 
         // Send reminders for maintenance due in 1 day
         $schedule->command('maintenance:send-reminders --days=1')
-            ->dailyAt('09:00')
+            ->dailyAt('09:15')
             ->timezone('UTC')
             ->name('Send 1-day maintenance reminders')
             ->withoutOverlapping();
