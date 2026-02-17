@@ -48,6 +48,7 @@ class CompanyResource extends Resource
                             ->options([
                                 'customer' => 'Customer',
                                 'supplier' => 'Supplier',
+                                'vendor' => 'Vendor',
                                 'both' => 'Both (Customer & Supplier)',
                             ])
                             ->default('customer')
@@ -115,6 +116,7 @@ class CompanyResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'customer' => 'success',
                         'supplier' => 'info',
+                        'vendor' => 'primary',
                         'both' => 'warning',
                         default => 'gray',
                     })
@@ -150,6 +152,7 @@ class CompanyResource extends Resource
                     ->options([
                         'customer' => 'Customer',
                         'supplier' => 'Supplier',
+                        'vendor' => 'Vendor',
                         'both' => 'Both',
                     ]),
                 SelectFilter::make('is_active')

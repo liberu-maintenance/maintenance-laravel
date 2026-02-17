@@ -55,6 +55,7 @@ class CompanyTest extends TestCase
         $this->assertEquals('supplier', $company->type);
         $this->assertTrue($company->isSupplier());
         $this->assertFalse($company->isCustomer());
+        $this->assertTrue($company->isVendor()); // Suppliers are also vendors
     }
 
     /** @test */
@@ -74,6 +75,7 @@ class CompanyTest extends TestCase
         $this->assertEquals('customer', $company->type);
         $this->assertTrue($company->isCustomer());
         $this->assertFalse($company->isSupplier());
+        $this->assertFalse($company->isVendor());
     }
 
     /** @test */
@@ -93,6 +95,7 @@ class CompanyTest extends TestCase
         $this->assertEquals('both', $company->type);
         $this->assertTrue($company->isSupplier());
         $this->assertTrue($company->isCustomer());
+        $this->assertTrue($company->isVendor());
     }
 
     /** @test */
