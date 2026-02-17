@@ -24,6 +24,15 @@ class MaintenanceScheduleFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => fake()->sentence(3),
+            'description' => fake()->paragraph(),
+            'frequency_type' => fake()->randomElement(['daily', 'weekly', 'monthly', 'yearly']),
+            'frequency_value' => fake()->numberBetween(1, 4),
+            'next_due_date' => fake()->dateTimeBetween('now', '+30 days'),
+            'last_completed_date' => fake()->optional()->dateTimeBetween('-30 days', 'now'),
+            'estimated_duration' => fake()->numberBetween(30, 480), // minutes
+            'priority' => fake()->randomElement(['low', 'medium', 'high', 'urgent']),
+            'status' => fake()->randomElement(['active', 'inactive']),
             'name' => fake()->words(3, true),
             'description' => fake()->optional()->paragraph(),
             'frequency_type' => fake()->randomElement(['daily', 'weekly', 'monthly', 'yearly', 'hours']),
@@ -67,6 +76,7 @@ class MaintenanceScheduleFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => 'active',
+            'next_due_date' => fake()->dateTimeBetween('-7 days', '-1 day'),
             'next_due_date' => now()->subDays(fake()->numberBetween(1, 30)),
         ]);
     }

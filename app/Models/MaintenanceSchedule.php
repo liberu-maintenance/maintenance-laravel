@@ -120,6 +120,19 @@ class MaintenanceSchedule extends Model
             'next_due_date' => $this->calculateNextDueDate(),
         ]);
 
+        // Update equipment status if it was under maintenance
+        if ($this->equipment && $this->equipment->status === 'under_maintenance') {
+            // Check if there are any other active maintenance activities
+            $hasActiveWorkOrders = $this->equipment->workOrders()
+                ->whereIn('status', ['pending', 'approved', 'in_progress'])
+                ->exists();
+            
+            // If no active work orders, set equipment back to active
+            if (!$hasActiveWorkOrders) {
+                $this->equipment->update(['status' => 'active']);
+            }
+        }
+
         // Send notification to assigned user about completion
         if ($this->assignedUser) {
             $this->assignedUser->notify(new TaskAssignedNotification($this, 'maintenance_schedule'));

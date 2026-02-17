@@ -91,6 +91,33 @@ class Equipment extends Model
     }
 
     /**
+     * Check if equipment has any active work orders
+     */
+    public function hasActiveWorkOrders(): bool
+    {
+        return $this->workOrders()
+            ->whereIn('status', ['pending', 'approved', 'in_progress'])
+            ->exists();
+    }
+
+    /**
+     * Check if equipment can be set to active status
+     */
+    public function canBeSetToActive(): bool
+    {
+        return !$this->hasActiveWorkOrders();
+    }
+
+    /**
+     * Automatically update equipment status based on work orders
+     */
+    public function syncStatusWithWorkOrders(): void
+    {
+        if ($this->hasActiveWorkOrders() && $this->status !== 'under_maintenance') {
+            $this->update(['status' => 'under_maintenance']);
+        } elseif (!$this->hasActiveWorkOrders() && $this->status === 'under_maintenance') {
+            $this->update(['status' => 'active']);
+        }
      * Scope to get equipment with work order counts
      */
     public function scopeWithWorkOrderCounts($query)
