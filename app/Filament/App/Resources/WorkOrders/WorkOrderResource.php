@@ -278,10 +278,10 @@ class WorkOrderResource extends Resource
                     ->label('Progress')
                     ->formatStateUsing(function ($record) {
                         $steps = [
-                            'pending' => '1/5 Pending',
-                            'approved' => '2/5 Approved',
-                            'in_progress' => '3/5 In Progress',
-                            'completed' => '5/5 Completed',
+                            'pending' => '1/4 Pending',
+                            'approved' => '2/4 Approved',
+                            'in_progress' => '3/4 In Progress',
+                            'completed' => '4/4 Completed',
                             'rejected' => 'Rejected',
                         ];
                         return $steps[$record->status] ?? 'Unknown';

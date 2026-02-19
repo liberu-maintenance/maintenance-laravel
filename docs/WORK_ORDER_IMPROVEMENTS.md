@@ -97,9 +97,9 @@ Streamlined workflow actions on the Edit page:
 
 Visual progress indicators throughout the UI:
 
-- **Progress column**: Shows workflow stage (1/5 to 5/5)
+- **Progress column**: Shows workflow stage (1/4 to 4/4)
 - **Status tabs**: Filter by All, Pending, Approved, In Progress, Completed, Overdue
-- **Badge counts**: Real-time counts on tabs and navigation
+- **Badge counts**: Real-time counts on tabs and navigation (cached for 5 minutes)
 - **Color coding**: Visual cues for status and urgency
 
 ## Model Enhancements
@@ -164,7 +164,7 @@ The work order form now includes:
 
 New columns in the work orders list:
 
-- **Progress**: Visual indicator showing workflow stage (1/5 to 5/5)
+- **Progress**: Visual indicator showing workflow stage (1/4 to 4/4)
 - **Assigned To**: Shows assigned technician
 - **Due Date**: Highlights overdue items in red
 - **Started At**: Shows when work began (hidden by default)

@@ -13,6 +13,7 @@ class WorkOrderObserver
     protected function clearCache(): void
     {
         Cache::forget('work_orders.badge_counts');
+        Cache::forget('work_orders.tab_counts');
     }
 
     /**
