@@ -86,6 +86,8 @@ Or use Laravel Sail for local development:
 - **Document management system** with version control, tagging, and compliance tracking
 - Team and user management (Jetstream + Teams)
 - Notifications, reports and custom forms
+- Vendor management with contracts and performance tracking
+- Supplier and customer relationship management
 
 The codebase uses a modular architecture to make extensions and integrations straightforward.
 

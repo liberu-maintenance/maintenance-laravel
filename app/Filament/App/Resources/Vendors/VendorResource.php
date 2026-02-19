@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Filament\App\Resources\Companies;
+namespace App\Filament\App\Resources\Vendors;
 
 use Filament\Schemas\Schema;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use App\Filament\App\Resources\Companies\Pages\ListCompanies;
-use App\Filament\App\Resources\Companies\Pages\CreateCompany;
-use App\Filament\App\Resources\Companies\Pages\EditCompany;
+use App\Filament\App\Resources\Vendors\Pages\ListVendors;
+use App\Filament\App\Resources\Vendors\Pages\CreateVendor;
+use App\Filament\App\Resources\Vendors\Pages\EditVendor;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Company;
@@ -22,15 +23,28 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\App\Resources\CompanyResource\Pages;
-use App\Filament\App\Resources\CompanyResource\RelationManagers;
 
-class CompanyResource extends Resource
+class VendorResource extends Resource
 {
     protected static ?string $model = Company::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
+
+    protected static string | \UnitEnum | null $navigationGroup = 'Vendor Management';
+
+    protected static ?string $navigationLabel = 'Vendors';
+
+    protected static ?string $modelLabel = 'Vendor';
+
+    protected static ?string $pluralModelLabel = 'Vendors';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->whereIn('type', ['vendor', 'supplier', 'both']);
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -40,18 +54,17 @@ class CompanyResource extends Resource
                 Section::make('Basic Information')
                     ->schema([
                         TextInput::make('name')
-                            ->label('Name')
+                            ->label('Vendor Name')
                             ->required()
                             ->maxLength(255),
                         Select::make('type')
                             ->label('Type')
                             ->options([
-                                'customer' => 'Customer',
-                                'supplier' => 'Supplier',
                                 'vendor' => 'Vendor',
-                                'both' => 'Both (Customer & Supplier)',
+                                'supplier' => 'Supplier',
+                                'both' => 'Both (Customer & Vendor)',
                             ])
-                            ->default('customer')
+                            ->default('vendor')
                             ->required(),
                         TextInput::make('contact_person')
                             ->label('Contact Person')
@@ -92,7 +105,7 @@ class CompanyResource extends Resource
                             ->url()
                             ->maxLength(255),
                         TextInput::make('industry')
-                            ->label('Industry')
+                            ->label('Industry/Specialization')
                             ->maxLength(255),
                         Textarea::make('description')
                             ->label('Description')
@@ -109,14 +122,14 @@ class CompanyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Vendor Name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'customer' => 'success',
-                        'supplier' => 'info',
                         'vendor' => 'primary',
+                        'supplier' => 'info',
                         'both' => 'warning',
                         default => 'gray',
                     })
@@ -124,17 +137,11 @@ class CompanyResource extends Resource
                     ->sortable(),
                 TextColumn::make('contact_person')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('email')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
                 TextColumn::make('phone_number')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('city')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('state')
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -142,17 +149,34 @@ class CompanyResource extends Resource
                     ->boolean()
                     ->label('Active')
                     ->sortable(),
-                TextColumn::make('industry')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('vendorContracts')
+                    ->label('Active Contracts')
+                    ->counts([
+                        'vendorContracts' => fn (Builder $query) => $query->where('status', 'active'),
+                    ])
+                    ->sortable(),
+                TextColumn::make('vendorPerformanceEvaluations')
+                    ->label('Avg Rating')
+                    ->getStateUsing(fn (Company $record): string => 
+                        number_format($record->getAveragePerformanceRating(), 2)
+                    )
+                    ->sortable(query: function (Builder $query, string $direction): Builder {
+                        return $query->withAvg('vendorPerformanceEvaluations', 'overall_rating')
+                            ->orderBy('vendor_performance_evaluations_avg_overall_rating', $direction);
+                    })
+                    ->badge()
+                    ->color(fn (string $state): string => match (true) {
+                        (float) $state >= 4.0 => 'success',
+                        (float) $state >= 3.0 => 'warning',
+                        (float) $state > 0 => 'danger',
+                        default => 'gray',
+                    }),
             ])
             ->filters([
                 SelectFilter::make('type')
                     ->options([
-                        'customer' => 'Customer',
-                        'supplier' => 'Supplier',
                         'vendor' => 'Vendor',
+                        'supplier' => 'Supplier',
                         'both' => 'Both',
                     ]),
                 SelectFilter::make('is_active')
@@ -163,13 +187,15 @@ class CompanyResource extends Resource
                     ->label('Status'),
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('name');
     }
 
     public static function getRelations(): array
@@ -182,9 +208,9 @@ class CompanyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListCompanies::route('/'),
-            'create' => CreateCompany::route('/create'),
-            'edit' => EditCompany::route('/{record}/edit'),
+            'index' => ListVendors::route('/'),
+            'create' => CreateVendor::route('/create'),
+            'edit' => EditVendor::route('/{record}/edit'),
         ];
     }
 }
