@@ -60,13 +60,7 @@ class WorkOrderObserver
         if ($workOrder->wasChanged(['status', 'due_date'])) {
             $this->clearCache();
         }
-    }
-
-    /**
-     * Handle the WorkOrder "updated" event.
-     */
-    public function updated(WorkOrder $workOrder): void
-    {
+        
         // When a work order is completed or rejected, check if equipment should be set back to active
         if ($workOrder->wasChanged('status') && 
             in_array($workOrder->status, ['completed', 'rejected']) &&
