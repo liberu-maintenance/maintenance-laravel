@@ -27,11 +27,19 @@ class Equipment extends Model
         'notes',
         'company_id',
         'team_id',
+        'sensor_enabled',
+        'sensor_type',
+        'sensor_id',
+        'sensor_config',
+        'last_sensor_reading_at',
     ];
 
     protected $casts = [
         'purchase_date' => 'date',
         'warranty_expiry' => 'date',
+        'sensor_enabled' => 'boolean',
+        'sensor_config' => 'array',
+        'last_sensor_reading_at' => 'datetime',
     ];
 
     /**
@@ -66,6 +74,34 @@ class Equipment extends Model
         return $this->belongsTo(Team::class);
     }
 
+    /**
+     * Get all sensor readings for this equipment.
+     */
+    public function sensorReadings(): HasMany
+    {
+        return $this->hasMany(IotSensorReading::class);
+    }
+
+    /**
+     * Get sensor readings from the last 24 hours for this equipment.
+     */
+    public function recentSensorReadings(): HasMany
+    {
+        return $this->hasMany(IotSensorReading::class)
+            ->where('reading_time', '>=', now()->subHours(24))
+            ->orderBy('reading_time', 'desc');
+    }
+
+    /**
+     * Get critical status sensor readings for this equipment.
+     */
+    public function criticalSensorReadings(): HasMany
+    {
+        return $this->hasMany(IotSensorReading::class)
+            ->where('status', 'critical')
+            ->orderBy('reading_time', 'desc');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
@@ -91,6 +127,47 @@ class Equipment extends Model
         return $query->where('criticality', 'high');
     }
 
+    public function scopeSensorEnabled($query)
+    {
+        return $query->where('sensor_enabled', true);
+    }
+
+    public function scopeWithCriticalReadings($query)
+    {
+        return $query->whereHas('sensorReadings', function ($q) {
+            $q->where('status', 'critical')
+              ->where('reading_time', '>=', now()->subHours(24));
+        });
+    }
+
+    /**
+     * Get the health status based on recent sensor readings
+     */
+    public function getHealthStatus(): string
+    {
+        if (!$this->sensor_enabled) {
+            return 'unknown';
+        }
+
+        $criticalCount = $this->sensorReadings()
+            ->where('status', 'critical')
+            ->where('reading_time', '>=', now()->subHours(24))
+            ->count();
+
+        $warningCount = $this->sensorReadings()
+            ->where('status', 'warning')
+            ->where('reading_time', '>=', now()->subHours(24))
+            ->count();
+
+        if ($criticalCount > 0) {
+            return 'critical';
+        }
+
+        if ($warningCount > 0) {
+            return 'warning';
+        }
+
+        return 'healthy';
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'documentable');

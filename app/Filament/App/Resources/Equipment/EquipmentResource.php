@@ -101,6 +101,41 @@ class EquipmentResource extends Resource
                             ->preload(),
                     ])->columns(3),
 
+                Section::make('IoT Sensor Configuration')
+                    ->schema([
+                        Forms\Components\Toggle::make('sensor_enabled')
+                            ->label('Enable IoT Sensor')
+                            ->reactive()
+                            ->helperText('Enable real-time monitoring for this equipment'),
+                        
+                        Select::make('sensor_type')
+                            ->label('Sensor Type')
+                            ->options([
+                                'temperature' => 'Temperature',
+                                'vibration' => 'Vibration',
+                                'pressure' => 'Pressure',
+                                'humidity' => 'Humidity',
+                                'power' => 'Power Consumption',
+                                'flow' => 'Flow Rate',
+                                'multi-sensor' => 'Multi-Sensor',
+                            ])
+                            ->searchable()
+                            ->visible(fn ($get) => $get('sensor_enabled')),
+                        
+                        TextInput::make('sensor_id')
+                            ->label('Sensor ID')
+                            ->unique(ignoreRecord: true)
+                            ->helperText('Unique identifier for the IoT sensor')
+                            ->visible(fn ($get) => $get('sensor_enabled')),
+                        
+                        Forms\Components\KeyValue::make('sensor_config')
+                            ->label('Sensor Configuration')
+                            ->helperText('Configure thresholds and sensor parameters (JSON format)')
+                            ->visible(fn ($get) => $get('sensor_enabled'))
+                            ->columnSpanFull(),
+                    ])->columns(3)
+                    ->collapsible(),
+
                 Section::make('Additional Notes')
                     ->schema([
                         Textarea::make('notes')
@@ -158,6 +193,27 @@ class EquipmentResource extends Resource
                 TextColumn::make('company.name')
                     ->searchable()
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                
+                BadgeColumn::make('sensor_enabled')
+                    ->label('IoT Sensor')
+                    ->formatStateUsing(fn ($state) => $state ? 'Enabled' : 'Disabled')
+                    ->colors([
+                        'success' => fn ($state) => $state === true,
+                        'secondary' => fn ($state) => $state === false,
+                    ])
+                    ->icon(fn ($state) => $state ? 'heroicon-o-signal' : null)
+                    ->toggleable(),
+                
+                TextColumn::make('sensor_type')
+                    ->label('Sensor Type')
+                    ->badge()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                
+                TextColumn::make('last_sensor_reading_at')
+                    ->label('Last Sensor Reading')
+                    ->dateTime()
+                    ->since()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
