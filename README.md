@@ -84,6 +84,8 @@ Or use Laravel Sail for local development:
 - Work orders, tasks and assignment workflows
 - Team and user management (Jetstream + Teams)
 - Notifications, reports and custom forms
+- Vendor management with contracts and performance tracking
+- Supplier and customer relationship management
 
 The codebase uses a modular architecture to make extensions and integrations straightforward.
 
