@@ -273,7 +273,7 @@
         <div 
             x-data="{ show: true }"
             x-show="show"
-            x-init="setTimeout(() => show = false, 5000)"
+            x-init="setTimeout(() => show = false, 8000)"
             class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-4 rounded-lg shadow-2xl z-50 flex items-center space-x-3 max-w-md animate-slide-in"
             role="alert"
             aria-live="assertive">
@@ -290,7 +290,7 @@
     @endif
 
     <!-- Loading Indicator -->
-    <div wire:loading class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50" role="status" aria-live="polite">
+    <div wire:loading class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50" role="status" aria-live="assertive">
         <div class="bg-white rounded-lg p-6 shadow-xl flex items-center space-x-4">
             <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

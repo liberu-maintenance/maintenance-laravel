@@ -170,7 +170,7 @@
                 </div>
                 @if($pendingWorkOrders->count() > 0)
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
-                        {{ $pendingWorkOrders->count() }} {{ Str::plural('pending', $pendingWorkOrders->count()) }}
+                        {{ $pendingWorkOrders->count() }} pending
                     </span>
                 @endif
             </div>
@@ -193,7 +193,7 @@
                             <div class="text-sm text-gray-600 mt-1 truncate">{{ Str::limit($workOrder->description, 60) }}</div>
                             <div class="flex items-center mt-1 space-x-3">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                    @if($workOrder->priority === 'urgent') bg-red-100 text-red-800
+                                    @if($workOrder->priority === 'critical') bg-red-100 text-red-800
                                     @elseif($workOrder->priority === 'high') bg-orange-100 text-orange-800
                                     @elseif($workOrder->priority === 'medium') bg-yellow-100 text-yellow-800
                                     @else bg-blue-100 text-blue-800
@@ -235,7 +235,7 @@
     </div>
 
     <!-- Loading Indicator -->
-    <div wire:loading class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50" role="status" aria-live="polite">
+    <div wire:loading class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50" role="status" aria-live="assertive">
         <div class="bg-white rounded-lg p-6 shadow-xl flex items-center space-x-4">
             <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
