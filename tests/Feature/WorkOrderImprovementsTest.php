@@ -212,4 +212,71 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertInstanceOf(Company::class, $workOrder->customer);
         $this->assertEquals('Test Customer', $workOrder->customer->name);
     }
+
+    /** @test */
+    public function work_order_can_have_comments(): void
+    {
+        $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
+        $user = User::factory()->create();
+
+        $comment = $workOrder->comments()->create([
+            'user_id' => $user->id,
+            'comment' => 'This is a test comment',
+            'is_internal' => false,
+        ]);
+
+        $this->assertNotNull($comment->id);
+        $this->assertEquals('This is a test comment', $comment->comment);
+        $this->assertFalse($comment->is_internal);
+        $this->assertEquals(1, $workOrder->comments()->count());
+    }
+
+    /** @test */
+    public function work_order_comments_can_be_internal_or_public(): void
+    {
+        $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
+        $user = User::factory()->create();
+
+        $publicComment = $workOrder->comments()->create([
+            'user_id' => $user->id,
+            'comment' => 'Public comment',
+            'is_internal' => false,
+        ]);
+
+        $internalComment = $workOrder->comments()->create([
+            'user_id' => $user->id,
+            'comment' => 'Internal note',
+            'is_internal' => true,
+        ]);
+
+        $this->assertFalse($publicComment->is_internal);
+        $this->assertTrue($internalComment->is_internal);
+        $this->assertEquals(2, $workOrder->comments()->count());
+    }
+
+    /** @test */
+    public function work_order_comments_are_ordered_by_creation_date(): void
+    {
+        $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
+        $user = User::factory()->create();
+
+        $firstComment = $workOrder->comments()->create([
+            'user_id' => $user->id,
+            'comment' => 'First comment',
+            'is_internal' => false,
+            'created_at' => now()->subHours(2),
+        ]);
+
+        $secondComment = $workOrder->comments()->create([
+            'user_id' => $user->id,
+            'comment' => 'Second comment',
+            'is_internal' => false,
+            'created_at' => now()->subHours(1),
+        ]);
+
+        $comments = $workOrder->comments;
+
+        $this->assertEquals('Second comment', $comments->first()->comment);
+        $this->assertEquals('First comment', $comments->last()->comment);
+    }
 }
