@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\DB;
 class IotSensorService
 {
     /**
+     * Minimum number of readings required for predictive analysis
+     */
+    protected const MIN_READINGS_FOR_PREDICTION = 10;
+
+    /**
+     * Threshold for determining significant trend (slope value)
+     */
+    protected const SIGNIFICANT_SLOPE_THRESHOLD = 0.1;
+
+    /**
      * Process and store a new sensor reading
      */
     public function storeReading(Equipment $equipment, array $data): IotSensorReading
@@ -134,7 +144,7 @@ class IotSensorService
             ->orderBy('reading_time', 'asc')
             ->get();
 
-        if ($readings->count() < 10) {
+        if ($readings->count() < self::MIN_READINGS_FOR_PREDICTION) {
             return [
                 'trend' => 'insufficient_data',
                 'prediction' => null,
@@ -186,7 +196,7 @@ class IotSensorService
         $slope = ($count * $sumXY - $sumX * $sumY) / ($count * $sumX2 - $sumX * $sumX);
 
         $direction = 'stable';
-        if (abs($slope) > 0.1) {
+        if (abs($slope) > self::SIGNIFICANT_SLOPE_THRESHOLD) {
             $direction = $slope > 0 ? 'increasing' : 'decreasing';
         }
 
@@ -203,7 +213,7 @@ class IotSensorService
     public function getRealTimeDashboardData(): array
     {
         $sensorEnabledEquipment = Equipment::sensorEnabled()
-            ->with(['latestSensorReadings' => function ($query) {
+            ->with(['recentSensorReadings' => function ($query) {
                 $query->limit(1);
             }])
             ->get();

@@ -66,18 +66,27 @@ class Equipment extends Model
         return $this->belongsTo(Team::class);
     }
 
+    /**
+     * Get all sensor readings for this equipment.
+     */
     public function sensorReadings(): HasMany
     {
         return $this->hasMany(IotSensorReading::class);
     }
 
-    public function latestSensorReadings(): HasMany
+    /**
+     * Get sensor readings from the last 24 hours for this equipment.
+     */
+    public function recentSensorReadings(): HasMany
     {
         return $this->hasMany(IotSensorReading::class)
             ->where('reading_time', '>=', now()->subHours(24))
             ->orderBy('reading_time', 'desc');
     }
 
+    /**
+     * Get critical status sensor readings for this equipment.
+     */
     public function criticalSensorReadings(): HasMany
     {
         return $this->hasMany(IotSensorReading::class)

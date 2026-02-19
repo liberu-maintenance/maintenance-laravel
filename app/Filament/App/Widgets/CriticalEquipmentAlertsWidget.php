@@ -23,7 +23,7 @@ class CriticalEquipmentAlertsWidget extends BaseWidget
                 Equipment::query()
                     ->sensorEnabled()
                     ->withCriticalReadings()
-                    ->with(['latestSensorReadings', 'company'])
+                    ->with(['recentSensorReadings', 'company'])
             )
             ->columns([
                 TextColumn::make('name')
@@ -50,17 +50,17 @@ class CriticalEquipmentAlertsWidget extends BaseWidget
                         'secondary' => 'inactive',
                     ]),
 
-                TextColumn::make('latestSensorReadings.metric_name')
+                TextColumn::make('recentSensorReadings.metric_name')
                     ->label('Critical Metric')
                     ->limit(20),
 
-                TextColumn::make('latestSensorReadings.value')
+                TextColumn::make('recentSensorReadings.value')
                     ->label('Value')
                     ->formatStateUsing(fn ($state, $record) => 
-                        $state . ' ' . ($record->latestSensorReadings->first()?->unit ?? '')
+                        $state . ' ' . ($record->recentSensorReadings->first()?->unit ?? '')
                     ),
 
-                BadgeColumn::make('latestSensorReadings.status')
+                BadgeColumn::make('recentSensorReadings.status')
                     ->label('Alert Status')
                     ->colors([
                         'danger' => 'critical',
