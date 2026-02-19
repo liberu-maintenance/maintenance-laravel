@@ -210,13 +210,13 @@ class MaintenanceReportServiceTest extends TestCase
         $this->assertCount(2, $metrics);
         
         // Metrics should be sorted by total cost descending
-        // Equipment2 should be first with cost: 10 * 50 = 500
-        $this->assertEquals('Test Equipment 2', $metrics[0]['equipment_name']);
-        $this->assertEquals(500.0, $metrics[0]['total_cost']);
+        // Equipment1 should be first with cost: 3 * 5 * 50 = 750
+        $this->assertEquals('Test Equipment 1', $metrics[0]['equipment_name']);
+        $this->assertEquals(750.0, $metrics[0]['total_cost']);
         
-        // Equipment1 should be second with cost: 3 * 5 * 50 = 750
-        $this->assertEquals('Test Equipment 1', $metrics[1]['equipment_name']);
-        $this->assertEquals(750.0, $metrics[1]['total_cost']);
+        // Equipment2 should be second with cost: 10 * 50 = 500
+        $this->assertEquals('Test Equipment 2', $metrics[1]['equipment_name']);
+        $this->assertEquals(500.0, $metrics[1]['total_cost']);
     }
 
     public function test_get_technician_performance_metrics(): void
