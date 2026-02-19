@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WorkOrder extends Model
 {
@@ -155,6 +156,13 @@ class WorkOrder extends Model
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'documentable');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(WorkOrderComment::class)->orderBy('created_at', 'desc');
+    }
+
     /**
      * Scope to get work orders with related data for listings
      */

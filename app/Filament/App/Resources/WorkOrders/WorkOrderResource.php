@@ -84,7 +84,18 @@ class WorkOrderResource extends Resource
                                         'completed' => 'Completed',
                                     ])
                                     ->required()
-                                    ->default('pending'),
+                                    ->default('pending')
+                                    ->helperText('Use status action buttons for proper workflow transitions.')
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $get, $set) {
+                                        // Auto-set timestamps based on status
+                                        if ($state === 'in_progress' && !$get('started_at')) {
+                                            $set('started_at', now());
+                                        }
+                                        if ($state === 'completed' && !$get('completed_at')) {
+                                            $set('completed_at', now());
+                                        }
+                                    }),
                             ]),
                     ]),
 
@@ -263,6 +274,29 @@ class WorkOrderResource extends Resource
                     })
                     ->sortable(),
 
+                TextColumn::make('progress')
+                    ->label('Progress')
+                    ->formatStateUsing(function ($record) {
+                        $steps = [
+                            'pending' => '1/4 Pending',
+                            'approved' => '2/4 Approved',
+                            'in_progress' => '3/4 In Progress',
+                            'completed' => '4/4 Completed',
+                            'rejected' => 'Rejected',
+                        ];
+                        return $steps[$record->status] ?? 'Unknown';
+                    })
+                    ->badge()
+                    ->color(fn ($record) => match ($record->status) {
+                        'pending' => 'gray',
+                        'approved' => 'info',
+                        'in_progress' => 'warning',
+                        'completed' => 'success',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    })
+                    ->toggleable(),
+
                 TextColumn::make('priority')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -435,7 +469,7 @@ class WorkOrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CommentsRelationManager::class,
         ];
     }
 
