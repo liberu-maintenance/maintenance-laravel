@@ -147,6 +147,7 @@ class EquipmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['company:company_id,name', 'team:id,name']))
             ->columns([
                 TextColumn::make('name')
                     ->searchable()

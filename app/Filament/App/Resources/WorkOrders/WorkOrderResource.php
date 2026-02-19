@@ -84,7 +84,18 @@ class WorkOrderResource extends Resource
                                         'completed' => 'Completed',
                                     ])
                                     ->required()
-                                    ->default('pending'),
+                                    ->default('pending')
+                                    ->helperText('Use status action buttons for proper workflow transitions.')
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, $get, $set) {
+                                        // Auto-set timestamps based on status
+                                        if ($state === 'in_progress' && !$get('started_at')) {
+                                            $set('started_at', now());
+                                        }
+                                        if ($state === 'completed' && !$get('completed_at')) {
+                                            $set('completed_at', now());
+                                        }
+                                    }),
                             ]),
                     ]),
 
@@ -244,6 +255,7 @@ class WorkOrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withRelatedData())
             ->columns([
                 TextColumn::make('title')
                     ->searchable()
@@ -261,6 +273,29 @@ class WorkOrderResource extends Resource
                         default => 'gray',
                     })
                     ->sortable(),
+
+                TextColumn::make('progress')
+                    ->label('Progress')
+                    ->formatStateUsing(function ($record) {
+                        $steps = [
+                            'pending' => '1/4 Pending',
+                            'approved' => '2/4 Approved',
+                            'in_progress' => '3/4 In Progress',
+                            'completed' => '4/4 Completed',
+                            'rejected' => 'Rejected',
+                        ];
+                        return $steps[$record->status] ?? 'Unknown';
+                    })
+                    ->badge()
+                    ->color(fn ($record) => match ($record->status) {
+                        'pending' => 'gray',
+                        'approved' => 'info',
+                        'in_progress' => 'warning',
+                        'completed' => 'success',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    })
+                    ->toggleable(),
 
                 TextColumn::make('priority')
                     ->badge()
@@ -434,7 +469,7 @@ class WorkOrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CommentsRelationManager::class,
         ];
     }
 
@@ -449,24 +484,37 @@ class WorkOrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $pendingCount = static::getModel()::where('status', 'pending')->count();
-        $overdueCount = static::getModel()::overdue()->count();
+        $cacheKey = 'work_orders.badge_counts';
         
-        if ($overdueCount > 0) {
-            return "{$overdueCount} overdue";
+        $counts = cache()->remember($cacheKey, now()->addMinutes(5), function () {
+            return [
+                'pending' => static::getModel()::where('status', 'pending')->count(),
+                'overdue' => static::getModel()::overdue()->count(),
+            ];
+        });
+        
+        if ($counts['overdue'] > 0) {
+            return "{$counts['overdue']} overdue";
         }
         
-        return $pendingCount > 0 ? (string) $pendingCount : null;
+        return $counts['pending'] > 0 ? (string) $counts['pending'] : null;
     }
 
     public static function getNavigationBadgeColor(): string|array|null
     {
-        $overdueCount = static::getModel()::overdue()->count();
+        $cacheKey = 'work_orders.badge_counts';
         
-        if ($overdueCount > 0) {
+        $counts = cache()->remember($cacheKey, now()->addMinutes(5), function () {
+            return [
+                'pending' => static::getModel()::where('status', 'pending')->count(),
+                'overdue' => static::getModel()::overdue()->count(),
+            ];
+        });
+        
+        if ($counts['overdue'] > 0) {
             return 'danger';
         }
         
-        return static::getModel()::where('status', 'pending')->count() > 0 ? 'warning' : 'success';
+        return $counts['pending'] > 0 ? 'warning' : 'success';
     }
 }

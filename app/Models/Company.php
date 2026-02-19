@@ -70,6 +70,21 @@ class Company extends Model
         return $this->hasMany(WorkOrder::class, 'customer_id');
     }
 
+    public function vendorContracts(): HasMany
+    {
+        return $this->hasMany(VendorContract::class, 'vendor_id', 'company_id');
+    }
+
+    public function vendorPerformanceEvaluations(): HasMany
+    {
+        return $this->hasMany(VendorPerformanceEvaluation::class, 'vendor_id', 'company_id');
+    }
+
+    public function vendorWorkOrders(): HasMany
+    {
+        return $this->hasMany(WorkOrder::class, 'vendor_id', 'company_id');
+    }
+
     public function scopeSuppliers($query)
     {
         return $query->whereIn('type', ['supplier', 'both']);
@@ -80,6 +95,11 @@ class Company extends Model
         return $query->whereIn('type', ['customer', 'both']);
     }
 
+    public function scopeVendors($query)
+    {
+        return $query->whereIn('type', ['vendor', 'supplier', 'both']);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -87,11 +107,29 @@ class Company extends Model
 
     public function isSupplier(): bool
     {
-        return in_array($this->type, ['supplier', 'both']);
+        return in_array($this->type, ['supplier', 'both', 'vendor']);
     }
 
     public function isCustomer(): bool
     {
         return in_array($this->type, ['customer', 'both']);
+    }
+
+    public function isVendor(): bool
+    {
+        return in_array($this->type, ['vendor', 'supplier', 'both']);
+    }
+
+    public function getAveragePerformanceRating(): float
+    {
+        return $this->vendorPerformanceEvaluations()
+            ->avg('overall_rating') ?? 0.0;
+    }
+
+    public function getActiveContractsCount(): int
+    {
+        return $this->vendorContracts()
+            ->where('status', 'active')
+            ->count();
     }
 }
