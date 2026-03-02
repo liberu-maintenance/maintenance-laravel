@@ -143,6 +143,8 @@ class MaintenanceSchedule extends Model
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'documentable');
+    }
+
     /**
      * Scope to get schedules with related data for listings
      */
