@@ -23,26 +23,9 @@ class MaintenanceScheduleFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => fake()->sentence(3),
-            'description' => fake()->paragraph(),
-            'frequency_type' => fake()->randomElement(['daily', 'weekly', 'monthly', 'yearly']),
-            'frequency_value' => fake()->numberBetween(1, 4),
-            'next_due_date' => fake()->dateTimeBetween('now', '+30 days'),
-            'last_completed_date' => fake()->optional()->dateTimeBetween('-30 days', 'now'),
-            'estimated_duration' => fake()->numberBetween(30, 480), // minutes
-            'priority' => fake()->randomElement(['low', 'medium', 'high', 'urgent']),
-            'status' => fake()->randomElement(['active', 'inactive']),
-            'name' => fake()->words(3, true),
-            'description' => fake()->optional()->paragraph(),
-            'frequency_type' => fake()->randomElement(['daily', 'weekly', 'monthly', 'yearly', 'hours']),
-            'frequency_value' => fake()->numberBetween(1, 12),
-            'next_due_date' => fake()->dateTimeBetween('now', '+30 days'),
-            'last_completed_date' => fake()->optional()->dateTimeBetween('-60 days', '-1 day'),
-            'estimated_duration' => fake()->optional()->numberBetween(15, 480),
         $frequencyType = fake()->randomElement(['daily', 'weekly', 'monthly', 'yearly', 'hours']);
         $nextDueDate = fake()->dateTimeBetween('-1 month', '+2 months');
-        
+
         return [
             'name' => fake()->words(3, true) . ' Maintenance',
             'description' => fake()->sentence(),
@@ -76,7 +59,6 @@ class MaintenanceScheduleFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => 'active',
-            'next_due_date' => fake()->dateTimeBetween('-7 days', '-1 day'),
             'next_due_date' => now()->subDays(fake()->numberBetween(1, 30)),
         ]);
     }
@@ -105,23 +87,6 @@ class MaintenanceScheduleFactory extends Factory
 
     /**
      * Indicate that the maintenance schedule has high priority.
-            'next_due_date' => fake()->dateTimeBetween('-2 weeks', '-1 day'),
-        ]);
-    }
-
-    /**
-     * Indicate that the schedule is due soon.
-     */
-    public function dueSoon(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'status' => 'active',
-            'next_due_date' => fake()->dateTimeBetween('now', '+7 days'),
-        ]);
-    }
-
-    /**
-     * Indicate that the schedule is high priority.
      */
     public function highPriority(): static
     {

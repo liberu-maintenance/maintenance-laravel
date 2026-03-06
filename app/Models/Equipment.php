@@ -168,9 +168,13 @@ class Equipment extends Model
         }
 
         return 'healthy';
+    }
+
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'documentable');
+    }
+
     /**
      * Check if equipment has any active work orders
      */
@@ -199,6 +203,9 @@ class Equipment extends Model
         } elseif (!$this->hasActiveWorkOrders() && $this->status === 'under_maintenance') {
             $this->update(['status' => 'active']);
         }
+    }
+
+    /**
      * Scope to get equipment with work order counts
      */
     public function scopeWithWorkOrderCounts($query)
