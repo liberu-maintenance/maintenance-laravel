@@ -1,5 +1,5 @@
-# Accepted values: 8.3 - 8.2
-ARG PHP_VERSION=8.3
+# Accepted values: 8.4 - 8.3
+ARG PHP_VERSION=8.4
 
 ARG COMPOSER_VERSION=latest
 
@@ -131,6 +131,8 @@ RUN composer install \
     --no-interaction \
     --no-ansi \
     --no-dev \
+    && composer require laravel/octane:^2.0 --no-interaction --no-ansi --update-with-dependencies \
+    && php artisan octane:install --server=swoole --no-interaction \
     && composer clear-cache
 
 COPY .env.example ./.env

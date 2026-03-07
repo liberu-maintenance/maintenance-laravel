@@ -1,0 +1,90 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WWWUSER: "${WWWUSER:-1000}"
+        WWWGROUP: "${WWWGROUP:-1000}"
+    image: maintenance-laravel:local
+    container_name: maintenance_app
+    restart: unless-stopped
+    environment:
+      CONTAINER_MODE: http
+      OCTANE_SERVER: swoole
+      APP_ENV: "${APP_ENV:-production}"
+      APP_KEY: "${APP_KEY}"
+      APP_URL: "${APP_URL:-http://localhost}"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: "${DB_DATABASE:-liberu}"
+      DB_USERNAME: "${DB_USERNAME:-liberu}"
+      DB_PASSWORD: "${DB_PASSWORD:-secret}"
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      WITH_SCHEDULER: "true"
+      WITH_HORIZON: "false"
+      RUNNING_MIGRATIONS_AND_SEEDERS: "false"
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - maintenance_network
+    volumes:
+      - app_storage:/var/www/html/storage
+
+  mysql:
+    image: mysql:8.0
+    container_name: maintenance_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-liberu}"
+      MYSQL_USER: "${DB_USERNAME:-liberu}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:-rootpassword}"
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    networks:
+      - maintenance_network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: maintenance_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    networks:
+      - maintenance_network
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  maintenance_network:
+    driver: bridge
+
+volumes:
+  app_storage:
+  mysql_data:
+  redis_data:
