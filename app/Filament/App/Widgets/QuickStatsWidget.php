@@ -9,7 +9,7 @@ use Filament\Widgets\Widget;
 
 class QuickStatsWidget extends Widget
 {
-    protected static string $view = 'filament.app.widgets.quick-stats';
+    protected string $view = 'filament.app.widgets.quick-stats';
 
     protected static int | string | array $columnSpan = 'full';
 

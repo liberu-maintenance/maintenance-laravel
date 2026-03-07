@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 
 class MaintenanceCalendarWidget extends Widget
 {
-    protected static string $view = 'filament.app.widgets.maintenance-calendar';
+    protected string $view = 'filament.app.widgets.maintenance-calendar';
 
     protected static ?string $heading = 'Upcoming Maintenance';
 

@@ -15,7 +15,7 @@ class Dashboard extends BaseDashboard
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
 
-    protected static string $view = 'filament.app.pages.dashboard';
+    protected string $view = 'filament.app.pages.dashboard';
 
     public function getWidgets(): array
     {

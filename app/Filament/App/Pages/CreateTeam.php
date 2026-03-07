@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateTeam extends RegisterTenant
 {
-    protected static string $view = 'filament.pages.create-team';
+    protected string $view = 'filament.pages.create-team';
 
     public $name = '';
 

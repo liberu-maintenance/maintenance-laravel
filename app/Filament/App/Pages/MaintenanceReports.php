@@ -15,7 +15,7 @@ class MaintenanceReports extends Page
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static string $view = 'filament.app.pages.maintenance-reports';
+    protected string $view = 'filament.app.pages.maintenance-reports';
 
     protected static string | \UnitEnum | null $navigationGroup = 'Reports';
 
