@@ -9,13 +9,13 @@ use Illuminate\Support\Carbon;
 
 class MaintenanceCalendarWidget extends Widget
 {
-    protected string $view = 'filament.app.widgets.maintenance-calendar';
+    protected static string $view = 'filament.app.widgets.maintenance-calendar';
 
     protected static ?string $heading = 'Upcoming Maintenance';
 
-    protected int | string | array $columnSpan = 1;
+    protected static int | string | array $columnSpan = 1;
 
-    protected ?string $pollingInterval = '300s';
+    protected static ?string $pollingInterval = '300s';
 
     public function getViewData(): array
     {
