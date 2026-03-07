@@ -13,7 +13,7 @@ class ActionableInsightsWidget extends Widget
 
     protected ?string $pollingInterval = null;
 
-    protected static string $view = 'filament.widgets.actionable-insights';
+    protected string $view = 'filament.widgets.actionable-insights';
 
     protected function getViewData(): array
     {
