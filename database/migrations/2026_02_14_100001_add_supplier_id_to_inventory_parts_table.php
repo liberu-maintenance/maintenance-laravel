@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('inventory_parts', function (Blueprint $table) {
-            // Add new supplier_id column
-            $table->foreignId('supplier_id')->nullable()->after('location')->constrained('companies', 'company_id')->onDelete('set null');
+            // Add new supplier_id column (unsignedInteger to match companies.company_id type)
+            $table->unsignedInteger('supplier_id')->nullable()->after('location');
+            $table->foreign('supplier_id')->references('company_id')->on('companies')->onDelete('set null');
             
             // Keep the old supplier string column for backward compatibility during migration
             // It can be removed in a future migration after data is migrated
