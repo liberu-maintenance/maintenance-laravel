@@ -3,7 +3,7 @@
 namespace App\Filament\App\Resources\WorkOrders\WorkOrderResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -20,9 +20,9 @@ class CommentsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'comment';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Textarea::make('comment')
                     ->required()

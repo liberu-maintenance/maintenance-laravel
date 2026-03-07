@@ -5,7 +5,7 @@ namespace App\Filament\App\Pages;
 use App\Services\MaintenanceReportService;
 use Filament\Pages\Page;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -33,9 +33,9 @@ class MaintenanceReports extends Page
         ]);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Report Parameters')
                     ->schema([
