@@ -16,6 +16,7 @@
         "joelbutcher/socialstream": "^6.0",
         "laravel/framework": "^12.0",
         "laravel/jetstream": "^5.1",
+        "laravel/octane": "^2.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^4.0",
