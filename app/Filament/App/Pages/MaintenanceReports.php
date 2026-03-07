@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Response;
 
 class MaintenanceReports extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
     protected static string $view = 'filament.app.pages.maintenance-reports';
 
