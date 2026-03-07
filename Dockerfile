@@ -126,16 +126,15 @@ COPY  --chown=${USER}:${USER} .docker/supervisord.*.conf /etc/supervisor/conf.d/
 COPY  --chown=${USER}:${USER} .docker/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
 COPY  --chown=${USER}:${USER} .docker/start-container /usr/local/bin/start-container
 
+COPY  --chown=${USER}:${USER} .env.example ./.env
+
 RUN composer install \
     --classmap-authoritative \
     --no-interaction \
     --no-ansi \
     --no-dev \
-    && composer require laravel/octane:^2.0 --no-interaction --no-ansi --update-with-dependencies \
     && php artisan octane:install --server=swoole --no-interaction \
     && composer clear-cache
-
-COPY .env.example ./.env
 
 RUN chmod +x /usr/local/bin/start-container
 
