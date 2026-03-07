@@ -11,7 +11,7 @@ class IotEquipmentMonitoringWidget extends BaseWidget
 {
     protected static ?int $sort = 1;
     
-    protected static int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 'full';
 
     public function getStats(): array
     {

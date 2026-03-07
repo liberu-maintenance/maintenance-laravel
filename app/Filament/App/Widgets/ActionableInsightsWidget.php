@@ -7,11 +7,11 @@ use Filament\Widgets\Widget;
 
 class ActionableInsightsWidget extends Widget
 {
-    protected static ?string $heading = 'Actionable Insights & Recommendations';
+    protected ?string $heading = 'Actionable Insights & Recommendations';
 
-    protected static int | string | array $columnSpan = 'full';
+    protected  int | string | array $columnSpan = 'full';
 
-    protected static ?string $pollingInterval = null;
+    protected ?string $pollingInterval = null;
 
     protected string $view = 'filament.widgets.actionable-insights';
 

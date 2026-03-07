@@ -7,13 +7,13 @@ use Filament\Widgets\ChartWidget;
 
 class AdvancedMaintenanceTrendsWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Maintenance Trends Analysis (Last 90 Days)';
+    protected ?string $heading = 'Maintenance Trends Analysis (Last 90 Days)';
 
-    protected static ?string $pollingInterval = null;
+    protected ?string $pollingInterval = null;
 
-    protected static int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 'full';
 
-    protected static ?string $maxHeight = '400px';
+    protected ?string $maxHeight = '400px';
 
     protected function getData(): array
     {

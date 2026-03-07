@@ -11,9 +11,9 @@ class TechnicianPerformanceWidget extends BaseWidget
 {
     protected static ?string $heading = 'Technician Performance Report';
 
-    protected static int | string | array $columnSpan = 'full';
+    protected int | string | array $columnSpan = 'full';
 
-    protected static ?string $pollingInterval = null;
+    protected ?string $pollingInterval = null;
 
     public function table(Table $table): Table
     {
