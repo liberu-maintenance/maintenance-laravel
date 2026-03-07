@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class EquipmentHealthWidget extends ChartWidget
 {
-    protected ?string $heading = 'Equipment Health Score';
+    protected static ?string $heading = 'Equipment Health Score';
 
-    protected ?string $pollingInterval = '60s';
+    protected static ?string $pollingInterval = '60s';
 
-    protected int | string | array $columnSpan = 1;
+    protected static int | string | array $columnSpan = 1;
 
-    protected ?string $maxHeight = '300px';
+    protected static ?string $maxHeight = '300px';
 
     protected function getData(): array
     {

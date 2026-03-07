@@ -9,11 +9,11 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class EquipmentPerformanceWidget extends BaseWidget
 {
-    protected ?string $heading = 'Equipment Performance Report';
+    protected static ?string $heading = 'Equipment Performance Report';
 
-    protected int | string | array $columnSpan = 'full';
+    protected static int | string | array $columnSpan = 'full';
 
-    protected ?string $pollingInterval = null; // Disable polling for performance
+    protected static ?string $pollingInterval = null; // Disable polling for performance
 
     public function table(Table $table): Table
     {

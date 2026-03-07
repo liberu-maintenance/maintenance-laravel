@@ -5,7 +5,7 @@ namespace App\Filament\App\Pages;
 use App\Services\MaintenanceReportService;
 use Filament\Pages\Page;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Response;
 
 class MaintenanceReports extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected static string $view = 'filament.app.pages.maintenance-reports';
+    protected string $view = 'filament.app.pages.maintenance-reports';
 
-    protected static ?string $navigationGroup = 'Reports';
+    protected static string | \UnitEnum | null $navigationGroup = 'Reports';
 
     protected static ?int $navigationSort = 1;
 
@@ -33,9 +33,9 @@ class MaintenanceReports extends Page
         ]);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Report Parameters')
                     ->schema([

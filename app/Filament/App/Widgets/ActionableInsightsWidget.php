@@ -9,11 +9,11 @@ class ActionableInsightsWidget extends Widget
 {
     protected static ?string $heading = 'Actionable Insights & Recommendations';
 
-    protected int | string | array $columnSpan = 'full';
+    protected static int | string | array $columnSpan = 'full';
 
-    protected ?string $pollingInterval = null;
+    protected static ?string $pollingInterval = null;
 
-    protected static string $view = 'filament.widgets.actionable-insights';
+    protected string $view = 'filament.widgets.actionable-insights';
 
     protected function getViewData(): array
     {

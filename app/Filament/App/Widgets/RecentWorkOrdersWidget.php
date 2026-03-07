@@ -13,9 +13,9 @@ class RecentWorkOrdersWidget extends BaseWidget
 {
     protected static ?string $heading = 'Recent Work Orders';
 
-    protected int | string | array $columnSpan = 'full';
+    protected static int | string | array $columnSpan = 'full';
 
-    protected   ?string $pollingInterval = '30s';
+    protected static ?string $pollingInterval = '30s';
 
     public function table(Table $table): Table
     {
