@@ -18,7 +18,6 @@ use App\Models\Checklist;
 use App\Models\User;
 use Filament\Schemas\Schema;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Grid;
 use Filament\Resources\Resource;
