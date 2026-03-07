@@ -17,7 +17,7 @@ class MaintenanceReports extends Page
 
     protected static string $view = 'filament.app.pages.maintenance-reports';
 
-    protected static ?string $navigationGroup = 'Reports';
+    protected static string | \UnitEnum | null $navigationGroup = 'Reports';
 
     protected static ?int $navigationSort = 1;
 
