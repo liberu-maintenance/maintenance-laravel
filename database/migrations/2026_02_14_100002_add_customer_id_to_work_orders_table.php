@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('work_orders', function (Blueprint $table) {
             // Add customer relationship
-            $table->foreignId('customer_id')->nullable()->after('team_id')->constrained('companies')->onDelete('set null');
+            $table->foreignId('customer_id')->nullable()->after('team_id')->constrained('companies', 'company_id')->onDelete('set null');
             
             $table->index('customer_id');
         });
