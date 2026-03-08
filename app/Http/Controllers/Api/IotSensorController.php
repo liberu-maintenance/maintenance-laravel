@@ -8,6 +8,7 @@ use App\Services\IotSensorService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class IotSensorController extends Controller
 {
@@ -24,7 +25,7 @@ class IotSensorController extends Controller
     public function storeReading(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'sensor_id' => 'required|string|exists:equipment,sensor_id',
+            'sensor_id' => ['required', 'string', Rule::exists('equipment', 'sensor_id')],
             'sensor_type' => 'sometimes|string',
             'metric_name' => 'required|string',
             'value' => 'required|numeric',

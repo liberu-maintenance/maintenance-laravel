@@ -8,13 +8,14 @@ use App\Models\User;
 use App\Models\VendorContract;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class VendorPerformanceEvaluationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_fillable_attributes()
     {
         $fillable = [
@@ -41,7 +42,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertEquals($fillable, $evaluation->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_created_with_required_fields()
     {
         $vendor = Company::create([
@@ -71,7 +72,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertEquals(5, $evaluation->quality_rating);
     }
 
-    /** @test */
+    #[Test]
     public function it_automatically_calculates_overall_rating()
     {
         $vendor = Company::create([
@@ -101,7 +102,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertEquals(4.0, $evaluation->overall_rating);
     }
 
-    /** @test */
+    #[Test]
     public function it_belongs_to_a_vendor()
     {
         $vendor = Company::create([
@@ -131,7 +132,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertEquals('Test Vendor', $evaluation->vendor->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_belongs_to_an_evaluator()
     {
         $vendor = Company::create([
@@ -161,7 +162,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertEquals('John Evaluator', $evaluation->evaluator->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_high_performance()
     {
         $vendor = Company::create([
@@ -204,7 +205,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertGreaterThanOrEqual(4.0, $highPerformance->first()->overall_rating);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_low_performance()
     {
         $vendor = Company::create([
@@ -247,7 +248,7 @@ class VendorPerformanceEvaluationTest extends TestCase
         $this->assertLessThan(3.0, $lowPerformance->first()->overall_rating);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_related_to_a_contract()
     {
         $vendor = Company::create([

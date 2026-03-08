@@ -6,6 +6,7 @@ use App\Models\Equipment;
 use App\Models\IotSensorReading;
 use App\Services\IotSensorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class IotSensorServiceTest extends TestCase
@@ -20,7 +21,7 @@ class IotSensorServiceTest extends TestCase
         $this->service = new IotSensorService();
     }
 
-    /** @test */
+    #[Test]
     public function it_stores_a_sensor_reading()
     {
         $equipment = Equipment::factory()->create([
@@ -44,7 +45,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEquals('temperature', $reading->metric_name);
     }
 
-    /** @test */
+    #[Test]
     public function it_determines_normal_status_for_values_within_threshold()
     {
         $equipment = Equipment::factory()->create([
@@ -73,7 +74,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEquals('normal', $reading->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_determines_warning_status_for_values_exceeding_warning_threshold()
     {
         $equipment = Equipment::factory()->create([
@@ -102,7 +103,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEquals('warning', $reading->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_determines_critical_status_for_values_exceeding_critical_threshold()
     {
         $equipment = Equipment::factory()->create([
@@ -131,7 +132,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEquals('critical', $reading->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_equipment_last_reading_timestamp()
     {
         $equipment = Equipment::factory()->create([
@@ -154,7 +155,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertNotNull($equipment->last_sensor_reading_at);
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_equipment_health_summary()
     {
         $equipment = Equipment::factory()->create([
@@ -203,7 +204,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertCount(1, $summary['metrics']);
     }
 
-    /** @test */
+    #[Test]
     public function it_counts_alerts_in_health_summary()
     {
         $equipment = Equipment::factory()->create([
@@ -227,7 +228,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEquals('critical', $summary['status']);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_no_data_status_when_no_readings_exist()
     {
         $equipment = Equipment::factory()->create([
@@ -241,7 +242,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEmpty($summary['metrics']);
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_predictive_insights()
     {
         $equipment = Equipment::factory()->create([
@@ -269,7 +270,7 @@ class IotSensorServiceTest extends TestCase
         $this->assertEquals('increasing', $insights['temperature']['trend']);
     }
 
-    /** @test */
+    #[Test]
     public function it_generates_real_time_dashboard_data()
     {
         // Create equipment with sensors

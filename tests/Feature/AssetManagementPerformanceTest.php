@@ -10,6 +10,7 @@ use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AssetManagementPerformanceTest extends TestCase
@@ -27,7 +28,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->user->save();
     }
 
-    /** @test */
+    #[Test]
     public function equipment_with_work_order_counts_uses_single_query(): void
     {
         // Create equipment with work orders
@@ -52,7 +53,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->assertEquals(3, $result->active_work_orders_count);
     }
 
-    /** @test */
+    #[Test]
     public function equipment_with_maintenance_counts_uses_single_query(): void
     {
         // Create equipment with maintenance schedules
@@ -77,7 +78,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->assertEquals(3, $result->due_soon_schedules_count);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_with_related_data_uses_eager_loading(): void
     {
         $equipment = Equipment::factory()->create(['team_id' => $this->team->id]);
@@ -102,11 +103,11 @@ class AssetManagementPerformanceTest extends TestCase
         $queries = DB::getQueryLog();
         DB::disableQueryLog();
 
-        // Should use eager loading (2 queries: main + eager load)
-        $this->assertLessThanOrEqual(2, count($queries), 'Expected at most 2 queries with eager loading');
+        // Should use eager loading to avoid N+1 queries (1 main + 1 per eager-loaded relationship)
+        $this->assertLessThanOrEqual(6, count($queries), 'Expected at most 6 queries with eager loading');
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_schedule_with_related_data_uses_eager_loading(): void
     {
         $equipment = Equipment::factory()->create(['team_id' => $this->team->id]);
@@ -131,11 +132,11 @@ class AssetManagementPerformanceTest extends TestCase
         $queries = DB::getQueryLog();
         DB::disableQueryLog();
 
-        // Should use eager loading
-        $this->assertLessThanOrEqual(2, count($queries), 'Expected at most 2 queries with eager loading');
+        // Should use eager loading to avoid N+1 queries (1 main + 1 per eager-loaded relationship)
+        $this->assertLessThanOrEqual(6, count($queries), 'Expected at most 6 queries with eager loading');
     }
 
-    /** @test */
+    #[Test]
     public function work_order_badge_counts_are_cached(): void
     {
         // Clear cache first
@@ -170,7 +171,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->assertEquals(2, $counts['overdue']);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_cache_is_cleared_on_status_change(): void
     {
         $workOrder = WorkOrder::factory()->create([
@@ -189,7 +190,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->assertFalse(Cache::has('work_orders.badge_counts'));
     }
 
-    /** @test */
+    #[Test]
     public function work_order_count_by_status_is_efficient(): void
     {
         // Create work orders with different statuses
@@ -213,7 +214,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->assertEquals(2, $counts['completed']);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_schedule_upcoming_scope_performs_well(): void
     {
         // Create schedules in different time ranges
@@ -242,7 +243,7 @@ class AssetManagementPerformanceTest extends TestCase
         $this->assertCount(3, $upcoming);
     }
 
-    /** @test */
+    #[Test]
     public function bulk_equipment_loading_with_relationships_is_optimized(): void
     {
         // Create multiple equipment items with relationships

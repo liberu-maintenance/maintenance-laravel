@@ -5,13 +5,14 @@ namespace Tests\Unit\Models;
 use App\Models\Equipment;
 use App\Models\IotSensorReading;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EquipmentIotSensorTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_iot_sensor_fillable_attributes()
     {
         $equipment = new Equipment();
@@ -24,7 +25,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertContains('last_sensor_reading_at', $fillable);
     }
 
-    /** @test */
+    #[Test]
     public function it_has_sensor_readings_relationship()
     {
         $equipment = Equipment::factory()->create([
@@ -46,7 +47,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertCount(1, $equipment->sensorReadings);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_filter_sensor_enabled_equipment()
     {
         Equipment::factory()->create([
@@ -64,7 +65,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertTrue($sensorEnabled->first()->sensor_enabled);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_filter_equipment_with_critical_readings()
     {
         $equipment1 = Equipment::factory()->create([
@@ -101,7 +102,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertEquals($equipment1->id, $criticalEquipment->first()->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_healthy_status_for_equipment_with_normal_readings()
     {
         $equipment = Equipment::factory()->create([
@@ -121,7 +122,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertEquals('healthy', $equipment->getHealthStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_warning_status_for_equipment_with_warning_readings()
     {
         $equipment = Equipment::factory()->create([
@@ -141,7 +142,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertEquals('warning', $equipment->getHealthStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_critical_status_for_equipment_with_critical_readings()
     {
         $equipment = Equipment::factory()->create([
@@ -161,7 +162,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertEquals('critical', $equipment->getHealthStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_unknown_status_for_equipment_without_sensors()
     {
         $equipment = Equipment::factory()->create([
@@ -171,7 +172,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertEquals('unknown', $equipment->getHealthStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_casts_sensor_config_to_array()
     {
         $equipment = Equipment::factory()->create([
@@ -192,7 +193,7 @@ class EquipmentIotSensorTest extends TestCase
         $this->assertArrayHasKey('thresholds', $equipment->sensor_config);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_last_sensor_reading_timestamp()
     {
         $equipment = Equipment::factory()->create([

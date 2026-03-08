@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Notifications\MaintenanceReminderNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SendMaintenanceRemindersCommandTest extends TestCase
@@ -33,7 +34,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         Notification::fake();
     }
 
-    /** @test */
+    #[Test]
     public function it_sends_reminders_for_maintenance_due_in_3_days(): void
     {
         $targetDate = now()->addDays(3);
@@ -59,7 +60,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_sends_reminders_for_maintenance_due_tomorrow(): void
     {
         $targetDate = now()->addDay();
@@ -84,7 +85,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_sends_reminders_for_maintenance_due_today(): void
     {
         $targetDate = now();
@@ -103,7 +104,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         Notification::assertSentTo($this->user, MaintenanceReminderNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_send_reminders_for_inactive_schedules(): void
     {
         $targetDate = now()->addDays(3);
@@ -122,7 +123,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         Notification::assertNotSentTo($this->user, MaintenanceReminderNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_send_reminders_when_no_user_is_assigned(): void
     {
         $targetDate = now()->addDays(3);
@@ -141,7 +142,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         Notification::assertNothingSent();
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_send_reminders_for_wrong_dates(): void
     {
         // Schedule due in 5 days, but command is for 3 days
@@ -159,7 +160,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         Notification::assertNotSentTo($this->user, MaintenanceReminderNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_sends_reminders_to_multiple_users(): void
     {
         $user2 = User::factory()->create();
@@ -189,7 +190,7 @@ class SendMaintenanceRemindersCommandTest extends TestCase
         Notification::assertSentTo($user2, MaintenanceReminderNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_displays_correct_summary_information(): void
     {
         $targetDate = now()->addDays(3);

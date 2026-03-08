@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer('note_id')->primary();
             $table->text('content');
             $table->integer('contact_id')->nullable();
-            $table->integer('company_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
             $table->integer('opportunity_id')->nullable();
             $table->timestamps();
 

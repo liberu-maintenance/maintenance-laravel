@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('status');
             $table->integer('priority');
             $table->integer('contact_id')->nullable();
-            $table->integer('company_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
             $table->integer('opportunity_id')->nullable();
             $table->timestamps();
 

@@ -7,6 +7,7 @@ use App\Models\WorkOrder;
 use App\Models\Team;
 use App\Models\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class WorkOrderImprovementsTest extends TestCase
@@ -24,7 +25,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->user->save();
     }
 
-    /** @test */
+    #[Test]
     public function work_order_can_have_assigned_user(): void
     {
         $assignee = User::factory()->create();
@@ -39,7 +40,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertInstanceOf(User::class, $workOrder->assignedTo);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_can_have_due_date(): void
     {
         $dueDate = now()->addDays(7);
@@ -53,7 +54,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertEquals($dueDate->format('Y-m-d H:i'), $workOrder->due_date->format('Y-m-d H:i'));
     }
 
-    /** @test */
+    #[Test]
     public function work_order_tracks_started_and_completed_timestamps(): void
     {
         $workOrder = WorkOrder::factory()->create([
@@ -70,7 +71,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertNotNull($workOrder->fresh()->completed_at);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_can_track_estimated_and_actual_hours(): void
     {
         $workOrder = WorkOrder::factory()->create([
@@ -83,7 +84,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertEquals(10, $workOrder->actual_hours);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_overdue_scope_returns_overdue_orders(): void
     {
         // Create overdue work order
@@ -114,7 +115,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertFalse($overdueOrders->contains($completedOrder));
     }
 
-    /** @test */
+    #[Test]
     public function work_order_assigned_to_scope_filters_by_user(): void
     {
         $assignee1 = User::factory()->create();
@@ -130,13 +131,13 @@ class WorkOrderImprovementsTest extends TestCase
             'team_id' => $this->team->id,
         ]);
 
-        $assignedOrders = WorkOrder::assignedTo($assignee1->id)->get();
+        $assignedOrders = WorkOrder::assignedToUser($assignee1->id)->get();
 
         $this->assertTrue($assignedOrders->contains($order1));
         $this->assertFalse($assignedOrders->contains($order2));
     }
 
-    /** @test */
+    #[Test]
     public function work_order_due_within_scope_returns_orders_due_soon(): void
     {
         // Order due in 3 days
@@ -159,7 +160,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertFalse($ordersDueWithinWeek->contains($dueLater));
     }
 
-    /** @test */
+    #[Test]
     public function work_order_supports_soft_deletes(): void
     {
         $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
@@ -178,7 +179,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertNotNull(WorkOrder::find($workOrderId));
     }
 
-    /** @test */
+    #[Test]
     public function observer_automatically_sets_submitted_at_on_create(): void
     {
         $workOrder = WorkOrder::factory()->create([
@@ -190,7 +191,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertNotNull($workOrder->fresh()->submitted_at);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_can_be_associated_with_a_customer(): void
     {
         $customer = Company::create([
@@ -213,7 +214,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertEquals('Test Customer', $workOrder->customer->name);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_can_have_comments(): void
     {
         $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
@@ -231,7 +232,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertEquals(1, $workOrder->comments()->count());
     }
 
-    /** @test */
+    #[Test]
     public function work_order_comments_can_be_internal_or_public(): void
     {
         $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
@@ -254,7 +255,7 @@ class WorkOrderImprovementsTest extends TestCase
         $this->assertEquals(2, $workOrder->comments()->count());
     }
 
-    /** @test */
+    #[Test]
     public function work_order_comments_are_ordered_by_creation_date(): void
     {
         $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);

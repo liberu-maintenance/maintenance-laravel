@@ -48,7 +48,6 @@ return new class extends Migration
             $table->index(['document_type', 'status']);
             $table->index(['team_id', 'status']);
             $table->index(['expiry_date', 'status']);
-            $table->index(['documentable_type', 'documentable_id']);
             $table->fullText(['name', 'description']);
         });
     }

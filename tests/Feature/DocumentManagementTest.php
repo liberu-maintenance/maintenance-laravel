@@ -11,6 +11,7 @@ use App\Models\WorkOrder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DocumentManagementTest extends TestCase
@@ -29,7 +30,7 @@ class DocumentManagementTest extends TestCase
         $this->user->teams()->attach($this->team);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_created_with_required_fields()
     {
         $document = Document::factory()->create([
@@ -46,7 +47,7 @@ class DocumentManagementTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_tagged()
     {
         $document = Document::factory()->create(['team_id' => $this->team->id]);
@@ -66,7 +67,7 @@ class DocumentManagementTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_searched_by_type()
     {
         Document::factory()->create(['document_type' => 'manual', 'team_id' => $this->team->id]);
@@ -80,7 +81,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(2, $manuals);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_filtered_by_tag()
     {
         $tag = DocumentTag::factory()->create(['name' => 'Safety', 'team_id' => $this->team->id]);
@@ -99,7 +100,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(2, $safetyDocs);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_versioned()
     {
         $document = Document::factory()->create([
@@ -126,7 +127,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, $document->versions);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_attached_to_equipment()
     {
         $equipment = Equipment::factory()->create(['team_id' => $this->team->id]);
@@ -142,7 +143,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, $equipment->documents);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_attached_to_work_order()
     {
         $workOrder = WorkOrder::factory()->create(['team_id' => $this->team->id]);
@@ -158,7 +159,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, $workOrder->documents);
     }
 
-    /** @test */
+    #[Test]
     public function compliance_document_tracks_expiry()
     {
         $document = Document::factory()->create([
@@ -177,7 +178,7 @@ class DocumentManagementTest extends TestCase
         $this->assertTrue($document->isExpired());
     }
 
-    /** @test */
+    #[Test]
     public function document_approval_workflow()
     {
         $document = Document::factory()->create([
@@ -203,7 +204,7 @@ class DocumentManagementTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function document_can_be_soft_deleted()
     {
         $document = Document::factory()->create(['team_id' => $this->team->id]);
@@ -218,7 +219,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, Document::withTrashed()->where('id', $document->id)->get());
     }
 
-    /** @test */
+    #[Test]
     public function expired_documents_can_be_identified()
     {
         Document::factory()->create([
@@ -238,7 +239,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, $expired);
     }
 
-    /** @test */
+    #[Test]
     public function documents_expiring_soon_can_be_identified()
     {
         Document::factory()->create([
@@ -258,7 +259,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, $expiringSoon);
     }
 
-    /** @test */
+    #[Test]
     public function documents_due_for_review_can_be_identified()
     {
         Document::factory()->create([
@@ -278,7 +279,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(1, $dueForReview);
     }
 
-    /** @test */
+    #[Test]
     public function document_tag_slug_is_generated_automatically()
     {
         $tag = DocumentTag::factory()->create([
@@ -289,7 +290,7 @@ class DocumentManagementTest extends TestCase
         $this->assertEquals('safety-manual', $tag->slug);
     }
 
-    /** @test */
+    #[Test]
     public function multiple_documents_can_share_same_tag()
     {
         $tag = DocumentTag::factory()->create(['name' => 'Safety', 'team_id' => $this->team->id]);
@@ -305,7 +306,7 @@ class DocumentManagementTest extends TestCase
         $this->assertCount(3, $tag->documents);
     }
 
-    /** @test */
+    #[Test]
     public function compliance_standard_filtering_works()
     {
         Document::factory()->create([

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EquipmentTrackingTest extends TestCase
@@ -25,11 +26,11 @@ class EquipmentTrackingTest extends TestCase
         
         // Create test data
         $this->company = Company::factory()->create();
-        $this->team = Team::factory()->create(['company_id' => $this->company->id]);
+        $this->team = Team::factory()->create();
         $this->user = User::factory()->create();
     }
 
-    /** @test */
+    #[Test]
     public function equipment_status_changes_to_under_maintenance_when_work_order_starts()
     {
         $equipment = Equipment::factory()->create([
@@ -53,7 +54,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('under_maintenance', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function equipment_status_changes_to_active_when_all_work_orders_complete()
     {
         $equipment = Equipment::factory()->create([
@@ -77,7 +78,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('active', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function equipment_remains_under_maintenance_when_other_work_orders_active()
     {
         $equipment = Equipment::factory()->create([
@@ -108,7 +109,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('under_maintenance', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function equipment_status_updates_when_work_order_rejected()
     {
         $equipment = Equipment::factory()->create([
@@ -132,7 +133,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('active', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function has_active_work_orders_returns_true_when_work_orders_active()
     {
         $equipment = Equipment::factory()->create([
@@ -149,7 +150,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertTrue($equipment->hasActiveWorkOrders());
     }
 
-    /** @test */
+    #[Test]
     public function has_active_work_orders_returns_false_when_no_active_work_orders()
     {
         $equipment = Equipment::factory()->create([
@@ -166,7 +167,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertFalse($equipment->hasActiveWorkOrders());
     }
 
-    /** @test */
+    #[Test]
     public function can_be_set_to_active_returns_false_when_work_orders_active()
     {
         $equipment = Equipment::factory()->create([
@@ -183,7 +184,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertFalse($equipment->canBeSetToActive());
     }
 
-    /** @test */
+    #[Test]
     public function sync_status_with_work_orders_updates_to_under_maintenance()
     {
         $equipment = Equipment::factory()->create([
@@ -204,7 +205,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('under_maintenance', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function sync_status_with_work_orders_updates_to_active()
     {
         $equipment = Equipment::factory()->create([
@@ -221,7 +222,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('active', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_schedule_mark_completed_updates_equipment_status()
     {
         $equipment = Equipment::factory()->create([
@@ -246,7 +247,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertEquals('active', $equipment->status);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_started_at_is_set_automatically()
     {
         $workOrder = WorkOrder::factory()->create([
@@ -262,7 +263,7 @@ class EquipmentTrackingTest extends TestCase
         $this->assertNotNull($workOrder->started_at);
     }
 
-    /** @test */
+    #[Test]
     public function work_order_completed_at_is_set_automatically()
     {
         $workOrder = WorkOrder::factory()->create([

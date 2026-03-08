@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('vendor_contracts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vendor_id')->constrained('companies', 'company_id')->onDelete('cascade');
+            $table->unsignedInteger('vendor_id');
+            $table->foreign('vendor_id')->references('company_id')->on('companies')->onDelete('cascade');
             $table->string('contract_number')->unique();
             $table->string('title');
             $table->text('description')->nullable();

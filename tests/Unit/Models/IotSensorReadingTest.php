@@ -5,13 +5,14 @@ namespace Tests\Unit\Models;
 use App\Models\Equipment;
 use App\Models\IotSensorReading;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class IotSensorReadingTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_fillable_attributes()
     {
         $fillable = [
@@ -30,7 +31,7 @@ class IotSensorReadingTest extends TestCase
         $this->assertEquals($fillable, $reading->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_belongs_to_equipment()
     {
         $equipment = Equipment::factory()->create();
@@ -48,7 +49,7 @@ class IotSensorReadingTest extends TestCase
         $this->assertEquals($equipment->id, $reading->equipment->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_filter_readings_by_date_range()
     {
         $equipment = Equipment::factory()->create();
@@ -79,7 +80,7 @@ class IotSensorReadingTest extends TestCase
         $this->assertCount(1, $readings);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_filter_readings_by_metric()
     {
         $equipment = Equipment::factory()->create();
@@ -108,7 +109,7 @@ class IotSensorReadingTest extends TestCase
         $this->assertEquals('temperature', $tempReadings->first()->metric_name);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_filter_critical_readings()
     {
         $equipment = Equipment::factory()->create();
@@ -137,7 +138,7 @@ class IotSensorReadingTest extends TestCase
         $this->assertEquals('critical', $criticalReadings->first()->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_detect_abnormal_readings()
     {
         $normalReading = IotSensorReading::create([
@@ -162,7 +163,7 @@ class IotSensorReadingTest extends TestCase
         $this->assertTrue($criticalReading->isAbnormal());
     }
 
-    /** @test */
+    #[Test]
     public function it_casts_metadata_to_array()
     {
         $reading = IotSensorReading::create([

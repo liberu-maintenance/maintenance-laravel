@@ -7,6 +7,7 @@ use App\Models\InventoryStockLevel;
 use App\Models\InventoryTransaction;
 use App\Services\InventoryService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryServiceTest extends TestCase
@@ -21,7 +22,7 @@ class InventoryServiceTest extends TestCase
         $this->service = new InventoryService();
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_stock_to_inventory()
     {
         $part = InventoryPart::factory()->create();
@@ -47,7 +48,7 @@ class InventoryServiceTest extends TestCase
         $this->assertEquals(100, $stockLevel->quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_remove_stock_from_inventory()
     {
         $part = InventoryPart::factory()->create();
@@ -74,7 +75,7 @@ class InventoryServiceTest extends TestCase
         $this->assertEquals(70, $stockLevel->quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_exception_when_removing_more_stock_than_available()
     {
         $this->expectException(\Exception::class);
@@ -86,7 +87,7 @@ class InventoryServiceTest extends TestCase
         $this->service->removeStock($part->id, 20, 'Warehouse A');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_adjust_stock_levels()
     {
         $part = InventoryPart::factory()->create();
@@ -113,7 +114,7 @@ class InventoryServiceTest extends TestCase
         $this->assertEquals(85, $stockLevel->quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_reserve_stock()
     {
         $part = InventoryPart::factory()->create();
@@ -130,7 +131,7 @@ class InventoryServiceTest extends TestCase
         $this->assertEquals(75, $stockLevel->available_quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_release_reserved_stock()
     {
         $part = InventoryPart::factory()->create();
@@ -147,7 +148,7 @@ class InventoryServiceTest extends TestCase
         $this->assertEquals(85, $stockLevel->available_quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_total_stock_for_a_part()
     {
         $part = InventoryPart::factory()->create();
@@ -162,7 +163,7 @@ class InventoryServiceTest extends TestCase
         $this->assertEquals(100, $total);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_available_stock_for_a_part()
     {
         $part = InventoryPart::factory()->create();
