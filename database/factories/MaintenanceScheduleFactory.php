@@ -29,6 +29,7 @@ class MaintenanceScheduleFactory extends Factory
         return [
             'name' => fake()->words(3, true) . ' Maintenance',
             'description' => fake()->sentence(),
+            'equipment_id' => Equipment::factory(),
             'frequency_type' => $frequencyType,
             'frequency_value' => fake()->numberBetween(1, 12),
             'next_due_date' => $nextDueDate,

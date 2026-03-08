@@ -43,8 +43,8 @@ class MaintenanceReportServiceTest extends TestCase
 
         $workOrder2 = WorkOrder::factory()->create([
             'team_id' => $this->team->id,
-            'started_at' => now()->subDays(3),
-            'completed_at' => now()->subDays(2)->subHours(12), // 36 hours
+            'started_at' => now()->subDays(3)->subHours(12),
+            'completed_at' => now()->subDays(2), // 36 hours
             'status' => 'completed',
         ]);
 

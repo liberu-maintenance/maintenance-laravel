@@ -131,7 +131,7 @@ class WorkOrderImprovementsTest extends TestCase
             'team_id' => $this->team->id,
         ]);
 
-        $assignedOrders = WorkOrder::assignedTo($assignee1->id)->get();
+        $assignedOrders = WorkOrder::assignedToUser($assignee1->id)->get();
 
         $this->assertTrue($assignedOrders->contains($order1));
         $this->assertFalse($assignedOrders->contains($order2));
