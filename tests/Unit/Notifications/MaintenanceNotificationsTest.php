@@ -10,6 +10,7 @@ use App\Notifications\MaintenanceDueSoonNotification;
 use App\Notifications\MaintenanceOverdueNotification;
 use App\Notifications\MaintenanceReminderNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class MaintenanceNotificationsTest extends TestCase
@@ -43,7 +44,7 @@ class MaintenanceNotificationsTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_overdue_notification_has_correct_channels(): void
     {
         $notification = new MaintenanceOverdueNotification($this->schedule);
@@ -51,7 +52,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertEquals(['mail', 'database'], $notification->via($this->user));
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_overdue_notification_mail_has_correct_content(): void
     {
         $this->schedule->update(['next_due_date' => now()->subDays(5)]);
@@ -65,7 +66,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('high', $mail->render());
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_overdue_notification_database_has_correct_data(): void
     {
         $notification = new MaintenanceOverdueNotification($this->schedule);
@@ -78,7 +79,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertArrayHasKey('url', $data);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_due_soon_notification_has_correct_channels(): void
     {
         $notification = new MaintenanceDueSoonNotification($this->schedule, 7);
@@ -86,7 +87,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertEquals(['mail', 'database'], $notification->via($this->user));
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_due_soon_notification_mail_has_correct_content(): void
     {
         $notification = new MaintenanceDueSoonNotification($this->schedule, 7);
@@ -100,7 +101,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('Test instructions', $mail->render());
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_due_soon_notification_singular_day_text(): void
     {
         $notification = new MaintenanceDueSoonNotification($this->schedule, 1);
@@ -110,7 +111,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('1 day', $mail->render());
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_due_soon_notification_database_has_correct_data(): void
     {
         $notification = new MaintenanceDueSoonNotification($this->schedule, 7);
@@ -123,7 +124,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('Upcoming', $data['title']);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_reminder_notification_has_correct_channels(): void
     {
         $notification = new MaintenanceReminderNotification($this->schedule, 3);
@@ -131,7 +132,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertEquals(['mail', 'database'], $notification->via($this->user));
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_reminder_notification_mail_has_correct_content(): void
     {
         $notification = new MaintenanceReminderNotification($this->schedule, 3);
@@ -147,7 +148,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('Test instructions', $mail->render());
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_reminder_notification_tomorrow_text(): void
     {
         $notification = new MaintenanceReminderNotification($this->schedule, 1);
@@ -157,7 +158,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('tomorrow', $mail->render());
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_reminder_notification_critical_priority_has_emoji(): void
     {
         $this->schedule->update(['priority' => 'critical']);
@@ -168,7 +169,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('🚨', $mail->subject);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_reminder_notification_high_priority_has_emoji(): void
     {
         $this->schedule->update(['priority' => 'high']);
@@ -179,7 +180,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('⚠️', $mail->subject);
     }
 
-    /** @test */
+    #[Test]
     public function maintenance_reminder_notification_database_has_correct_data(): void
     {
         $notification = new MaintenanceReminderNotification($this->schedule, 3);
@@ -193,7 +194,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertArrayHasKey('url', $data);
     }
 
-    /** @test */
+    #[Test]
     public function notifications_include_checklist_when_available(): void
     {
         $checklist = \App\Models\Checklist::factory()->create([

@@ -6,13 +6,14 @@ use App\Models\VendorContract;
 use App\Models\Company;
 use App\Models\VendorPerformanceEvaluation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class VendorContractTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_fillable_attributes()
     {
         $fillable = [
@@ -40,7 +41,7 @@ class VendorContractTest extends TestCase
         $this->assertEquals($fillable, $contract->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_created_with_required_fields()
     {
         $vendor = Company::create([
@@ -69,7 +70,7 @@ class VendorContractTest extends TestCase
         $this->assertEquals('active', $contract->status);
     }
 
-    /** @test */
+    #[Test]
     public function it_belongs_to_a_vendor()
     {
         $vendor = Company::create([
@@ -96,7 +97,7 @@ class VendorContractTest extends TestCase
         $this->assertEquals('Test Vendor', $contract->vendor->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_check_if_active()
     {
         $vendor = Company::create([
@@ -133,7 +134,7 @@ class VendorContractTest extends TestCase
         $this->assertFalse($expiredContract->isActive());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_check_if_expiring_soon()
     {
         $vendor = Company::create([
@@ -170,7 +171,7 @@ class VendorContractTest extends TestCase
         $this->assertFalse($notExpiringSoon->isExpiringSoon(30));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_days_until_expiration()
     {
         $vendor = Company::create([
@@ -199,7 +200,7 @@ class VendorContractTest extends TestCase
         $this->assertLessThanOrEqual(10, $daysUntilExpiration);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_active_contracts()
     {
         $vendor = Company::create([

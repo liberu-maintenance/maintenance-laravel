@@ -7,13 +7,14 @@ use App\Models\InventoryStockLevel;
 use App\Models\WorkOrder;
 use App\Models\Company;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryPartTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_fillable_attributes()
     {
         $fillable = [
@@ -38,7 +39,7 @@ class InventoryPartTest extends TestCase
         $this->assertEquals($fillable, $part->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_stock_levels()
     {
         $part = InventoryPart::factory()->create();
@@ -54,7 +55,7 @@ class InventoryPartTest extends TestCase
         $this->assertEquals(100, $part->stockLevels->first()->quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_calculates_total_quantity_across_locations()
     {
         $part = InventoryPart::factory()->create();
@@ -78,7 +79,7 @@ class InventoryPartTest extends TestCase
         $this->assertEquals(80, $part->total_quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_calculates_available_quantity()
     {
         $part = InventoryPart::factory()->create();
@@ -95,7 +96,7 @@ class InventoryPartTest extends TestCase
         $this->assertEquals(75, $part->available_quantity);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_detect_low_stock()
     {
         $part = InventoryPart::factory()->create([
@@ -114,7 +115,7 @@ class InventoryPartTest extends TestCase
         $this->assertTrue($part->isLowStock());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_detect_adequate_stock()
     {
         $part = InventoryPart::factory()->create([
@@ -133,7 +134,7 @@ class InventoryPartTest extends TestCase
         $this->assertFalse($part->isLowStock());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_associated_with_work_orders()
     {
         $part = InventoryPart::factory()->create();
@@ -149,7 +150,7 @@ class InventoryPartTest extends TestCase
         $this->assertEquals(5, $part->workOrders->first()->pivot->quantity_planned);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_associated_with_a_supplier()
     {
         $supplier = Company::create([

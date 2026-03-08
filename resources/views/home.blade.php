@@ -61,7 +61,7 @@
                         <a href="#submit-request" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
                             Submit Request
                         </a>
-                        <a href="{{ route('login') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md text-sm font-semibold transition duration-150 ease-in-out shadow-md">
+                        <a href="{{ url('/admin') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md text-sm font-semibold transition duration-150 ease-in-out shadow-md">
                             Staff Portal
                         </a>
                     @endauth
@@ -86,7 +86,7 @@
                     <a href="#submit-request" class="bg-white text-indigo-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-50 transition duration-150 ease-in-out shadow-lg">
                         Submit Maintenance Request
                     </a>
-                    <a href="{{ route('login') }}" class="staff-portal-btn text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-150 ease-in-out">
+                    <a href="{{ url('/admin') }}" class="staff-portal-btn text-white px-8 py-3 rounded-lg text-lg font-semibold transition duration-150 ease-in-out">
                         Staff Portal
                     </a>
                 </div>
@@ -346,7 +346,7 @@
                     <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="#submit-request" class="hover:text-white transition duration-150">Submit Request</a></li>
-                        <li><a href="{{ route('login') }}" class="hover:text-white transition duration-150">Staff Login</a></li>
+                        <li><a href="{{ url('/admin') }}" class="hover:text-white transition duration-150">Staff Login</a></li>
                         <li><a href="https://www.liberu.co.uk" class="hover:text-white transition duration-150">About Liberu</a></li>
                     </ul>
                 </div>

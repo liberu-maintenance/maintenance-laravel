@@ -11,6 +11,7 @@ use App\Notifications\MaintenanceDueSoonNotification;
 use App\Notifications\MaintenanceOverdueNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CheckDueMaintenanceCommandTest extends TestCase
@@ -34,7 +35,7 @@ class CheckDueMaintenanceCommandTest extends TestCase
         Notification::fake();
     }
 
-    /** @test */
+    #[Test]
     public function it_detects_overdue_maintenance_schedules(): void
     {
         $overdueSchedule = MaintenanceSchedule::factory()->create([
@@ -51,7 +52,7 @@ class CheckDueMaintenanceCommandTest extends TestCase
         Notification::assertSentTo($this->user, MaintenanceOverdueNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_detects_maintenance_due_soon(): void
     {
         $dueSoonSchedule = MaintenanceSchedule::factory()->create([
@@ -68,7 +69,7 @@ class CheckDueMaintenanceCommandTest extends TestCase
         Notification::assertSentTo($this->user, MaintenanceDueSoonNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_notify_for_inactive_schedules(): void
     {
         MaintenanceSchedule::factory()->create([
@@ -85,7 +86,7 @@ class CheckDueMaintenanceCommandTest extends TestCase
         Notification::assertNotSentTo($this->user, MaintenanceOverdueNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_does_not_notify_when_no_user_is_assigned(): void
     {
         MaintenanceSchedule::factory()->create([
@@ -102,7 +103,7 @@ class CheckDueMaintenanceCommandTest extends TestCase
         Notification::assertNothingSent();
     }
 
-    /** @test */
+    #[Test]
     public function it_respects_custom_days_ahead_parameter(): void
     {
         // Create schedule due in 10 days
@@ -130,7 +131,7 @@ class CheckDueMaintenanceCommandTest extends TestCase
         Notification::assertSentTo($this->user, MaintenanceDueSoonNotification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_notifies_multiple_users_for_different_schedules(): void
     {
         $user2 = User::factory()->create();
