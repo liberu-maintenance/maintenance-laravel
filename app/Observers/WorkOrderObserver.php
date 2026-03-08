@@ -40,15 +40,21 @@ class WorkOrderObserver
     }
 
     /**
+     * Handle the WorkOrder "creating" event.
+     */
+    public function creating(WorkOrder $workOrder): void
+    {
+        // Set submitted_at before insert if not already provided
+        if (!$workOrder->submitted_at) {
+            $workOrder->submitted_at = now();
+        }
+    }
+
+    /**
      * Handle the WorkOrder "created" event.
      */
     public function created(WorkOrder $workOrder): void
     {
-        // Set submitted_at if not already set
-        if (!$workOrder->submitted_at) {
-            $workOrder->update(['submitted_at' => now()]);
-        }
-        
         $this->clearCache();
     }
 

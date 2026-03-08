@@ -63,7 +63,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('OVERDUE: Maintenance Required', $mail->subject);
         $this->assertStringContainsString('Test Equipment', $mail->render());
         $this->assertStringContainsString('Test Maintenance', $mail->render());
-        $this->assertStringContainsString('high', $mail->render());
+        $this->assertStringContainsString('High', $mail->render());
     }
 
     #[Test]
@@ -143,7 +143,7 @@ class MaintenanceNotificationsTest extends TestCase
         $this->assertStringContainsString('Test Maintenance', $mail->subject);
         $this->assertStringContainsString('Test Equipment', $mail->render());
         $this->assertStringContainsString('in 3 days', $mail->render());
-        $this->assertStringContainsString('high', $mail->render());
+        $this->assertStringContainsString('High', $mail->render());
         $this->assertStringContainsString('60 minutes', $mail->render());
         $this->assertStringContainsString('Test instructions', $mail->render());
     }

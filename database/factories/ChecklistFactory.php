@@ -28,6 +28,7 @@ class ChecklistFactory extends Factory
             'category' => fake()->randomElement(['Preventive', 'Corrective', 'Inspection', 'Safety', 'Other']),
             'is_template' => fake()->boolean(30),
             'status' => fake()->randomElement(['active', 'inactive', 'draft']),
+            'created_by' => User::factory(),
         ];
     }
 

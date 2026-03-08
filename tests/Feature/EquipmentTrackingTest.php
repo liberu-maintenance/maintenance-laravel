@@ -26,7 +26,7 @@ class EquipmentTrackingTest extends TestCase
         
         // Create test data
         $this->company = Company::factory()->create();
-        $this->team = Team::factory()->create(['company_id' => $this->company->id]);
+        $this->team = Team::factory()->create();
         $this->user = User::factory()->create();
     }
 

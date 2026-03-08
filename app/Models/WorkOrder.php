@@ -141,7 +141,7 @@ class WorkOrder extends Model
             ->where('due_date', '<', now());
     }
 
-    public function scopeAssignedTo($query, $userId)
+    public function scopeAssignedToUser($query, $userId)
     {
         return $query->where('assigned_to', $userId);
     }
