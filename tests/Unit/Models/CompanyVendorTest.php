@@ -8,13 +8,14 @@ use App\Models\VendorPerformanceEvaluation;
 use App\Models\User;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CompanyVendorTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function a_company_can_be_a_vendor()
     {
         $vendor = Company::create([
@@ -31,7 +32,7 @@ class CompanyVendorTest extends TestCase
         $this->assertFalse($vendor->isCustomer());
     }
 
-    /** @test */
+    #[Test]
     public function a_company_can_be_both_customer_and_vendor()
     {
         $company = Company::create([
@@ -48,7 +49,7 @@ class CompanyVendorTest extends TestCase
         $this->assertTrue($company->isCustomer());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_vendor_contracts()
     {
         $vendor = Company::create([
@@ -86,7 +87,7 @@ class CompanyVendorTest extends TestCase
         $this->assertCount(2, $vendor->vendorContracts);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_performance_evaluations()
     {
         $vendor = Company::create([
@@ -128,7 +129,7 @@ class CompanyVendorTest extends TestCase
         $this->assertCount(2, $vendor->vendorPerformanceEvaluations);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_calculate_average_performance_rating()
     {
         $vendor = Company::create([
@@ -173,7 +174,7 @@ class CompanyVendorTest extends TestCase
         $this->assertEquals(4.0, $averageRating);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_active_contracts_count()
     {
         $vendor = Company::create([
@@ -221,7 +222,7 @@ class CompanyVendorTest extends TestCase
         $this->assertEquals(2, $activeCount);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_vendors()
     {
         Company::create([
@@ -274,7 +275,7 @@ class CompanyVendorTest extends TestCase
         $this->assertFalse($vendors->contains('name', 'Customer 1'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_vendor_work_orders()
     {
         $vendor = Company::create([

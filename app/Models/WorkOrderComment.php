@@ -15,6 +15,7 @@ class WorkOrderComment extends Model
         'user_id',
         'comment',
         'is_internal',
+        'created_at',
     ];
 
     protected $casts = [

@@ -19,9 +19,17 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'email' => fake()->email(),
-            'phone' => fake()->phoneNumber(),
-            'address' => fake()->address(),
+            'address' => fake()->streetAddress(),
+            'city' => fake()->city(),
+            'state' => fake()->stateAbbr(),
+            'zip' => fake()->postcode(),
+            'phone_number' => fake()->phoneNumber(),
+            'website' => fake()->url(),
+            'industry' => fake()->randomElement(['Manufacturing', 'Healthcare', 'Technology', 'Construction', 'Retail']),
+            'description' => fake()->sentence(),
+            'type' => fake()->randomElement(['customer', 'vendor', 'supplier', 'both']),
+            'email' => fake()->safeEmail(),
+            'is_active' => true,
         ];
     }
 }

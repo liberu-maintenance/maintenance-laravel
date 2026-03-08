@@ -9,13 +9,14 @@ use App\Models\Equipment;
 use App\Models\User;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DocumentTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_fillable_attributes()
     {
         $fillable = [
@@ -47,7 +48,7 @@ class DocumentTest extends TestCase
         $this->assertEquals($fillable, $document->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_attached_to_equipment()
     {
         $equipment = Equipment::factory()->create();
@@ -60,7 +61,7 @@ class DocumentTest extends TestCase
         $this->assertEquals($equipment->id, $document->documentable->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_attached_to_work_order()
     {
         $workOrder = WorkOrder::factory()->create();
@@ -73,7 +74,7 @@ class DocumentTest extends TestCase
         $this->assertEquals($workOrder->id, $document->documentable->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_tags()
     {
         $document = Document::factory()->create();
@@ -87,7 +88,7 @@ class DocumentTest extends TestCase
         $this->assertTrue($document->tags->contains('name', 'Compliance'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_versions()
     {
         $document = Document::factory()->create();
@@ -106,7 +107,7 @@ class DocumentTest extends TestCase
         $this->assertEquals('2.0', $document->versions->first()->version);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_active_documents()
     {
         Document::factory()->create(['status' => 'active']);
@@ -118,7 +119,7 @@ class DocumentTest extends TestCase
         $this->assertCount(2, $activeDocuments);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_approved_documents()
     {
         Document::factory()->create(['approval_status' => 'approved']);
@@ -130,7 +131,7 @@ class DocumentTest extends TestCase
         $this->assertCount(2, $approvedDocuments);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_detect_expired_documents()
     {
         $expiredDoc = Document::factory()->create([
@@ -145,7 +146,7 @@ class DocumentTest extends TestCase
         $this->assertFalse($validDoc->isExpired());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_detect_documents_expiring_soon()
     {
         $expiringSoon = Document::factory()->create([
@@ -160,7 +161,7 @@ class DocumentTest extends TestCase
         $this->assertFalse($notExpiringSoon->isExpiringSoon(30));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_detect_documents_due_for_review()
     {
         $dueForReview = Document::factory()->create([
@@ -175,7 +176,7 @@ class DocumentTest extends TestCase
         $this->assertFalse($notDueForReview->isDueForReview());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_documents_by_type()
     {
         Document::factory()->create(['document_type' => 'manual']);
@@ -187,7 +188,7 @@ class DocumentTest extends TestCase
         $this->assertCount(2, $manuals);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_documents_by_compliance_standard()
     {
         Document::factory()->create(['compliance_standard' => 'ISO 9001']);
@@ -199,7 +200,7 @@ class DocumentTest extends TestCase
         $this->assertCount(2, $isoDocuments);
     }
 
-    /** @test */
+    #[Test]
     public function it_formats_file_size_correctly()
     {
         $document = Document::factory()->create(['file_size' => 2048]);
@@ -209,7 +210,7 @@ class DocumentTest extends TestCase
         $this->assertEquals('2 MB', $document2->formatted_file_size);
     }
 
-    /** @test */
+    #[Test]
     public function it_belongs_to_a_creator()
     {
         $user = User::factory()->create();
@@ -219,7 +220,7 @@ class DocumentTest extends TestCase
         $this->assertEquals($user->id, $document->creator->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_belongs_to_an_approver()
     {
         $user = User::factory()->create();
@@ -232,7 +233,7 @@ class DocumentTest extends TestCase
         $this->assertEquals($user->id, $document->approver->id);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_expiring_soon_documents()
     {
         Document::factory()->create([
@@ -250,7 +251,7 @@ class DocumentTest extends TestCase
         $this->assertCount(1, $expiringSoon);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_expired_documents()
     {
         Document::factory()->create([
@@ -268,7 +269,7 @@ class DocumentTest extends TestCase
         $this->assertCount(1, $expired);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_documents_due_for_review()
     {
         Document::factory()->create([

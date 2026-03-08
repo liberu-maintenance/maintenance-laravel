@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Modules\ModuleManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ModuleSystemTest extends TestCase
@@ -18,7 +19,7 @@ class ModuleSystemTest extends TestCase
         $this->moduleManager = app(ModuleManager::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_list_all_modules()
     {
         $modules = $this->moduleManager->all();
@@ -26,14 +27,14 @@ class ModuleSystemTest extends TestCase
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $modules);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_null_for_non_existent_module()
     {
         $module = $this->moduleManager->get('NonExistentModule');
         $this->assertNull($module);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_false_for_non_existent_modules()
     {
         $result = $this->moduleManager->enable('NonExistentModule');
@@ -46,21 +47,21 @@ class ModuleSystemTest extends TestCase
         $this->assertNull($module);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_false_for_installing_non_existent_module()
     {
         $result = $this->moduleManager->install('NonExistentModule');
         $this->assertFalse($result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_false_for_uninstalling_non_existent_module()
     {
         $result = $this->moduleManager->uninstall('NonExistentModule');
         $this->assertFalse($result);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_empty_array_for_non_existent_module_info()
     {
         $info = $this->moduleManager->getModuleInfo('NonExistentModule');
@@ -68,20 +69,20 @@ class ModuleSystemTest extends TestCase
         $this->assertEmpty($info);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_check_if_module_exists()
     {
         $this->assertFalse($this->moduleManager->has('NonExistentModule'));
     }
 
-    /** @test */
+    #[Test]
     public function enabled_modules_returns_collection()
     {
         $enabled = $this->moduleManager->enabled();
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $enabled);
     }
 
-    /** @test */
+    #[Test]
     public function disabled_modules_returns_collection()
     {
         $disabled = $this->moduleManager->disabled();

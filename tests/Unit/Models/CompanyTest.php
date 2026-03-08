@@ -6,13 +6,14 @@ use App\Models\Company;
 use App\Models\InventoryPart;
 use App\Models\WorkOrder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CompanyTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_fillable_attributes()
     {
         $fillable = [
@@ -38,7 +39,7 @@ class CompanyTest extends TestCase
         $this->assertEquals($fillable, $company->getFillable());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_created_as_a_supplier()
     {
         $company = Company::create([
@@ -58,7 +59,7 @@ class CompanyTest extends TestCase
         $this->assertTrue($company->isVendor()); // Suppliers are also vendors
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_created_as_a_customer()
     {
         $company = Company::create([
@@ -78,7 +79,7 @@ class CompanyTest extends TestCase
         $this->assertFalse($company->isVendor());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_created_as_both_supplier_and_customer()
     {
         $company = Company::create([
@@ -98,7 +99,7 @@ class CompanyTest extends TestCase
         $this->assertTrue($company->isVendor());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_suppliers_only()
     {
         Company::create([
@@ -139,7 +140,7 @@ class CompanyTest extends TestCase
         $this->assertFalse($suppliers->contains('name', 'Customer 1'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_customers_only()
     {
         Company::create([
@@ -180,7 +181,7 @@ class CompanyTest extends TestCase
         $this->assertFalse($customers->contains('name', 'Supplier 1'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_scope_to_active_companies()
     {
         Company::create([
@@ -211,7 +212,7 @@ class CompanyTest extends TestCase
         $this->assertEquals('Active Company', $activeCompanies->first()->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_inventory_parts_as_supplier()
     {
         $supplier = Company::create([
@@ -235,7 +236,7 @@ class CompanyTest extends TestCase
         $this->assertEquals('Test Part', $supplier->inventoryParts->first()->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_have_work_orders_as_customer()
     {
         $customer = Company::create([
@@ -265,7 +266,7 @@ class CompanyTest extends TestCase
         $this->assertEquals('Test Work Order', $customer->workOrders->first()->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_casts_is_active_to_boolean()
     {
         $company = Company::create([
