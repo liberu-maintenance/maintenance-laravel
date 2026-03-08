@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vendor_performance_evaluations', function (Blueprint $table) {
             $table->id();
-            $table->integer('vendor_id');
+            $table->unsignedInteger('vendor_id');
             $table->foreign('vendor_id')->references('company_id')->on('companies')->onDelete('cascade');
             $table->foreignId('vendor_contract_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('work_order_id')->nullable()->constrained()->onDelete('set null');
