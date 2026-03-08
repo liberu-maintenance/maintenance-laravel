@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive', 'under_maintenance', 'retired'])->default('active');
             $table->enum('criticality', ['low', 'medium', 'high', 'critical'])->default('medium');
             $table->text('notes')->nullable();
-            $table->integer('company_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
 
             // Create foreign key constraint manually since companies table uses custom primary key
             $table->index('company_id');

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('work_orders', function (Blueprint $table) {
-            // Add customer relationship (integer to match companies.company_id type)
-            $table->integer('customer_id')->nullable()->after('team_id');
+            // Add customer relationship (unsignedInteger to match companies.company_id type)
+            $table->unsignedInteger('customer_id')->nullable()->after('team_id');
             $table->foreign('customer_id')->references('company_id')->on('companies')->onDelete('set null');
             
             $table->index('customer_id');
