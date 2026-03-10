@@ -6,7 +6,7 @@ use Filament\Actions\CreateAction;
 use App\Filament\App\Resources\WorkOrders\WorkOrderResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Resources\Components\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListWorkOrders extends ListRecords

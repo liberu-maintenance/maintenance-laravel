@@ -55,7 +55,7 @@ class TaskResource extends Resource
                     ->relationship('company', 'name')
                     ->label('Company'),
                 Select::make('opportunity_id')
-                    ->relationship('opportunity', 'name')
+                    ->relationship('opportunity', 'opportunity_id')
                     ->label('Opportunity'),
                 Select::make('assigned_to')
                     ->relationship('assignedUser', 'name')
