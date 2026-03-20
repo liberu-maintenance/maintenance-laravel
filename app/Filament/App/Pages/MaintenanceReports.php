@@ -5,6 +5,7 @@ namespace App\Filament\App\Pages;
 use App\Services\MaintenanceReportService;
 use Filament\Pages\Page;
 use Filament\Forms;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Notifications\Notification;
 use Carbon\Carbon;
@@ -37,7 +38,7 @@ class MaintenanceReports extends Page
     {
         return $schema
             ->schema([
-                Forms\Components\Section::make('Report Parameters')
+                Section::make('Report Parameters')
                     ->schema([
                         Forms\Components\DatePicker::make('start_date')
                             ->label('Start Date')
