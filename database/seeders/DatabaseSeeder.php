@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 //            SiteSettingsSeeder::class,
 
             // Application data seeders
+            TeamSeeder::class,
             UserSeeder::class,
             CompanySeeder::class,
             EquipmentSeeder::class,
