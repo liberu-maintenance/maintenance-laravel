@@ -1,30 +1,31 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Cb299NWM.css",
-    "src": "resources/css/app.css",
-    "isEntry": true,
+    "file": "assets/app-Dc-bD6Ju.css",
+    "name": "app",
     "names": [
       "app.css"
-    ]
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
   },
   "resources/css/filament/admin/theme.css": {
-    "file": "assets/theme-B1UKXQIq.css",
-    "src": "resources/css/filament/admin/theme.css",
-    "isEntry": true,
-    "names": [
-      "theme.css"
-    ]
+    "file": "assets/theme-Cgsyqyfx.css",
+    "src": "resources/css/filament/admin/theme.css"
   },
   "resources/css/filament/app/theme.css": {
-    "file": "assets/theme-xvwnVct1.css",
-    "src": "resources/css/filament/app/theme.css",
-    "isEntry": true,
+    "file": "assets/theme-CYGySo1w.css",
+    "name": "theme",
     "names": [
       "theme.css"
+    ],
+    "src": "resources/css/filament/app/theme.css",
+    "isEntry": true,
+    "css": [
+      "assets/theme-Cgsyqyfx.css"
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-l0sNRNKZ.js",
+    "file": "assets/app-34mOoJaZ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
