@@ -45,7 +45,7 @@ class CustomFormRenderer extends Component
             ]);
 
             $this->submitted = true;
-            $this->emit('formSubmitted', $submission->id);
+            $this->dispatch('formSubmitted', $submission->id);
 
         } catch (Exception $e) {
             $this->addError('submission', 'There was an error submitting your form. Please try again.');

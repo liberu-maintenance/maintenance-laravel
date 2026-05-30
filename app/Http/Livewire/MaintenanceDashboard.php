@@ -64,7 +64,7 @@ class MaintenanceDashboard extends Component
         if ($schedule) {
             $schedule->markCompleted();
             $this->loadDashboardData();
-            $this->emit('maintenanceCompleted', $schedule->name);
+            $this->dispatch('maintenanceCompleted', $schedule->name);
         }
     }
 
@@ -78,7 +78,7 @@ class MaintenanceDashboard extends Component
                 'reviewed_at' => now(),
             ]);
             $this->loadDashboardData();
-            $this->emit('workOrderApproved', $workOrder->title);
+            $this->dispatch('workOrderApproved', $workOrder->title);
         }
     }
 

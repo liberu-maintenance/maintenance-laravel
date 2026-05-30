@@ -126,7 +126,7 @@ class MaintenanceQuickActions extends Component
         $this->resetQuickMaintenanceForm();
 
         session()->flash('success', "⚡ Quick {$this->quickMaintenanceType} completed for {$equipment->name}!");
-        $this->emit('maintenanceCompleted');
+        $this->dispatch('maintenanceCompleted');
     }
 
     public function submitQuickTask()
@@ -162,7 +162,7 @@ class MaintenanceQuickActions extends Component
         $this->resetQuickTaskForm();
 
         session()->flash('success', "📋 Task '{$this->quickTaskTitle}' created successfully!");
-        $this->emit('taskCreated');
+        $this->dispatch('taskCreated');
     }
 
     public function submitQuickWorkOrder()
@@ -190,7 +190,7 @@ class MaintenanceQuickActions extends Component
         $this->resetQuickWorkOrderForm();
 
         session()->flash('success', "🔧 Work order '{$this->quickWorkOrderTitle}' created successfully!");
-        $this->emit('workOrderCreated');
+        $this->dispatch('workOrderCreated');
     }
 
     public function closeModals()

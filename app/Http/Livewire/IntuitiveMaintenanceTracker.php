@@ -52,7 +52,7 @@ class IntuitiveMaintenanceTracker extends Component
     public function loadData()
     {
         // This method will be called to refresh data
-        $this->emit('dataRefreshed');
+        $this->dispatch('dataRefreshed');
     }
 
     public function getOverviewStatsProperty()
@@ -156,7 +156,7 @@ class IntuitiveMaintenanceTracker extends Component
         $schedule = MaintenanceSchedule::find($scheduleId);
         if ($schedule && ($schedule->assignedUser && $schedule->assignedUser->id === auth()->id() || auth()->user()->hasRole('admin'))) {
             $schedule->markCompleted();
-            $this->emit('maintenanceCompleted', $schedule->name);
+            $this->dispatch('maintenanceCompleted', $schedule->name);
             session()->flash('success', "✅ Maintenance '{$schedule->name}' completed successfully!");
             $this->loadData();
         }
@@ -178,7 +178,7 @@ class IntuitiveMaintenanceTracker extends Component
                 'reviewed_at' => now(),
             ]);
 
-            $this->emit('workOrderCreated', $workOrder->id);
+            $this->dispatch('workOrderCreated', $workOrder->id);
             session()->flash('success', "🔧 Work order created for '{$schedule->name}'!");
             $this->loadData();
         }
