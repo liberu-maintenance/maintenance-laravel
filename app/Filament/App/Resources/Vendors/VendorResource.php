@@ -26,18 +26,25 @@ use Illuminate\Database\Eloquent\Builder;
 
 class VendorResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Company::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Vendor Management';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Vendors';
 
+    #[\Override]
     protected static ?string $modelLabel = 'Vendor';
 
+    #[\Override]
     protected static ?string $pluralModelLabel = 'Vendors';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public static function getEloquentQuery(): Builder

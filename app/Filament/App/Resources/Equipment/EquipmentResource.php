@@ -26,12 +26,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EquipmentResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Equipment::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-wrench-screwdriver';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Asset Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

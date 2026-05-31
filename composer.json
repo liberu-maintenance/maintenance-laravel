@@ -8,27 +8,32 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.5",
         "bezhansalleh/filament-shield": "~4.0",
         "filament/filament": "^5.0",
         "filament/spatie-laravel-settings-plugin": "^5.0",
         "guzzlehttp/guzzle": "^7.8",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^13.0",
+        "laravel/horizon": "^5.0",
         "laravel/jetstream": "^5.1",
         "laravel/octane": "^2.0",
+        "laravel/reverb": "^1.0",
         "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.9",
+        "laravel/tinker": "^3.0",
         "livewire/livewire": "^4.0",
-        "spatie/laravel-menu": "^4.2"
+        "spatie/laravel-menu": "^4.2",
+        "spatie/laravel-permission": "^7.0"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.0",
         "fakerphp/faker": "^1.23",
         "filament/upgrade": "^5.0",
         "laravel/pint": "^1.14",
         "laravel/sail": "^1.28",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^12.3",
+        "phpunit/phpunit": "^13.0",
+        "rector/rector": "^2.0",
         "spatie/laravel-ignition": "^2.4"
     },
     "autoload": {
@@ -69,7 +74,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "8.3.0"
+            "php": "8.5.0"
         },
         "allow-plugins": {
             "pestphp/pest-plugin": true,

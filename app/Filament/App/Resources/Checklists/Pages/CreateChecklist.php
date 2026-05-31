@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateChecklist extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = ChecklistResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array

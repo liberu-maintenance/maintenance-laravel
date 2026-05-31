@@ -15,7 +15,7 @@ return new class extends Migration
             // Add new supplier_id column (unsignedInteger to match companies.company_id type)
             $table->unsignedInteger('supplier_id')->nullable()->after('location');
             $table->foreign('supplier_id')->references('company_id')->on('companies')->onDelete('set null');
-            
+
             // Keep the old supplier string column for backward compatibility during migration
             // It can be removed in a future migration after data is migrated
         });

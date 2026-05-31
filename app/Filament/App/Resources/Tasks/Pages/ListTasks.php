@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\Tasks\Pages;
 
 use Filament\Actions\CreateAction;
@@ -9,6 +11,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListTasks extends ListRecords
 {
+    #[\Override]
     protected static string $resource = TaskResource::class;
 
     protected function getHeaderActions(): array

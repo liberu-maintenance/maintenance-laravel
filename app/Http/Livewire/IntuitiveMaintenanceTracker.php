@@ -38,6 +38,7 @@ class IntuitiveMaintenanceTracker extends Component
         'viewMode' => ['except' => 'cards'],
     ];
 
+    #[\Override]
     protected $listeners = [
         'refreshData' => 'loadData',
         'maintenanceCompleted' => 'handleMaintenanceCompleted',
@@ -142,7 +143,9 @@ class IntuitiveMaintenanceTracker extends Component
     private function calculateEquipmentHealth()
     {
         $totalEquipment = Equipment::active()->count();
-        if ($totalEquipment === 0) return 100;
+        if ($totalEquipment === 0) {
+            return 100;
+        }
 
         $criticalEquipment = Equipment::critical()->count();
         $overdueMaintenanceCount = MaintenanceSchedule::overdue()->distinct('equipment_id')->count();

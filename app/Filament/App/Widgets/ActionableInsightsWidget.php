@@ -9,10 +9,12 @@ class ActionableInsightsWidget extends Widget
 {
     protected ?string $heading = 'Actionable Insights & Recommendations';
 
+    #[\Override]
     protected  int | string | array $columnSpan = 'full';
 
     protected ?string $pollingInterval = null;
 
+    #[\Override]
     protected string $view = 'filament.widgets.actionable-insights';
 
     protected function getViewData(): array

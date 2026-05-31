@@ -27,14 +27,19 @@ use Filament\Support\RawJs;
 
 class VendorPerformanceEvaluationResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = VendorPerformanceEvaluation::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-star';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Vendor Management';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Performance Evaluations';
 
+    #[\Override]
     protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema

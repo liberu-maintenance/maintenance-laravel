@@ -6,21 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'inventory_part_id',
+    'location',
+    'quantity',
+    'reserved_quantity',
+])]
 class InventoryStockLevel extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'inventory_part_id',
-        'location',
-        'quantity',
-        'reserved_quantity',
-    ];
-
-    protected $casts = [
-        'quantity' => 'integer',
-        'reserved_quantity' => 'integer',
-    ];
 
     public function inventoryPart(): BelongsTo
     {
@@ -30,9 +24,11 @@ class InventoryStockLevel extends Model
     /**
      * Get available quantity (quantity - reserved)
      */
-    public function getAvailableQuantityAttribute(): int
+    protected function availableQuantity(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
-        return $this->quantity - $this->reserved_quantity;
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: function () {
+            return $this->quantity - $this->reserved_quantity;
+        });
     }
 
     /**
@@ -71,5 +67,12 @@ class InventoryStockLevel extends Model
     public function releaseReservedStock(int $quantity): void
     {
         $this->decrement('reserved_quantity', min($quantity, $this->reserved_quantity));
+    }
+    protected function casts(): array
+    {
+        return [
+            'quantity' => 'integer',
+            'reserved_quantity' => 'integer',
+        ];
     }
 }

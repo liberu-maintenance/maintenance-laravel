@@ -8,14 +8,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UpdateProfileInformationPage extends Page
 {
+    #[\Override]
     protected string $view = 'filament.pages.profile.update-profile-information';
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Account';
 
+    #[\Override]
     protected static ?int $navigationSort = 0;
 
+    #[\Override]
     protected static ?string $title = 'Profile';
 
     public $name;

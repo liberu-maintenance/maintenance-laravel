@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DocumentFactory extends Factory
 {
+    #[\Override]
     protected $model = Document::class;
 
     /**

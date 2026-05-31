@@ -7,23 +7,11 @@ use App\Notifications\MaintenanceOverdueNotification;
 use App\Notifications\MaintenanceDueSoonNotification;
 use Illuminate\Console\Command;
 
+#[\Illuminate\Console\Attributes\Description('Check for overdue and upcoming maintenance schedules and send notifications')]
+#[\Illuminate\Console\Attributes\Signature('maintenance:check-due
+                          {--days=7 : Number of days to look ahead for due maintenance}')]
 class CheckDueMaintenanceCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'maintenance:check-due
-                          {--days=7 : Number of days to look ahead for due maintenance}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Check for overdue and upcoming maintenance schedules and send notifications';
-
     /**
      * Execute the console command.
      */

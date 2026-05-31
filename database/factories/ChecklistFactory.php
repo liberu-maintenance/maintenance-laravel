@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ChecklistFactory extends Factory
 {
+    #[\Override]
     protected $model = Checklist::class;
 
     /**

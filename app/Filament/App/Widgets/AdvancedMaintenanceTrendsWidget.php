@@ -7,12 +7,16 @@ use Filament\Widgets\ChartWidget;
 
 class AdvancedMaintenanceTrendsWidget extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Maintenance Trends Analysis (Last 90 Days)';
 
+    #[\Override]
     protected ?string $pollingInterval = null;
 
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
+    #[\Override]
     protected ?string $maxHeight = '400px';
 
     protected function getData(): array

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\Notes;
 
 use Filament\Schemas\Schema;
@@ -24,8 +26,10 @@ use App\Filament\App\Resources\NoteResource\RelationManagers;
 
 class NoteResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Note::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema

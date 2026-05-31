@@ -7,33 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'address',
+    'city',
+    'state',
+    'zip',
+    'phone_number',
+    'website',
+    'industry',
+    'description',
+    'type',
+    'contact_person',
+    'email',
+    'payment_terms',
+    'is_active',
+    'team_id',
+])]
 class Company extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $primaryKey = 'company_id';
-
-    protected $fillable = [
-        'name',
-        'address',
-        'city',
-        'state',
-        'zip',
-        'phone_number',
-        'website',
-        'industry',
-        'description',
-        'type',
-        'contact_person',
-        'email',
-        'payment_terms',
-        'is_active',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
     
     public function notes(): HasMany
     {
@@ -85,22 +81,26 @@ class Company extends Model
         return $this->hasMany(WorkOrder::class, 'vendor_id', 'company_id');
     }
 
-    public function scopeSuppliers($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function suppliers($query)
     {
         return $query->whereIn('type', ['supplier', 'both']);
     }
 
-    public function scopeCustomers($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function customers($query)
     {
         return $query->whereIn('type', ['customer', 'both']);
     }
 
-    public function scopeVendors($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function vendors($query)
     {
         return $query->whereIn('type', ['vendor', 'supplier', 'both']);
     }
 
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }
@@ -131,5 +131,11 @@ class Company extends Model
         return $this->vendorContracts()
             ->where('status', 'active')
             ->count();
+    }
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
     }
 }

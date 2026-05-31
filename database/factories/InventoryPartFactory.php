@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InventoryPartFactory extends Factory
 {
+    #[\Override]
     protected $model = InventoryPart::class;
 
     /**
@@ -20,10 +21,10 @@ class InventoryPartFactory extends Factory
     public function definition(): array
     {
         return [
-            'part_number' => strtoupper($this->faker->bothify('PART-####-???')),
-            'name' => $this->faker->words(3, true),
-            'description' => $this->faker->sentence(),
-            'category' => $this->faker->randomElement([
+            'part_number' => strtoupper(fake()->bothify('PART-####-???')),
+            'name' => fake()->words(3, true),
+            'description' => fake()->sentence(),
+            'category' => fake()->randomElement([
                 'Mechanical',
                 'Electrical',
                 'Hydraulic',
@@ -35,14 +36,14 @@ class InventoryPartFactory extends Factory
                 'Safety',
                 'Other',
             ]),
-            'unit_of_measure' => $this->faker->randomElement(['piece', 'box', 'liter', 'meter', 'kilogram']),
-            'unit_cost' => $this->faker->randomFloat(2, 1, 500),
-            'reorder_level' => $this->faker->numberBetween(5, 50),
-            'reorder_quantity' => $this->faker->numberBetween(20, 200),
-            'location' => $this->faker->randomElement(['Warehouse A', 'Warehouse B', 'Storage Room', 'Tool Crib']),
-            'supplier' => $this->faker->company(),
-            'lead_time_days' => $this->faker->numberBetween(1, 30),
-            'notes' => $this->faker->optional()->sentence(),
+            'unit_of_measure' => fake()->randomElement(['piece', 'box', 'liter', 'meter', 'kilogram']),
+            'unit_cost' => fake()->randomFloat(2, 1, 500),
+            'reorder_level' => fake()->numberBetween(5, 50),
+            'reorder_quantity' => fake()->numberBetween(20, 200),
+            'location' => fake()->randomElement(['Warehouse A', 'Warehouse B', 'Storage Room', 'Tool Crib']),
+            'supplier' => fake()->company(),
+            'lead_time_days' => fake()->numberBetween(1, 30),
+            'notes' => fake()->optional()->sentence(),
         ];
     }
 }

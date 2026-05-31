@@ -35,14 +35,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class WorkOrderResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = WorkOrder::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Maintenance';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Work Orders';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 class WorkOrderTrendsWidget extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Work Order Trends (Last 30 Days)';
 
+    #[\Override]
     protected ?string $pollingInterval = '300s';
 
+    #[\Override]
     protected int | string | array $columnSpan = 1;
 
+    #[\Override]
     protected ?string $maxHeight = '300px';
 
     protected function getData(): array

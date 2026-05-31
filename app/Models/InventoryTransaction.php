@@ -6,26 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'inventory_part_id',
+    'type',
+    'quantity',
+    'location',
+    'work_order_id',
+    'user_id',
+    'notes',
+    'unit_cost',
+    'reference_number',
+])]
 class InventoryTransaction extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'inventory_part_id',
-        'type',
-        'quantity',
-        'location',
-        'work_order_id',
-        'user_id',
-        'notes',
-        'unit_cost',
-        'reference_number',
-    ];
-
-    protected $casts = [
-        'quantity' => 'integer',
-        'unit_cost' => 'decimal:2',
-    ];
 
     public function inventoryPart(): BelongsTo
     {
@@ -106,5 +100,12 @@ class InventoryTransaction extends Model
             'user_id' => $userId,
             'notes' => $notes,
         ]);
+    }
+    protected function casts(): array
+    {
+        return [
+            'quantity' => 'integer',
+            'unit_cost' => 'decimal:2',
+        ];
     }
 }

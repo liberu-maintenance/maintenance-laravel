@@ -25,14 +25,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class InventoryPartResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = InventoryPart::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cube';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Inventory Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Parts';
 
     public static function form(Schema $schema): Schema

@@ -12,17 +12,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EquipmentFactory extends Factory
 {
+    #[\Override]
     protected $model = Equipment::class;
 
     public function definition(): array
     {
         return [
-            'name' => $this->faker->words(3, true),
-            'description' => $this->faker->sentence(),
-            'serial_number' => $this->faker->unique()->bothify('SN-####-????'),
-            'model' => $this->faker->bothify('Model-###'),
-            'manufacturer' => $this->faker->company(),
-            'category' => $this->faker->randomElement([
+            'name' => fake()->words(3, true),
+            'description' => fake()->sentence(),
+            'serial_number' => fake()->unique()->bothify('SN-####-????'),
+            'model' => fake()->bothify('Model-###'),
+            'manufacturer' => fake()->company(),
+            'category' => fake()->randomElement([
                 'HVAC',
                 'Electrical',
                 'Plumbing',
@@ -31,18 +32,18 @@ class EquipmentFactory extends Factory
                 'Safety Equipment',
                 'Vehicles',
             ]),
-            'location' => $this->faker->randomElement([
+            'location' => fake()->randomElement([
                 'Building A - Floor 1',
                 'Building A - Floor 2',
                 'Building B - Floor 1',
                 'Warehouse',
                 'Parking Lot',
             ]),
-            'purchase_date' => $this->faker->dateTimeBetween('-5 years', '-1 year'),
-            'warranty_expiry' => $this->faker->dateTimeBetween('now', '+2 years'),
-            'status' => $this->faker->randomElement(['active', 'inactive', 'under_maintenance', 'retired']),
-            'criticality' => $this->faker->randomElement(['low', 'medium', 'high', 'critical']),
-            'notes' => $this->faker->optional()->paragraph(),
+            'purchase_date' => fake()->dateTimeBetween('-5 years', '-1 year'),
+            'warranty_expiry' => fake()->dateTimeBetween('now', '+2 years'),
+            'status' => fake()->randomElement(['active', 'inactive', 'under_maintenance', 'retired']),
+            'criticality' => fake()->randomElement(['low', 'medium', 'high', 'critical']),
+            'notes' => fake()->optional()->paragraph(),
             'sensor_enabled' => false,
             'sensor_type' => null,
             'sensor_id' => null,
@@ -55,7 +56,7 @@ class EquipmentFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'sensor_enabled' => true,
-            'sensor_type' => $this->faker->randomElement([
+            'sensor_type' => fake()->randomElement([
                 'temperature',
                 'vibration',
                 'pressure',
@@ -63,7 +64,7 @@ class EquipmentFactory extends Factory
                 'power',
                 'flow',
             ]),
-            'sensor_id' => $this->faker->unique()->bothify('SENSOR-###-????'),
+            'sensor_id' => fake()->unique()->bothify('SENSOR-###-????'),
             'sensor_config' => [
                 'thresholds' => [
                     'temperature' => [

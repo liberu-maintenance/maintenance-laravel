@@ -83,7 +83,7 @@ class CustomFormRenderer extends Component
                     break;
             }
 
-            if (!empty($fieldRules)) {
+            if ($fieldRules !== []) {
                 $rules["formData.{$field->name}"] = implode('|', $fieldRules);
             }
         }

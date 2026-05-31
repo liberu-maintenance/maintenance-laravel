@@ -28,7 +28,7 @@ class MaintenanceDueSoonNotification extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        $daysText = $this->daysUntilDue == 1 ? '1 day' : "{$this->daysUntilDue} days";
+        $daysText = $this->daysUntilDue === 1 ? '1 day' : "{$this->daysUntilDue} days";
 
         return (new MailMessage)
             ->subject("Upcoming Maintenance: {$this->maintenanceSchedule->name}")

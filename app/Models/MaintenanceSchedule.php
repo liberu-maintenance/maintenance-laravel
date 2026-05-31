@@ -9,38 +9,32 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'description',
+    'equipment_id',
+    'frequency_type',
+    'frequency_value',
+    'next_due_date',
+    'last_completed_date',
+    'estimated_duration',
+    'priority',
+    'status',
+    'assigned_to',
+    'instructions',
+    'checklist_id',
+    'team_id',
+])]
 class MaintenanceSchedule extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'equipment_id',
-        'frequency_type',
-        'frequency_value',
-        'next_due_date',
-        'last_completed_date',
-        'estimated_duration',
-        'priority',
-        'status',
-        'assigned_to',
-        'instructions',
-        'checklist_id',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'next_due_date' => 'date',
-        'last_completed_date' => 'date',
-        'estimated_duration' => 'integer',
-    ];
 
     /**
      * The relationships that should be eagerly loaded.
      *
      * @var array
      */
+    #[\Override]
     protected $with = [];
 
     public function equipment(): BelongsTo
@@ -68,24 +62,28 @@ class MaintenanceSchedule extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeOverdue($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function overdue($query)
     {
         return $query->where('next_due_date', '<', now())
                     ->where('status', 'active');
     }
 
-    public function scopeDueSoon($query, $days = 7)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function dueSoon($query, $days = 7)
     {
         return $query->whereBetween('next_due_date', [now(), now()->addDays($days)])
                     ->where('status', 'active');
     }
 
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeInactive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function inactive($query)
     {
         return $query->where('status', 'inactive');
     }
@@ -148,7 +146,8 @@ class MaintenanceSchedule extends Model
     /**
      * Scope to get schedules with related data for listings
      */
-    public function scopeWithRelatedData($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withRelatedData($query)
     {
         return $query->with([
             'equipment:id,name,serial_number,status',
@@ -161,7 +160,8 @@ class MaintenanceSchedule extends Model
     /**
      * Scope to get schedules with work order count
      */
-    public function scopeWithWorkOrderCount($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withWorkOrderCount($query)
     {
         return $query->withCount([
             'workOrders',
@@ -174,10 +174,19 @@ class MaintenanceSchedule extends Model
     /**
      * Scope for upcoming maintenance (next 30 days)
      */
-    public function scopeUpcoming($query, $days = 30)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function upcoming($query, $days = 30)
     {
         return $query->where('status', 'active')
             ->whereBetween('next_due_date', [now(), now()->addDays($days)])
             ->orderBy('next_due_date');
+    }
+    protected function casts(): array
+    {
+        return [
+            'next_due_date' => 'date',
+            'last_completed_date' => 'date',
+            'estimated_duration' => 'integer',
+        ];
     }
 }

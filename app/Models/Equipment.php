@@ -8,45 +8,37 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'description',
+    'serial_number',
+    'model',
+    'manufacturer',
+    'category',
+    'location',
+    'purchase_date',
+    'warranty_expiry',
+    'status',
+    'criticality',
+    'notes',
+    'company_id',
+    'team_id',
+    'sensor_enabled',
+    'sensor_type',
+    'sensor_id',
+    'sensor_config',
+    'last_sensor_reading_at',
+])]
 class Equipment extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'serial_number',
-        'model',
-        'manufacturer',
-        'category',
-        'location',
-        'purchase_date',
-        'warranty_expiry',
-        'status',
-        'criticality',
-        'notes',
-        'company_id',
-        'team_id',
-        'sensor_enabled',
-        'sensor_type',
-        'sensor_id',
-        'sensor_config',
-        'last_sensor_reading_at',
-    ];
-
-    protected $casts = [
-        'purchase_date' => 'date',
-        'warranty_expiry' => 'date',
-        'sensor_enabled' => 'boolean',
-        'sensor_config' => 'array',
-        'last_sensor_reading_at' => 'datetime',
-    ];
 
     /**
      * The relationships that should be eagerly loaded.
      *
      * @var array
      */
+    #[\Override]
     protected $with = [];
 
     public function company(): BelongsTo
@@ -102,37 +94,44 @@ class Equipment extends Model
             ->orderBy('reading_time', 'desc');
     }
 
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeInactive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function inactive($query)
     {
         return $query->where('status', 'inactive');
     }
 
-    public function scopeUnderMaintenance($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function underMaintenance($query)
     {
         return $query->where('status', 'under_maintenance');
     }
 
-    public function scopeCritical($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function critical($query)
     {
         return $query->where('criticality', 'critical');
     }
 
-    public function scopeHigh($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function high($query)
     {
         return $query->where('criticality', 'high');
     }
 
-    public function scopeSensorEnabled($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function sensorEnabled($query)
     {
         return $query->where('sensor_enabled', true);
     }
 
-    public function scopeWithCriticalReadings($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withCriticalReadings($query)
     {
         return $query->whereHas('sensorReadings', function ($q) {
             $q->where('status', 'critical')
@@ -208,7 +207,8 @@ class Equipment extends Model
     /**
      * Scope to get equipment with work order counts
      */
-    public function scopeWithWorkOrderCounts($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withWorkOrderCounts($query)
     {
         return $query->withCount([
             'workOrders',
@@ -224,7 +224,8 @@ class Equipment extends Model
     /**
      * Scope to get equipment with maintenance schedule counts
      */
-    public function scopeWithMaintenanceCounts($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withMaintenanceCounts($query)
     {
         return $query->withCount([
             'maintenanceSchedules',
@@ -237,5 +238,15 @@ class Equipment extends Model
                      ->where('status', 'active');
             }
         ]);
+    }
+    protected function casts(): array
+    {
+        return [
+            'purchase_date' => 'date',
+            'warranty_expiry' => 'date',
+            'sensor_enabled' => 'boolean',
+            'sensor_config' => 'array',
+            'last_sensor_reading_at' => 'datetime',
+        ];
     }
 }

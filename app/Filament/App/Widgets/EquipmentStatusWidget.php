@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 class EquipmentStatusWidget extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Equipment Status Overview';
 
+    #[\Override]
     protected ?string $pollingInterval = '60s';
 
+    #[\Override]
     protected int | string | array $columnSpan = 1;
 
+    #[\Override]
     protected ?string $maxHeight = '300px';
 
     protected function getData(): array

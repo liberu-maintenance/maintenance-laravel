@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'content',
+    'contact_id',
+    'company_id',
+    'opportunity_id',
+    'team_id',
+])]
 class Note extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $primaryKey = 'note_id';
-
-    protected $fillable = [
-        'content',
-        'contact_id',
-        'company_id',
-        'opportunity_id',
-        'team_id',
-    ];
 
     public function contact(): BelongsTo
     {

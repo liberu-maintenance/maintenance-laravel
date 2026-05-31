@@ -8,33 +8,25 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'part_number',
+    'name',
+    'description',
+    'category',
+    'unit_of_measure',
+    'unit_cost',
+    'reorder_level',
+    'reorder_quantity',
+    'location',
+    'supplier',
+    'supplier_id',
+    'lead_time_days',
+    'notes',
+    'team_id',
+])]
 class InventoryPart extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'part_number',
-        'name',
-        'description',
-        'category',
-        'unit_of_measure',
-        'unit_cost',
-        'reorder_level',
-        'reorder_quantity',
-        'location',
-        'supplier',
-        'supplier_id',
-        'lead_time_days',
-        'notes',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'unit_cost' => 'decimal:2',
-        'reorder_level' => 'integer',
-        'reorder_quantity' => 'integer',
-        'lead_time_days' => 'integer',
-    ];
 
     public function team(): BelongsTo
     {
@@ -66,17 +58,21 @@ class InventoryPart extends Model
     /**
      * Get total quantity across all locations
      */
-    public function getTotalQuantityAttribute(): int
+    protected function totalQuantity(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
-        return $this->stockLevels()->sum('quantity');
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: function () {
+            return $this->stockLevels()->sum('quantity');
+        });
     }
 
     /**
      * Get available quantity (total - reserved)
      */
-    public function getAvailableQuantityAttribute(): int
+    protected function availableQuantity(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
-        return $this->stockLevels()->sum('quantity') - $this->stockLevels()->sum('reserved_quantity');
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: function () {
+            return $this->stockLevels()->sum('quantity') - $this->stockLevels()->sum('reserved_quantity');
+        });
     }
 
     /**
@@ -90,7 +86,8 @@ class InventoryPart extends Model
     /**
      * Scope for low stock items
      */
-    public function scopeLowStock($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function lowStock($query)
     {
         return $query->whereHas('stockLevels', function ($q) {
             $q->havingRaw('SUM(quantity) <= inventory_parts.reorder_level');
@@ -100,10 +97,20 @@ class InventoryPart extends Model
     /**
      * Scope for out of stock items
      */
-    public function scopeOutOfStock($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function outOfStock($query)
     {
         return $query->whereHas('stockLevels', function ($q) {
             $q->havingRaw('SUM(quantity) = 0');
         });
+    }
+    protected function casts(): array
+    {
+        return [
+            'unit_cost' => 'decimal:2',
+            'reorder_level' => 'integer',
+            'reorder_quantity' => 'integer',
+            'lead_time_days' => 'integer',
+        ];
     }
 }

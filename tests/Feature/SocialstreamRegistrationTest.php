@@ -75,6 +75,10 @@ class SocialstreamRegistrationTest extends TestCase
      */
     public static function socialiteProvidersDataProvider(): array
     {
+        if (! class_exists(Providers::class)) {
+            return [];
+        }
+
         return [
             [Providers::bitbucket()],
             [Providers::facebook()],

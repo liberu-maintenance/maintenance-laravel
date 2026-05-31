@@ -85,20 +85,20 @@ class CreateNewUser implements CreatesNewUsers
                 'sql' => $e->getSql(),
                 'bindings' => $e->getBindings(),
             ]);
-            throw new Exception($this->getDatabaseErrorMessage($e));
+            throw new Exception($this->getDatabaseErrorMessage($e), $e->getCode(), $e);
         } catch (RoleDoesNotExist $e) {
             Log::error('Invalid role specified during user creation', [
                 'role' => $input['role'] ?? 'not provided',
                 'message' => $e->getMessage(),
             ]);
-            throw new Exception('Invalid role specified. Please choose a valid role.');
+            throw new Exception('Invalid role specified. Please choose a valid role.', $e->getCode(), $e);
         } catch (Exception $e) {
             Log::error('Unexpected error during user creation', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'exception_class' => get_class($e),
             ]);
-            throw new Exception('An unexpected error occurred. Please try again later.');
+            throw new Exception('An unexpected error occurred. Please try again later.', $e->getCode(), $e);
         }
     }
     

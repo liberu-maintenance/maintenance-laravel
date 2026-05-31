@@ -11,6 +11,7 @@ class TaskNotifications extends Component
     public $unreadCount = 0;
     public $showDropdown = false;
 
+    #[\Override]
     protected $listeners = [
         'notificationRead' => 'loadNotifications',
         'echo:notifications,NotificationSent' => 'handleNewNotification',

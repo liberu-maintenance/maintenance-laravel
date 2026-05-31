@@ -6,26 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'equipment_id',
+    'sensor_type',
+    'metric_name',
+    'value',
+    'unit',
+    'metadata',
+    'status',
+    'reading_time',
+])]
 class IotSensorReading extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'equipment_id',
-        'sensor_type',
-        'metric_name',
-        'value',
-        'unit',
-        'metadata',
-        'status',
-        'reading_time',
-    ];
-
-    protected $casts = [
-        'value' => 'decimal:2',
-        'metadata' => 'array',
-        'reading_time' => 'datetime',
-    ];
 
     public function equipment(): BelongsTo
     {
@@ -35,7 +28,8 @@ class IotSensorReading extends Model
     /**
      * Scope to get readings within a date range
      */
-    public function scopeBetweenDates($query, $startDate, $endDate)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function betweenDates($query, $startDate, $endDate)
     {
         return $query->whereBetween('reading_time', [$startDate, $endDate]);
     }
@@ -43,7 +37,8 @@ class IotSensorReading extends Model
     /**
      * Scope to get readings by metric name
      */
-    public function scopeForMetric($query, $metricName)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function forMetric($query, $metricName)
     {
         return $query->where('metric_name', $metricName);
     }
@@ -51,7 +46,8 @@ class IotSensorReading extends Model
     /**
      * Scope to get critical readings
      */
-    public function scopeCritical($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function critical($query)
     {
         return $query->where('status', 'critical');
     }
@@ -59,7 +55,8 @@ class IotSensorReading extends Model
     /**
      * Scope to get warning readings
      */
-    public function scopeWarning($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function warning($query)
     {
         return $query->where('status', 'warning');
     }
@@ -67,7 +64,8 @@ class IotSensorReading extends Model
     /**
      * Scope to get recent readings
      */
-    public function scopeRecent($query, $hours = 24)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function recent($query, $hours = 24)
     {
         return $query->where('reading_time', '>=', now()->subHours($hours));
     }
@@ -78,5 +76,13 @@ class IotSensorReading extends Model
     public function isAbnormal(): bool
     {
         return in_array($this->status, ['warning', 'critical', 'error']);
+    }
+    protected function casts(): array
+    {
+        return [
+            'value' => 'decimal:2',
+            'metadata' => 'array',
+            'reading_time' => 'datetime',
+        ];
     }
 }

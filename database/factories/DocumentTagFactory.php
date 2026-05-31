@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\DocumentTag;
@@ -11,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DocumentTagFactory extends Factory
 {
+    #[\Override]
     protected $model = DocumentTag::class;
 
     /**

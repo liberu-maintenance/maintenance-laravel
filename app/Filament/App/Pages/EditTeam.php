@@ -10,6 +10,7 @@ use Filament\Pages\Tenancy\EditTenantProfile;
 
 class EditTeam extends EditTenantProfile
 {
+    #[\Override]
     protected string $view = 'filament.pages.edit-team';
 
     public $name = '';

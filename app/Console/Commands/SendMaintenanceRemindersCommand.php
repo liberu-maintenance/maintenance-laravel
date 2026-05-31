@@ -6,23 +6,11 @@ use App\Models\MaintenanceSchedule;
 use App\Notifications\MaintenanceReminderNotification;
 use Illuminate\Console\Command;
 
+#[\Illuminate\Console\Attributes\Description('Send reminder notifications for maintenance schedules due soon')]
+#[\Illuminate\Console\Attributes\Signature('maintenance:send-reminders
+                          {--days=3 : Number of days before due date to send reminders}')]
 class SendMaintenanceRemindersCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'maintenance:send-reminders
-                          {--days=3 : Number of days before due date to send reminders}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Send reminder notifications for maintenance schedules due soon';
-
     /**
      * Execute the console command.
      */

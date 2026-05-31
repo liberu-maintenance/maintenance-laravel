@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\Opportunities\Pages;
 
 use Filament\Actions\CreateAction;
@@ -9,6 +11,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListOpportunities extends ListRecords
 {
+    #[\Override]
     protected static string $resource = OpportunityResource::class;
 
     protected function getHeaderActions(): array

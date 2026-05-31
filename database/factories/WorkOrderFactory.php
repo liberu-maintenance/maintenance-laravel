@@ -20,6 +20,7 @@ class WorkOrderFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = WorkOrder::class;
 
     /**

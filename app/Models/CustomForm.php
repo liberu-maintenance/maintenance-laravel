@@ -7,26 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'description',
+    'category',
+    'is_active',
+    'is_public',
+    'created_by',
+    'settings',
+    'team_id',
+])]
 class CustomForm extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'category',
-        'is_active',
-        'is_public',
-        'created_by',
-        'settings',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
-        'is_public' => 'boolean',
-        'settings' => 'array',
-    ];
 
     public function creator(): BelongsTo
     {
@@ -48,17 +41,20 @@ class CustomForm extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }
 
-    public function scopePublic($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function public($query)
     {
         return $query->where('is_public', true);
     }
 
-    public function scopeByCategory($query, $category)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function byCategory($query, $category)
     {
         return $query->where('category', $category);
     }
@@ -77,5 +73,13 @@ class CustomForm extends Model
         }
 
         return $newForm;
+    }
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'is_public' => 'boolean',
+            'settings' => 'array',
+        ];
     }
 }

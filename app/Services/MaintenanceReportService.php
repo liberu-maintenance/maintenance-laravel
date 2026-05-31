@@ -25,10 +25,10 @@ class MaintenanceReportService
             ->whereNotNull('completed_at')
             ->whereNotNull('started_at');
 
-        if ($startDate) {
+        if ($startDate instanceof \Carbon\Carbon) {
             $query->where('completed_at', '>=', $startDate);
         }
-        if ($endDate) {
+        if ($endDate instanceof \Carbon\Carbon) {
             $query->where('completed_at', '<=', $endDate);
         }
 
@@ -102,10 +102,10 @@ class MaintenanceReportService
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
             ->whereNotNull('completed_at');
 
-        if ($startDate) {
+        if ($startDate instanceof \Carbon\Carbon) {
             $query->where('completed_at', '>=', $startDate);
         }
-        if ($endDate) {
+        if ($endDate instanceof \Carbon\Carbon) {
             $query->where('completed_at', '<=', $endDate);
         }
 
@@ -203,10 +203,10 @@ class MaintenanceReportService
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
             ->whereNotNull('assigned_to');
 
-        if ($startDate) {
+        if ($startDate instanceof \Carbon\Carbon) {
             $query->where('submitted_at', '>=', $startDate);
         }
-        if ($endDate) {
+        if ($endDate instanceof \Carbon\Carbon) {
             $query->where('submitted_at', '<=', $endDate);
         }
 
@@ -338,7 +338,7 @@ class MaintenanceReportService
         $equipmentMetrics = $this->getEquipmentPerformanceMetrics($teamId, $startDate, $endDate);
         $highCostEquipment = array_filter($equipmentMetrics, fn($e) => $e['total_cost'] > 5000);
         
-        if (!empty($highCostEquipment)) {
+        if ($highCostEquipment !== []) {
             $insights[] = [
                 'type' => 'warning',
                 'category' => 'Cost Management',
@@ -350,7 +350,7 @@ class MaintenanceReportService
         // Check for low uptime equipment
         $lowUptimeEquipment = array_filter($equipmentMetrics, fn($e) => $e['uptime_percentage'] < 80);
         
-        if (!empty($lowUptimeEquipment)) {
+        if ($lowUptimeEquipment !== []) {
             $insights[] = [
                 'type' => 'critical',
                 'category' => 'Equipment Reliability',
@@ -390,7 +390,7 @@ class MaintenanceReportService
         $techMetrics = $this->getTechnicianPerformanceMetrics($teamId, $startDate, $endDate);
         $overloadedTechs = array_filter($techMetrics, fn($t) => $t['completion_rate'] < 70 && $t['total_assigned'] > 5);
         
-        if (!empty($overloadedTechs)) {
+        if ($overloadedTechs !== []) {
             $insights[] = [
                 'type' => 'info',
                 'category' => 'Resource Management',

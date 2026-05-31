@@ -12,8 +12,10 @@ use Filament\Tables\Columns\BadgeColumn;
 
 class CriticalEquipmentAlertsWidget extends BaseWidget
 {
+    #[\Override]
     protected static ?int $sort = 2;
     
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
     public function table(Table $table): Table

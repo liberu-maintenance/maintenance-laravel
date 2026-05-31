@@ -9,8 +9,10 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class TechnicianPerformanceWidget extends BaseWidget
 {
+    #[\Override]
     protected static ?string $heading = 'Technician Performance Report';
 
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
     protected ?string $pollingInterval = null;

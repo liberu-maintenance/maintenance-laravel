@@ -14,10 +14,13 @@ use Filament\Tables\Columns\IconColumn;
 
 class CommentsRelationManager extends RelationManager
 {
+    #[\Override]
     protected static string $relationship = 'comments';
 
+    #[\Override]
     protected static ?string $title = 'Comments & Notes';
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'comment';
 
     public function form(Schema $schema): Schema

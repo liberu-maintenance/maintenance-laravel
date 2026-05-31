@@ -201,7 +201,7 @@ class IotSensorService
         }
 
         return [
-            'trend' => $direction !== 'stable' ? $direction : 'stable',
+            'trend' => $direction,
             'direction' => $direction,
             'rate_of_change' => round($slope, 4),
         ];

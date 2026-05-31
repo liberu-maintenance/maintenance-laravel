@@ -9,10 +9,12 @@ use Illuminate\Support\Carbon;
 
 class MaintenanceCalendarWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.app.widgets.maintenance-calendar';
 
     protected ?string $heading = 'Upcoming Maintenance';
 
+    #[\Override]
     protected int | string | array $columnSpan = 1;
 
     protected ?string $pollingInterval = '300s';

@@ -7,8 +7,12 @@ use App\Models\WorkOrder;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WorkOrderComment>
+ */
 class WorkOrderCommentFactory extends Factory
 {
+    #[\Override]
     protected $model = WorkOrderComment::class;
 
     public function definition(): array

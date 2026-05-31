@@ -28,7 +28,7 @@ class MaintenanceReminderNotification extends Notification implements ShouldQueu
 
     public function toMail($notifiable)
     {
-        $daysText = $this->daysUntilDue == 1 ? 'tomorrow' : "in {$this->daysUntilDue} days";
+        $daysText = $this->daysUntilDue === 1 ? 'tomorrow' : "in {$this->daysUntilDue} days";
         $priorityEmoji = $this->maintenanceSchedule->priority === 'critical' ? '🚨 ' : 
                         ($this->maintenanceSchedule->priority === 'high' ? '⚠️ ' : '');
 
