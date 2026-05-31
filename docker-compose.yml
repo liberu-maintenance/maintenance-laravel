@@ -4,17 +4,20 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: '8.3'
-        WWWUSER: '${WWWUSER:-1000}'
-        WWWGROUP: '${WWWGROUP:-1000}'
-    image: boilerplate-laravel:latest
+        PHP_VERSION: '8.5'
+        USER_ID: '${UID:-1000}'
+        GROUP_ID: '${GID:-1000}'
+    image: liberu/maintenance:latest
+    restart: unless-stopped
     ports:
-      - '${APP_PORT:-8000}:80'
+      - '${APP_PORT:-8000}:8000'
+      - '${HEALTH_PORT:-8080}:8080'
     environment:
       CONTAINER_MODE: http
-      OCTANE_SERVER: roadrunner
-      WITH_SCHEDULER: 'true'
-      WITH_HORIZON: 'false'
+      OCTANE_SERVER: '${OCTANE_SERVER:-roadrunner}'
+      WITH_SCHEDULER: '${WITH_SCHEDULER:-true}'
+      WITH_HORIZON: '${WITH_HORIZON:-false}'
+      WITH_REVERB: '${WITH_REVERB:-false}'
       RUNNING_MIGRATIONS_AND_SEEDERS: '${RUNNING_MIGRATIONS_AND_SEEDERS:-false}'
     env_file:
       - .env
@@ -28,14 +31,68 @@ services:
         condition: service_healthy
     networks:
       - appnet
+    healthcheck:
+      test: ['CMD', 'healthcheck']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  horizon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PHP_VERSION: '8.5'
+    image: liberu/maintenance:latest
+    restart: unless-stopped
+    environment:
+      CONTAINER_MODE: horizon
+    env_file:
+      - .env
+    volumes:
+      - storage:/var/www/html/storage/app
+      - logs:/var/www/html/storage/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - appnet
+    profiles:
+      - horizon
+
+  reverb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PHP_VERSION: '8.5'
+    image: liberu/maintenance:latest
+    restart: unless-stopped
+    ports:
+      - '${REVERB_PORT:-8082}:8080'
+    environment:
+      CONTAINER_MODE: reverb
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - appnet
+    profiles:
+      - reverb
 
   worker:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        PHP_VERSION: '8.3'
-    image: boilerplate-laravel:latest
+        PHP_VERSION: '8.5'
+    image: liberu/maintenance:latest
+    restart: unless-stopped
     environment:
       CONTAINER_MODE: worker
       WORKER_COMMAND: 'php /var/www/html/artisan queue:work --sleep=3 --tries=3 --max-time=3600'
@@ -56,11 +113,12 @@ services:
 
   mysql:
     image: mysql:8.0
+    restart: unless-stopped
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD:-secret}'
-      MYSQL_DATABASE: '${DB_DATABASE:-liberu}'
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD:-secret}'
+      MYSQL_DATABASE: '${DB_DATABASE:-liberu_maintenance}'
       MYSQL_USER: '${DB_USERNAME:-liberu}'
       MYSQL_PASSWORD: '${DB_PASSWORD:-secret}'
     volumes:
@@ -72,9 +130,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   redis:
     image: redis:7-alpine
+    restart: unless-stopped
     ports:
       - '${FORWARD_REDIS_PORT:-6379}:6379'
     volumes:
@@ -89,11 +149,14 @@ services:
 
   mailpit:
     image: axllent/mailpit:latest
+    restart: unless-stopped
     ports:
       - '${FORWARD_MAIL_PORT:-1025}:1025'
       - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
     networks:
       - appnet
+    profiles:
+      - mail
 
 networks:
   appnet:

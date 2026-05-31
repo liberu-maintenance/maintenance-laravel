@@ -5,6 +5,16 @@ declare(strict_types=1);
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\IotSensorController;
+use App\Http\Controllers\Api\V1\EquipmentController;
+use App\Http\Controllers\Api\V1\WorkOrderController;
+use App\Http\Controllers\Api\V1\MaintenanceScheduleController;
+use App\Http\Controllers\Api\V1\InventoryPartController;
+use App\Http\Controllers\Api\V1\DocumentController;
+use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\CompanyController;
+use App\Http\Controllers\Api\V1\ChecklistController;
+use App\Http\Controllers\Api\V1\NoteController;
+use App\Http\Controllers\Api\V1\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +44,19 @@ Route::prefix('iot-sensors')->group(function () {
         Route::get('/equipment/{equipment}/insights', [IotSensorController::class, 'getPredictiveInsights']);
     });
 });
+
+// V1 API Routes — all protected by auth:sanctum and rate-limited via the 'api' throttle
+Route::prefix('v1')
+    ->middleware(['auth:sanctum', 'throttle:api'])
+    ->group(function () {
+        Route::apiResource('equipment', EquipmentController::class);
+        Route::apiResource('work-orders', WorkOrderController::class);
+        Route::apiResource('maintenance-schedules', MaintenanceScheduleController::class);
+        Route::apiResource('inventory-parts', InventoryPartController::class);
+        Route::apiResource('documents', DocumentController::class);
+        Route::apiResource('contacts', ContactController::class);
+        Route::apiResource('companies', CompanyController::class);
+        Route::apiResource('checklists', ChecklistController::class);
+        Route::apiResource('notes', NoteController::class);
+        Route::apiResource('tasks', TaskController::class);
+    });

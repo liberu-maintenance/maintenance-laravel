@@ -25,3 +25,4 @@ Route::post('/submit-request', [App\Http\Controllers\GuestWorkOrderController::c
 Route::get('/request-submitted', [App\Http\Controllers\GuestWorkOrderController::class, 'success'])->name('guest.work-order.success');
 
 require __DIR__.'/socialstream.php';
+require __DIR__.'/socialstream.php';

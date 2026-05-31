@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AssignDefaultTeam;
+use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\TeamsPermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,7 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
+            SecurityHeaders::class,
             AssignDefaultTeam::class,
+        ]);
+
+        $middleware->api(append: [
+            SecurityHeaders::class,
         ]);
 
         $middleware->alias([
