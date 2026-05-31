@@ -20,7 +20,7 @@ class MaintenanceScheduleSeeder extends Seeder
         $equipment = Equipment::all();
         $users = User::all();
         $checklists = Checklist::all();
-        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
+        $defaultTeam = Team::first();
 
         if ($equipment->isEmpty()) {
             $this->command->warn('No equipment found. Please run EquipmentSeeder first.');
