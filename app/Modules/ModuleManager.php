@@ -66,7 +66,7 @@ class ModuleManager
     {
         $module = $this->get($name);
         
-        if (!$module) {
+        if (!$module instanceof \App\Modules\Contracts\ModuleInterface) {
             return false;
         }
 
@@ -86,7 +86,7 @@ class ModuleManager
     {
         $module = $this->get($name);
         
-        if (!$module) {
+        if (!$module instanceof \App\Modules\Contracts\ModuleInterface) {
             return false;
         }
 
@@ -106,7 +106,7 @@ class ModuleManager
     {
         $module = $this->get($name);
         
-        if (!$module) {
+        if (!$module instanceof \App\Modules\Contracts\ModuleInterface) {
             return false;
         }
 
@@ -126,7 +126,7 @@ class ModuleManager
     {
         $module = $this->get($name);
         
-        if (!$module) {
+        if (!$module instanceof \App\Modules\Contracts\ModuleInterface) {
             return false;
         }
 
@@ -213,7 +213,7 @@ class ModuleManager
     {
         $module = $this->get($name);
         
-        if (!$module) {
+        if (!$module instanceof \App\Modules\Contracts\ModuleInterface) {
             return [];
         }
 

@@ -9,8 +9,10 @@ use Filament\Widgets\Widget;
 
 class QuickStatsWidget extends Widget
 {
+    #[\Override]
     protected string $view = 'filament.app.widgets.quick-stats';
 
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
     protected ?string $pollingInterval = '60s';
@@ -66,7 +68,9 @@ class QuickStatsWidget extends Widget
             ->where('submitted_at', '>=', now()->subDays(30))
             ->count();
 
-        if ($total === 0) return 100.0;
+        if ($total === 0) {
+            return 100.0;
+        }
 
         $completed = WorkOrder::query()
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
@@ -95,7 +99,9 @@ class QuickStatsWidget extends Widget
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
             ->count();
 
-        if ($total === 0) return 100.0;
+        if ($total === 0) {
+            return 100.0;
+        }
 
         $operational = Equipment::query()
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))
@@ -112,7 +118,9 @@ class QuickStatsWidget extends Widget
             ->where('status', 'active')
             ->count();
 
-        if ($total === 0) return 100.0;
+        if ($total === 0) {
+            return 100.0;
+        }
 
         $compliant = MaintenanceSchedule::query()
             ->when($teamId, fn($q) => $q->where('team_id', $teamId))

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\DocumentTags\Pages;
 
 use App\Filament\App\Resources\DocumentTags\DocumentTagResource;
@@ -8,6 +10,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditDocumentTag extends EditRecord
 {
+    #[\Override]
     protected static string $resource = DocumentTagResource::class;
 
     protected function getHeaderActions(): array

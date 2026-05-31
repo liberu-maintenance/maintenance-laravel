@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\IotSensorReadings\Pages;
 
 use App\Filament\App\Resources\IotSensorReadings\IotSensorReadingResource;
@@ -8,6 +10,7 @@ use Filament\Actions;
 
 class ListIotSensorReadings extends ListRecords
 {
+    #[\Override]
     protected static string $resource = IotSensorReadingResource::class;
 
     protected function getHeaderActions(): array

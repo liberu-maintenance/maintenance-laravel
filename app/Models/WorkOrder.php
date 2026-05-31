@@ -10,52 +10,42 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'title',
+    'description',
+    'priority',
+    'status',
+    'guest_name',
+    'guest_email',
+    'guest_phone',
+    'location',
+    'equipment_id',
+    'maintenance_schedule_id',
+    'checklist_id',
+    'submitted_at',
+    'reviewed_by',
+    'reviewed_at',
+    'notes',
+    'team_id',
+    'customer_id',
+    'vendor_id',
+    'assigned_to',
+    'due_date',
+    'started_at',
+    'completed_at',
+    'estimated_hours',
+    'actual_hours',
+])]
 class WorkOrder extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $fillable = [
-        'title',
-        'description',
-        'priority',
-        'status',
-        'guest_name',
-        'guest_email',
-        'guest_phone',
-        'location',
-        'equipment_id',
-        'maintenance_schedule_id',
-        'checklist_id',
-        'submitted_at',
-        'reviewed_by',
-        'reviewed_at',
-        'notes',
-        'team_id',
-        'customer_id',
-        'vendor_id',
-        'assigned_to',
-        'due_date',
-        'started_at',
-        'completed_at',
-        'estimated_hours',
-        'actual_hours',
-    ];
-
-    protected $casts = [
-        'submitted_at' => 'datetime',
-        'reviewed_at' => 'datetime',
-        'due_date' => 'datetime',
-        'started_at' => 'datetime',
-        'completed_at' => 'datetime',
-        'estimated_hours' => 'integer',
-        'actual_hours' => 'integer',
-    ];
 
     /**
      * The relationships that should be eagerly loaded.
      *
      * @var array
      */
+    #[\Override]
     protected $with = [];
 
     public function reviewer(): BelongsTo
@@ -110,43 +100,51 @@ class WorkOrder extends Model
             ->withTimestamps();
     }
 
-    public function scopePending($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function pending($query)
     {
         return $query->where('status', 'pending');
     }
 
-    public function scopeApproved($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function approved($query)
     {
         return $query->where('status', 'approved');
     }
 
-    public function scopeRejected($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function rejected($query)
     {
         return $query->where('status', 'rejected');
     }
 
-    public function scopeInProgress($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function inProgress($query)
     {
         return $query->where('status', 'in_progress');
     }
 
-    public function scopeCompleted($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function completed($query)
     {
         return $query->where('status', 'completed');
     }
 
-    public function scopeOverdue($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function overdue($query)
     {
         return $query->whereNotIn('status', ['completed', 'rejected'])
             ->where('due_date', '<', now());
     }
 
-    public function scopeAssignedToUser($query, $userId)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function assignedToUser($query, $userId)
     {
         return $query->where('assigned_to', $userId);
     }
 
-    public function scopeDueWithin($query, $days)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function dueWithin($query, $days)
     {
         return $query->whereNotIn('status', ['completed', 'rejected'])
             ->whereBetween('due_date', [now(), now()->addDays($days)]);
@@ -165,7 +163,8 @@ class WorkOrder extends Model
     /**
      * Scope to get work orders with related data for listings
      */
-    public function scopeWithRelatedData($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function withRelatedData($query)
     {
         return $query->with([
             'equipment:id,name,serial_number,status',
@@ -179,7 +178,8 @@ class WorkOrder extends Model
     /**
      * Scope for efficient counting by status
      */
-    public function scopeCountByStatus($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function countByStatus($query)
     {
         return $query->selectRaw('status, COUNT(*) as count')
             ->groupBy('status');
@@ -188,9 +188,22 @@ class WorkOrder extends Model
     /**
      * Scope for efficient counting by priority
      */
-    public function scopeCountByPriority($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function countByPriority($query)
     {
         return $query->selectRaw('priority, COUNT(*) as count')
             ->groupBy('priority');
+    }
+    protected function casts(): array
+    {
+        return [
+            'submitted_at' => 'datetime',
+            'reviewed_at' => 'datetime',
+            'due_date' => 'datetime',
+            'started_at' => 'datetime',
+            'completed_at' => 'datetime',
+            'estimated_hours' => 'integer',
+            'actual_hours' => 'integer',
+        ];
     }
 }

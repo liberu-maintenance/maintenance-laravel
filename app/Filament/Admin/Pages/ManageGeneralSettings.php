@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Pages;
 
 use Filament\Schemas\Schema;
@@ -12,14 +14,19 @@ use Filament\Pages\SettingsPage;
 
 class ManageGeneralSettings extends SettingsPage
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog-6-tooth';
 
+    #[\Override]
     protected static string $settings = GeneralSettings::class;
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Settings';
 
+    #[\Override]
     protected static ?string $title = 'General Settings';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'General Settings';
 
     public function form(Schema $schema): Schema

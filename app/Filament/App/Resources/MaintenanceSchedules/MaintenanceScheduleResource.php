@@ -29,12 +29,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MaintenanceScheduleResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = MaintenanceSchedule::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-calendar-days';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Maintenance Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

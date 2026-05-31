@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Team;
@@ -16,6 +18,7 @@ class TeamFactory extends Factory
      *
      * @var string
      */
+    #[\Override]
     protected $model = Team::class;
 
     /**

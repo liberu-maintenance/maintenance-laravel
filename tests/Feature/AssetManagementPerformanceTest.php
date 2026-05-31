@@ -15,6 +15,8 @@ use Tests\TestCase;
 
 class AssetManagementPerformanceTest extends TestCase
 {
+    public $user;
+    public $team;
     use RefreshDatabase;
 
     protected function setUp(): void

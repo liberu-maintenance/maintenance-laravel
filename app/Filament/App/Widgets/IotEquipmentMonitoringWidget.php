@@ -9,8 +9,10 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class IotEquipmentMonitoringWidget extends BaseWidget
 {
+    #[\Override]
     protected static ?int $sort = 1;
     
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
     public function getStats(): array

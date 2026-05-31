@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MaintenanceScheduleFactory extends Factory
 {
+    #[\Override]
     protected $model = MaintenanceSchedule::class;
 
     /**

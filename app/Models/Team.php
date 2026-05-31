@@ -9,25 +9,20 @@ use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'personal_team',
+])]
 class Team extends JetstreamTeam
 {
     use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'personal_team',
-    ];
 
     /**
      * The event map for the model.
      *
      * @var array<string, class-string>
      */
+    #[\Override]
     protected $dispatchesEvents = [
         'created' => TeamCreated::class,
         'updated' => TeamUpdated::class,

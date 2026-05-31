@@ -6,39 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'vendor_id',
+    'vendor_contract_id',
+    'work_order_id',
+    'evaluation_date',
+    'evaluated_by',
+    'quality_rating',
+    'timeliness_rating',
+    'communication_rating',
+    'cost_effectiveness_rating',
+    'professionalism_rating',
+    'overall_rating',
+    'strengths',
+    'areas_for_improvement',
+    'comments',
+    'would_recommend',
+    'team_id',
+])]
 class VendorPerformanceEvaluation extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'vendor_id',
-        'vendor_contract_id',
-        'work_order_id',
-        'evaluation_date',
-        'evaluated_by',
-        'quality_rating',
-        'timeliness_rating',
-        'communication_rating',
-        'cost_effectiveness_rating',
-        'professionalism_rating',
-        'overall_rating',
-        'strengths',
-        'areas_for_improvement',
-        'comments',
-        'would_recommend',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'evaluation_date' => 'date',
-        'overall_rating' => 'decimal:2',
-        'would_recommend' => 'boolean',
-        'quality_rating' => 'integer',
-        'timeliness_rating' => 'integer',
-        'communication_rating' => 'integer',
-        'cost_effectiveness_rating' => 'integer',
-        'professionalism_rating' => 'integer',
-    ];
 
     protected static function boot()
     {
@@ -86,25 +74,37 @@ class VendorPerformanceEvaluation extends Model
 
         $validRatings = array_filter($ratings, fn($rating) => $rating > 0);
         
-        if (count($validRatings) > 0) {
-            $this->overall_rating = round(array_sum($validRatings) / count($validRatings), 2);
-        } else {
-            $this->overall_rating = 0.00;
-        }
+        $this->overall_rating = count($validRatings) > 0 ? round(array_sum($validRatings) / count($validRatings), 2) : 0.00;
     }
 
-    public function scopeForVendor($query, $vendorId)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function forVendor($query, $vendorId)
     {
         return $query->where('vendor_id', $vendorId);
     }
 
-    public function scopeHighPerformance($query, $threshold = 4.0)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function highPerformance($query, $threshold = 4.0)
     {
         return $query->where('overall_rating', '>=', $threshold);
     }
 
-    public function scopeLowPerformance($query, $threshold = 3.0)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function lowPerformance($query, $threshold = 3.0)
     {
         return $query->where('overall_rating', '<', $threshold);
+    }
+    protected function casts(): array
+    {
+        return [
+            'evaluation_date' => 'date',
+            'overall_rating' => 'decimal:2',
+            'would_recommend' => 'boolean',
+            'quality_rating' => 'integer',
+            'timeliness_rating' => 'integer',
+            'communication_rating' => 'integer',
+            'cost_effectiveness_rating' => 'integer',
+            'professionalism_rating' => 'integer',
+        ];
     }
 }

@@ -7,24 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'description',
+    'category',
+    'equipment_id',
+    'is_template',
+    'status',
+    'created_by',
+    'team_id',
+])]
 class Checklist extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'description',
-        'category',
-        'equipment_id',
-        'is_template',
-        'status',
-        'created_by',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'is_template' => 'boolean',
-    ];
 
     public function equipment(): BelongsTo
     {
@@ -56,17 +51,20 @@ class Checklist extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeTemplates($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function templates($query)
     {
         return $query->where('is_template', true);
     }
 
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeByCategory($query, $category)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function byCategory($query, $category)
     {
         return $query->where('category', $category);
     }
@@ -86,5 +84,11 @@ class Checklist extends Model
         }
 
         return $newChecklist;
+    }
+    protected function casts(): array
+    {
+        return [
+            'is_template' => 'boolean',
+        ];
     }
 }

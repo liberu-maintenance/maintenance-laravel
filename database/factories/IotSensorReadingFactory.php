@@ -6,13 +6,17 @@ use App\Models\IotSensorReading;
 use App\Models\Equipment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\IotSensorReading>
+ */
 class IotSensorReadingFactory extends Factory
 {
+    #[\Override]
     protected $model = IotSensorReading::class;
 
     public function definition(): array
     {
-        $sensorType = $this->faker->randomElement([
+        $sensorType = fake()->randomElement([
             'temperature',
             'vibration',
             'pressure',
@@ -22,12 +26,12 @@ class IotSensorReadingFactory extends Factory
         ]);
 
         $metricConfig = [
-            'temperature' => ['value' => $this->faker->numberBetween(20, 90), 'unit' => '°C'],
-            'vibration' => ['value' => $this->faker->randomFloat(2, 0, 10), 'unit' => 'mm/s'],
-            'pressure' => ['value' => $this->faker->numberBetween(1, 100), 'unit' => 'PSI'],
-            'humidity' => ['value' => $this->faker->numberBetween(20, 80), 'unit' => '%'],
-            'power' => ['value' => $this->faker->numberBetween(100, 5000), 'unit' => 'W'],
-            'flow' => ['value' => $this->faker->randomFloat(2, 0, 100), 'unit' => 'L/min'],
+            'temperature' => ['value' => fake()->numberBetween(20, 90), 'unit' => '°C'],
+            'vibration' => ['value' => fake()->randomFloat(2, 0, 10), 'unit' => 'mm/s'],
+            'pressure' => ['value' => fake()->numberBetween(1, 100), 'unit' => 'PSI'],
+            'humidity' => ['value' => fake()->numberBetween(20, 80), 'unit' => '%'],
+            'power' => ['value' => fake()->numberBetween(100, 5000), 'unit' => 'W'],
+            'flow' => ['value' => fake()->randomFloat(2, 0, 100), 'unit' => 'L/min'],
         ];
 
         $config = $metricConfig[$sensorType];
@@ -39,11 +43,11 @@ class IotSensorReadingFactory extends Factory
             'value' => $config['value'],
             'unit' => $config['unit'],
             'metadata' => [
-                'battery_level' => $this->faker->numberBetween(50, 100) . '%',
-                'signal_strength' => $this->faker->randomElement(['excellent', 'good', 'fair', 'poor']),
+                'battery_level' => fake()->numberBetween(50, 100) . '%',
+                'signal_strength' => fake()->randomElement(['excellent', 'good', 'fair', 'poor']),
             ],
-            'status' => $this->faker->randomElement(['normal', 'warning', 'critical']),
-            'reading_time' => $this->faker->dateTimeBetween('-7 days', 'now'),
+            'status' => fake()->randomElement(['normal', 'warning', 'critical']),
+            'reading_time' => fake()->dateTimeBetween('-7 days', 'now'),
         ];
     }
 

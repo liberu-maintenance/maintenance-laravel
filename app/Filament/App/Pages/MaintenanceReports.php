@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Response;
 
 class MaintenanceReports extends Page
 {
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
 
+    #[\Override]
     protected string $view = 'filament.app.pages.maintenance-reports';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Reports';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public ?array $data = [];

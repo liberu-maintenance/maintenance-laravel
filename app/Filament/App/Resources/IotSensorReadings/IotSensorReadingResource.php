@@ -16,14 +16,19 @@ use App\Filament\App\Resources\IotSensorReadings\Pages\ListIotSensorReadings;
 
 class IotSensorReadingResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = IotSensorReading::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-signal';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'IoT Monitoring';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Sensor Readings';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public static function table(Table $table): Table

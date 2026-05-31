@@ -7,18 +7,10 @@ use App\Modules\ModuleManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
+#[\Illuminate\Console\Attributes\Description('Manage application modules')]
+#[\Illuminate\Console\Attributes\Signature('module {action} {name?} {--force}')]
 class ModuleCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     */
-    protected $signature = 'module {action} {name?} {--force}';
-
-    /**
-     * The console command description.
-     */
-    protected $description = 'Manage application modules';
-
     protected ModuleManager $moduleManager;
 
     public function __construct(ModuleManager $moduleManager)
@@ -156,11 +148,9 @@ class ModuleCommand extends Command
             return 1;
         }
 
-        if (!$this->option('force')) {
-            if (!$this->confirm("Are you sure you want to uninstall module '{$name}'? This action cannot be undone.")) {
-                $this->info('Operation cancelled.');
-                return 0;
-            }
+        if (!$this->option('force') && !$this->confirm("Are you sure you want to uninstall module '{$name}'? This action cannot be undone.")) {
+            $this->info('Operation cancelled.');
+            return 0;
         }
 
         try {
@@ -212,7 +202,7 @@ class ModuleCommand extends Command
 
         $info = $this->moduleManager->getModuleInfo($name);
 
-        if (empty($info)) {
+        if ($info === []) {
             $this->error("Module '{$name}' not found.");
             return 1;
         }

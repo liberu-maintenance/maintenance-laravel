@@ -12,6 +12,8 @@ use Tests\TestCase;
 
 class WorkOrderImprovementsTest extends TestCase
 {
+    public $user;
+    public $team;
     use RefreshDatabase;
 
     protected function setUp(): void

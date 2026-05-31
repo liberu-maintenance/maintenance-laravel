@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\DocumentTags;
 
 use App\Filament\App\Resources\DocumentTags\Pages\ListDocumentTags;
@@ -22,14 +24,19 @@ use Filament\Actions\DeleteBulkAction;
 
 class DocumentTagResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = DocumentTag::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Documentation';
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Tags';
 
     public static function form(Schema $schema): Schema

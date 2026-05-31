@@ -6,21 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'work_order_id',
+    'user_id',
+    'comment',
+    'is_internal',
+    'created_at',
+])]
 class WorkOrderComment extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'work_order_id',
-        'user_id',
-        'comment',
-        'is_internal',
-        'created_at',
-    ];
-
-    protected $casts = [
-        'is_internal' => 'boolean',
-    ];
 
     public function workOrder(): BelongsTo
     {
@@ -30,5 +25,11 @@ class WorkOrderComment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    protected function casts(): array
+    {
+        return [
+            'is_internal' => 'boolean',
+        ];
     }
 }

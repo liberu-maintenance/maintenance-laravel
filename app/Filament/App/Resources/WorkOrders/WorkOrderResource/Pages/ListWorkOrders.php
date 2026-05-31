@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ListWorkOrders extends ListRecords
 {
+    #[\Override]
     protected static string $resource = WorkOrderResource::class;
 
     protected function getHeaderActions(): array

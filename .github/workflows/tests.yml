@@ -47,7 +47,6 @@ jobs:
 
       - name: Run tests
         run: php artisan test --coverage-clover=coverage.xml
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:

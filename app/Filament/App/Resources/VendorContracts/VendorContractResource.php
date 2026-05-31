@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\VendorContracts;
 
 use Filament\Schemas\Schema;
@@ -28,14 +30,19 @@ use Illuminate\Database\Eloquent\Builder;
 
 class VendorContractResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = VendorContract::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Vendor Management';
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Contracts';
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema

@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 
 class EditWorkOrder extends EditRecord
 {
+    #[\Override]
     protected static string $resource = WorkOrderResource::class;
 
     protected function getHeaderActions(): array

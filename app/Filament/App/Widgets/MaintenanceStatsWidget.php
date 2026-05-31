@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class MaintenanceStatsWidget extends BaseWidget
 {
+    #[\Override]
     protected ?string $pollingInterval = '30s';
 
     protected function getStats(): array

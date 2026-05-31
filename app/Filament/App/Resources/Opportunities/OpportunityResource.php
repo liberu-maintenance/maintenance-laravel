@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\Opportunities;
 
 use Filament\Schemas\Schema;
@@ -24,8 +26,10 @@ use App\Filament\App\Resources\OpportunityResource\RelationManagers;
 
 class OpportunityResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Opportunity::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Schema $schema): Schema

@@ -29,12 +29,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ChecklistResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Checklist::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Maintenance Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema

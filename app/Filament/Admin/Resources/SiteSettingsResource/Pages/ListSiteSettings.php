@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\SiteSettingsResource\Pages;
 
 use Filament\Actions\CreateAction;
@@ -9,6 +11,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListSiteSettings extends ListRecords
 {
+    #[\Override]
     protected static string $resource = SiteSettingsResource::class;
 
     protected function getHeaderActions(): array

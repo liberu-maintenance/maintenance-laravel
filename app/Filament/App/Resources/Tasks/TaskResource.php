@@ -29,8 +29,10 @@ use App\Notifications\TaskAssignedNotification;
 
 class TaskResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Task::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     public static function form(Schema $schema): Schema

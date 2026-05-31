@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Models\Equipment;
@@ -18,9 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Register the module manager as a singleton
-        $this->app->singleton(ModuleManager::class, function ($app) {
-            return new ModuleManager();
-        });
+        $this->app->singleton(ModuleManager::class, fn($app): ModuleManager => new ModuleManager());
 
         // Register the module service provider
         $this->app->register(ModuleServiceProvider::class);

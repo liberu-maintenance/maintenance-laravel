@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 class EquipmentHealthWidget extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Equipment Health Score';
 
+    #[\Override]
     protected ?string $pollingInterval = '60s';
 
+    #[\Override]
     protected int | string | array $columnSpan = 1;
 
+    #[\Override]
     protected ?string $maxHeight = '300px';
 
     protected function getData(): array
@@ -118,9 +122,15 @@ class EquipmentHealthWidget extends ChartWidget
 
     private function getHealthCategory(int $score): string
     {
-        if ($score >= 90) return 'Excellent';
-        if ($score >= 70) return 'Good';
-        if ($score >= 50) return 'Fair';
+        if ($score >= 90) {
+            return 'Excellent';
+        }
+        if ($score >= 70) {
+            return 'Good';
+        }
+        if ($score >= 50) {
+            return 'Fair';
+        }
         return 'Poor';
     }
 }

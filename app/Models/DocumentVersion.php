@@ -6,27 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'document_id',
+    'version',
+    'file_path',
+    'file_name',
+    'mime_type',
+    'file_size',
+    'change_notes',
+    'created_by',
+])]
+#[\Illuminate\Database\Eloquent\Attributes\WithoutTimestamps]
 class DocumentVersion extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
-
-    protected $fillable = [
-        'document_id',
-        'version',
-        'file_path',
-        'file_name',
-        'mime_type',
-        'file_size',
-        'change_notes',
-        'created_by',
-    ];
-
-    protected $casts = [
-        'created_at' => 'datetime',
-        'file_size' => 'integer',
-    ];
 
     /**
      * Get the document that owns this version.
@@ -43,25 +36,30 @@ class DocumentVersion extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
     /**
      * Get formatted file size.
      */
-    public function getFormattedFileSizeAttribute(): string
+    protected function formattedFileSize(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
-        if (!$this->file_size) {
-            return 'N/A';
-        }
-
-        $units = ['B', 'KB', 'MB', 'GB'];
-        $size = $this->file_size;
-        $unit = 0;
-
-        while ($size >= 1024 && $unit < count($units) - 1) {
-            $size /= 1024;
-            $unit++;
-        }
-
-        return round($size, 2) . ' ' . $units[$unit];
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: function () {
+            if (!$this->file_size) {
+                return 'N/A';
+            }
+            $units = ['B', 'KB', 'MB', 'GB'];
+            $size = $this->file_size;
+            $unit = 0;
+            while ($size >= 1024 && $unit < count($units) - 1) {
+                $size /= 1024;
+                $unit++;
+            }
+            return round($size, 2) . ' ' . $units[$unit];
+        });
+    }
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'file_size' => 'integer',
+        ];
     }
 }

@@ -11,6 +11,7 @@ class TaskNotifications extends Component
     public $unreadCount = 0;
     public $showDropdown = false;
 
+    #[\Override]
     protected $listeners = [
         'notificationRead' => 'loadNotifications',
         'echo:notifications,NotificationSent' => 'handleNewNotification',
@@ -40,7 +41,7 @@ class TaskNotifications extends Component
         if ($notification && $notification->notifiable_id === auth()->id()) {
             $notification->markAsRead();
             $this->loadNotifications();
-            $this->emit('notificationRead');
+            $this->dispatch('notificationRead');
         }
     }
 
@@ -48,7 +49,7 @@ class TaskNotifications extends Component
     {
         auth()->user()->unreadNotifications->markAsRead();
         $this->loadNotifications();
-        $this->emit('notificationRead');
+        $this->dispatch('notificationRead');
     }
 
     public function toggleDropdown()
@@ -59,7 +60,7 @@ class TaskNotifications extends Component
     public function handleNewNotification($event)
     {
         $this->loadNotifications();
-        $this->emit('newNotification', $event);
+        $this->dispatch('newNotification', $event);
     }
 
     public function render()

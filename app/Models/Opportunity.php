@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'deal_size',
+    'stage',
+    'closing_date',
+    'team_id',
+])]
 class Opportunity extends Model
 {
     use HasFactory;
 
+    #[\Override]
     protected $primaryKey = 'opportunity_id';
-
-    protected $fillable = [
-        'deal_size',
-        'stage',
-        'closing_date',
-        'team_id',
-    ];
 
     public function notes()
     {

@@ -18,18 +18,25 @@ use UnitEnum;
 
 class UserResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = User::class;
 
+    #[\Override]
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
+    #[\Override]
     protected static string | UnitEnum | null $navigationGroup = "Administration";
 
+    #[\Override]
     protected static ?string $navigationLabel = 'Users';
 
+    #[\Override]
     protected static ?string $recordTitleAttribute = 'name';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
+    #[\Override]
     protected static ?string $tenantOwnershipRelationshipName = 'teams';
 
     public static function form(Schema $schema): Schema

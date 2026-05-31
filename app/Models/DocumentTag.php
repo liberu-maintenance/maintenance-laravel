@@ -8,17 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'name',
+    'slug',
+    'description',
+    'color',
+    'team_id',
+])]
 class DocumentTag extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'color',
-        'team_id',
-    ];
 
     /**
      * Boot the model.
@@ -90,7 +89,8 @@ class DocumentTag extends Model
     /**
      * Scope a query to filter by team.
      */
-    public function scopeForTeam($query, $teamId)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function forTeam($query, $teamId)
     {
         return $query->where('team_id', $teamId);
     }

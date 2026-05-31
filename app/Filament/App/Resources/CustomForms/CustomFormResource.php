@@ -29,12 +29,16 @@ use Filament\Forms\Components\KeyValue;
 
 class CustomFormResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = CustomForm::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Form Management';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

@@ -8,6 +8,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateCustomForm extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = CustomFormResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array

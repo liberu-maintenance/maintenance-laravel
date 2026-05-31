@@ -31,12 +31,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class DocumentResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Document::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
+    #[\Override]
     protected static string | \UnitEnum | null $navigationGroup = 'Documentation';
 
+    #[\Override]
     protected static ?int $navigationSort = 1;
 
     // Allowed file types for document upload

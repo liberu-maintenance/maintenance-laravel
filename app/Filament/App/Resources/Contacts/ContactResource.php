@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\Contacts;
 
 use Filament\Schemas\Schema;
@@ -23,8 +25,10 @@ use App\Filament\App\Resources\ContactResource\RelationManagers;
 
 class ContactResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Contact::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema

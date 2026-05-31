@@ -7,37 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'vendor_id',
+    'contract_number',
+    'title',
+    'description',
+    'contract_type',
+    'start_date',
+    'end_date',
+    'contract_value',
+    'currency',
+    'status',
+    'terms_and_conditions',
+    'payment_frequency',
+    'renewal_period_months',
+    'auto_renewal',
+    'renewal_date',
+    'notes',
+    'team_id',
+])]
 class VendorContract extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'vendor_id',
-        'contract_number',
-        'title',
-        'description',
-        'contract_type',
-        'start_date',
-        'end_date',
-        'contract_value',
-        'currency',
-        'status',
-        'terms_and_conditions',
-        'payment_frequency',
-        'renewal_period_months',
-        'auto_renewal',
-        'renewal_date',
-        'notes',
-        'team_id',
-    ];
-
-    protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-        'renewal_date' => 'date',
-        'contract_value' => 'decimal:2',
-        'auto_renewal' => 'boolean',
-    ];
 
     public function vendor(): BelongsTo
     {
@@ -54,18 +45,21 @@ class VendorContract extends Model
         return $this->hasMany(VendorPerformanceEvaluation::class);
     }
 
-    public function scopeActive($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function active($query)
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeExpiringSoon($query, $days = 30)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function expiringSoon($query, $days = 30)
     {
         return $query->where('status', 'active')
             ->whereBetween('end_date', [now(), now()->addDays($days)]);
     }
 
-    public function scopeExpired($query)
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function expired($query)
     {
         return $query->where('end_date', '<', now())
             ->whereIn('status', ['active', 'expired']);
@@ -90,5 +84,15 @@ class VendorContract extends Model
     public function getDaysUntilExpiration(): int
     {
         return max(0, now()->diffInDays($this->end_date, false));
+    }
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'date',
+            'end_date' => 'date',
+            'renewal_date' => 'date',
+            'contract_value' => 'decimal:2',
+            'auto_renewal' => 'boolean',
+        ];
     }
 }

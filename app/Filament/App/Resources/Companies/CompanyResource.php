@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\Companies;
 
 use Filament\Schemas\Schema;
@@ -28,8 +30,10 @@ use App\Filament\App\Resources\CompanyResource\RelationManagers;
 
 class CompanyResource extends Resource
 {
+    #[\Override]
     protected static ?string $model = Company::class;
 
+    #[\Override]
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\App\Resources\WorkOrders\WorkOrderResource\Pages;
 
 use App\Filament\App\Resources\WorkOrders\WorkOrderResource;
@@ -8,6 +10,7 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateWorkOrder extends CreateRecord
 {
+    #[\Override]
     protected static string $resource = WorkOrderResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array

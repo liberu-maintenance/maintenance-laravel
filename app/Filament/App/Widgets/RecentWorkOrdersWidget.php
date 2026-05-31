@@ -11,8 +11,10 @@ use Filament\Tables\Actions\Action;
 
 class RecentWorkOrdersWidget extends BaseWidget
 {
+    #[\Override]
     protected static ?string $heading = 'Recent Work Orders';
 
+    #[\Override]
     protected int | string | array $columnSpan = 'full';
 
     protected ?string $pollingInterval = '30s';

@@ -118,7 +118,7 @@ class MaintenanceTracker extends Component
         $schedule = MaintenanceSchedule::find($scheduleId);
         if ($schedule && $schedule->assignedUser && $schedule->assignedUser->id === auth()->id()) {
             $schedule->markCompleted();
-            $this->emit('maintenanceCompleted', $schedule->name);
+            $this->dispatch('maintenanceCompleted', $schedule->name);
             session()->flash('success', "Maintenance '{$schedule->name}' marked as completed!");
         }
     }
@@ -139,7 +139,7 @@ class MaintenanceTracker extends Component
                 'reviewed_at' => now(),
             ]);
 
-            $this->emit('workOrderCreated', $workOrder->id);
+            $this->dispatch('workOrderCreated', $workOrder->id);
             session()->flash('success', "Work order created for '{$schedule->name}'!");
         }
     }

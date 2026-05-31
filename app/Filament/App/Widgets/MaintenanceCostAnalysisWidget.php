@@ -7,12 +7,16 @@ use Filament\Widgets\ChartWidget;
 
 class MaintenanceCostAnalysisWidget extends ChartWidget
 {
+    #[\Override]
     protected ?string $heading = 'Maintenance Cost Analysis (Last 30 Days)';
 
+    #[\Override]
     protected ?string $pollingInterval = null;
 
+    #[\Override]
     protected int | string | array $columnSpan = 1;
 
+    #[\Override]
     protected ?string $maxHeight = '300px';
 
     protected function getData(): array
