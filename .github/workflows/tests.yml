@@ -5,10 +5,15 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v4
@@ -17,50 +22,28 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.5'
-          extensions: mbstring, bcmath, pdo, pdo_sqlite, dom, curl
+          extensions: mbstring, pdo, pdo_sqlite, bcmath, opcache, zip, gd, intl
           coverage: xdebug
 
-      - name: Get Composer cache directory
+      - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - name: Cache Composer dependencies
+      - name: Cache composer dependencies
         uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Install PHP dependencies
-        run: composer install --no-progress --prefer-dist --no-interaction
+      - name: Copy environment file
+        run: cp .env.example .env
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Install npm dependencies
-        run: npm ci
+      - name: Generate application key
+        run: php artisan key:generate
 
-      - name: Build frontend assets
-        run: npm run build
-
-      - name: Configure environment for SQLite testing
-        run: |
-          cp .env.example .env
-          php artisan key:generate
-          echo "DB_CONNECTION=sqlite" >> .env
-          echo "DB_DATABASE=:memory:" >> .env
-
-      - name: Run tests with coverage
+      - name: Run tests
         run: php artisan test --coverage-clover=coverage.xml
-
-      - name: Upload coverage to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage.xml
-          flags: unittests
-          fail_ci_if_error: false
