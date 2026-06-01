@@ -18,7 +18,7 @@ class ChecklistSeeder extends Seeder
     {
         $equipment = Equipment::all();
         $users = User::all();
-        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
+        $defaultTeam = Team::first();
 
         if ($users->isEmpty()) {
             $this->command->warn('No users found. Please run UserSeeder first.');

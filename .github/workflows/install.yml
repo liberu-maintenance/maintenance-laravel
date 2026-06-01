@@ -42,15 +42,17 @@ jobs:
       - name: Configure environment
         run: |
           cp .env.example .env
+          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          sed -i '/^DB_HOST=/d; /^DB_PORT=/d; /^DB_USERNAME=/d; /^DB_PASSWORD=/d' .env
+          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=database\/database.sqlite/' .env
           php artisan key:generate
-          echo "DB_CONNECTION=sqlite" >> .env
-          echo "DB_DATABASE=:memory:" >> .env
+          touch database/database.sqlite
 
       - name: Run database migrations
         run: php artisan migrate --force
 
       - name: Seed database
-        run: php artisan db:seed
+        run: php artisan db:seed --force
 
       - name: Install npm dependencies
         run: npm ci

@@ -12,6 +12,7 @@ use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
+    use HasRoles;
     use Notifiable;
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
@@ -34,6 +36,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'current_team_id',
     ];
 
     /**

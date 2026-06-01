@@ -24,10 +24,10 @@ class DocumentManagementTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
-        $this->user = User::factory()->create();
+
         $this->team = Team::factory()->create();
-        $this->user->teams()->attach($this->team);
+        $this->user = User::factory()->create(['current_team_id' => $this->team->id]);
+        $this->team->users()->attach($this->user);
     }
 
     #[Test]

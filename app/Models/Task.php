@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[\Illuminate\Database\Eloquent\Attributes\Fillable([
-    'name',
     'description',
     'due_date',
     'status',
+    'priority',
     'contact_id',
     'company_id',
     'opportunity_id',
@@ -27,17 +27,17 @@ class Task extends Model
 
     public function contact()
     {
-        return $this->belongsTo(Contact::class);
+        return $this->belongsTo(Contact::class, 'contact_id', 'contact_id');
     }
 
     public function company()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
 
     public function opportunity()
     {
-        return $this->belongsTo(Opportunity::class);
+        return $this->belongsTo(Opportunity::class, 'opportunity_id', 'opportunity_id');
     }
 
     public function assignedUser()

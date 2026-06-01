@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+container_mode=${CONTAINER_MODE:-"http"}
+ROOT=${ROOT:-"/var/www/html"}
+
+check_supervisor_process() {
+    local process="$1"
+    local status
+    status="$(supervisorctl status "${process}" 2>/dev/null | awk '{print tolower($2)}')"
+    if [ "${status}" = "running" ]; then
+        return 0
+    fi
+    echo "Healthcheck failed: ${process} is not running (status: ${status})"
+    return 1
+}
+
+if [ "${container_mode}" = "http" ]; then
+    php "${ROOT}/artisan" octane:status
+elif [ "${container_mode}" = "horizon" ]; then
+    php "${ROOT}/artisan" horizon:status
+elif [ "${container_mode}" = "reverb" ]; then
+    check_supervisor_process "reverb"
+elif [ "${container_mode}" = "scheduler" ]; then
+    check_supervisor_process "scheduler"
+elif [ "${container_mode}" = "worker" ]; then
+    check_supervisor_process "worker"
+elif [ "${container_mode}" = "ssr" ]; then
+    check_supervisor_process "ssr"
+else
+    echo "Container mode '${container_mode}' is not recognised."
+    exit 1
+fi

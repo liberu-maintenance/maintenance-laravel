@@ -16,7 +16,7 @@ class EquipmentSeeder extends Seeder
     public function run(): void
     {
         $company = Company::first();
-        $defaultTeam = Team::where('name', 'Liberu Maintenance Team')->first();
+        $defaultTeam = Team::first();
 
         $equipment = [
             [
