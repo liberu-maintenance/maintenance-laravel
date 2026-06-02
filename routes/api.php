@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\ChecklistController;
 use App\Http\Controllers\Api\V1\NoteController;
 use App\Http\Controllers\Api\V1\TaskController;
+use App\Http\Controllers\Api\V1\OpportunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +60,5 @@ Route::prefix('v1')
         Route::apiResource('checklists', ChecklistController::class);
         Route::apiResource('notes', NoteController::class);
         Route::apiResource('tasks', TaskController::class);
+        Route::apiResource('opportunities', OpportunityController::class);
     });

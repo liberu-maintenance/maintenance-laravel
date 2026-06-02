@@ -21,8 +21,7 @@ Route::get('/', function () {
 
 // Guest work order routes
 Route::get('/submit-request', [App\Http\Controllers\GuestWorkOrderController::class, 'create'])->name('guest.work-order.create');
-Route::post('/submit-request', [App\Http\Controllers\GuestWorkOrderController::class, 'store'])->name('guest.work-order.store');
+Route::post('/submit-request', [App\Http\Controllers\GuestWorkOrderController::class, 'store'])->middleware('throttle:10,1')->name('guest.work-order.store');
 Route::get('/request-submitted', [App\Http\Controllers\GuestWorkOrderController::class, 'success'])->name('guest.work-order.success');
 
-require __DIR__.'/socialstream.php';
 require __DIR__.'/socialstream.php';

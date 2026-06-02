@@ -163,20 +163,30 @@ install_standalone() {
         print_success "Database seeded"
     fi
 
-    print_header "PHPUnit Tests"
-    if [ -f "vendor/bin/phpunit" ]; then
-        # Run tests without failing the install script
-        set +e
-        php artisan test
-        local test_exit=$?
-        set -e
-        if [ "${test_exit}" -eq 0 ]; then
-            print_success "All tests passed"
-        else
-            print_warning "Some tests failed (exit ${test_exit}). Review output above."
-        fi
+    print_header "Filament Shield Permissions"
+    if php artisan shield:generate --all --no-interaction 2>/dev/null; then
+        print_success "Filament Shield permissions generated"
     else
-        print_warning "PHPUnit not found in vendor/bin/ — skipping"
+        print_warning "Filament Shield not available — skipping"
+    fi
+
+    print_header "Tests"
+    set +e
+    if [ -f "vendor/bin/pest" ]; then
+        print_info "Running Pest..."
+        ./vendor/bin/pest
+    elif [ -f "vendor/bin/phpunit" ]; then
+        print_info "Running PHPUnit via artisan..."
+        php artisan test
+    else
+        print_warning "No test runner found in vendor/bin/ — skipping"
+    fi
+    local test_exit=$?
+    set -e
+    if [ "${test_exit}" -eq 0 ]; then
+        print_success "All tests passed"
+    elif [ "${test_exit}" -ne 0 ] && ( [ -f "vendor/bin/pest" ] || [ -f "vendor/bin/phpunit" ] ); then
+        print_warning "Some tests failed (exit ${test_exit}). Review output above."
     fi
 
     print_header "Cache Optimization"
@@ -186,7 +196,7 @@ install_standalone() {
     php artisan view:cache
     print_success "Caches warmed"
 
-    print_success "═════════���════════ Installation complete ══════════════════"
+    print_success "════════════════════ Installation complete ════════════════════"
     echo ""
 
     read -rp "  Start dev server (php artisan serve)? [y/N] " serve
@@ -262,25 +272,34 @@ install_kubernetes() {
     fi
     print_info "Using manifests from: ${k8s_dir}/"
 
-    # Secret validation
-    if grep -q "REPLACE_WITH" "${k8s_dir}/secret.yaml" 2>/dev/null; then
-        print_warning "k8s/secret.yaml contains placeholder values (REPLACE_WITH_*)."
-        print_warning "Edit k8s/secret.yaml with real values before deploying."
+    # Secret validation — check base/ subdirectory if present
+    local secret_file="${k8s_dir}/secret.yaml"
+    [ -f "${k8s_dir}/base/secret.yaml" ] && secret_file="${k8s_dir}/base/secret.yaml"
+
+    if grep -q "REPLACE_WITH" "${secret_file}" 2>/dev/null; then
+        print_warning "${secret_file} contains placeholder values (REPLACE_WITH_*)."
+        print_warning "Edit the secret file with real values before deploying."
         read -rp "  Apply anyway? [y/N] " force
-        [[ "${force,,}" == "y" ]] || { print_info "Aborting. Update secret.yaml and re-run."; exit 0; }
+        [[ "${force,,}" == "y" ]] || { print_info "Aborting. Update the secret file and re-run."; exit 0; }
     fi
 
-    if [ -f "${k8s_dir}/kustomization.yaml" ]; then
-        print_info "Applying via kustomize..."
-        kubectl apply -k "${k8s_dir}/"
+    # Prefer base/ overlay if present
+    local apply_dir="${k8s_dir}"
+    [ -f "${k8s_dir}/base/kustomization.yaml" ] && apply_dir="${k8s_dir}/base"
+    [ -f "${k8s_dir}/kustomization.yaml" ]       && apply_dir="${k8s_dir}"
+
+    if [ -f "${apply_dir}/kustomization.yaml" ]; then
+        print_info "Applying via kustomize (${apply_dir})..."
+        kubectl apply -k "${apply_dir}/"
     else
-        print_info "Applying manifests..."
-        kubectl apply -f "${k8s_dir}/"
+        print_info "Applying manifests from ${apply_dir}/..."
+        kubectl apply -f "${apply_dir}/"
     fi
 
     print_success "Kubernetes resources applied"
     print_info "Check status: kubectl get all -n liberu-maintenance"
-    print_info "View logs:    kubectl logs -n liberu-maintenance -l app=liberu-maintenance-app -f"
+    print_info "View logs:    kubectl logs -n liberu-maintenance -l app=liberu-maintenance -f"
+    print_info "Domains:      Update k8s/base/ingress.yaml with your real hostnames before deploying"
 }
 
 # ─── Main ─────────────────────────────────────────────────────────────────────

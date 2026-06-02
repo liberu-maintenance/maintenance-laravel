@@ -31,10 +31,10 @@ class TaskController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'name'           => 'required|string|max:255',
-            'description'    => 'nullable|string',
+            'description'    => 'required|string|max:255',
             'due_date'       => 'nullable|date',
             'status'         => 'nullable|string|max:50',
+            'priority'       => 'nullable|integer|min:1|max:5',
             'contact_id'     => 'nullable|integer|exists:contacts,contact_id',
             'company_id'     => 'nullable|integer|exists:companies,company_id',
             'opportunity_id' => 'nullable|integer',
@@ -68,10 +68,10 @@ class TaskController extends Controller
         }
 
         $validated = $request->validate([
-            'name'           => 'sometimes|required|string|max:255',
-            'description'    => 'nullable|string',
+            'description'    => 'sometimes|required|string|max:255',
             'due_date'       => 'nullable|date',
             'status'         => 'nullable|string|max:50',
+            'priority'       => 'nullable|integer|min:1|max:5',
             'contact_id'     => 'nullable|integer|exists:contacts,contact_id',
             'company_id'     => 'nullable|integer|exists:companies,company_id',
             'opportunity_id' => 'nullable|integer',
