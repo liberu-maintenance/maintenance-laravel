@@ -10,7 +10,6 @@
         </testsuite>
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
-            <exclude>tests/Feature/SocialstreamRegistrationTest.php</exclude>
         </testsuite>
     </testsuites>
     <source>

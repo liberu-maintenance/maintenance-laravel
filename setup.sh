@@ -149,6 +149,10 @@ install_standalone() {
     php artisan key:generate
     print_success "Application key generated"
 
+    print_header "Storage Link"
+    php artisan storage:link 2>/dev/null || true
+    print_success "Storage link created"
+
     print_header "Database Migration"
     local migrate_cmd="migrate --force"
     read -rp "  Fresh migration (drops all tables)? [y/N] " fresh
@@ -194,6 +198,9 @@ install_standalone() {
     php artisan config:cache
     php artisan route:cache
     php artisan view:cache
+    if php artisan module:clear 2>/dev/null; then
+        print_info "Module cache cleared"
+    fi
     print_success "Caches warmed"
 
     print_success "════════════════════ Installation complete ════════════════════"
@@ -255,7 +262,7 @@ install_kubernetes() {
         print_error "kubectl not found. See https://kubernetes.io/docs/tasks/tools/"
         exit 1
     fi
-    print_success "kubectl $(kubectl version --client --short 2>/dev/null | head -1)"
+    print_success "kubectl $(kubectl version --client 2>/dev/null | grep 'Client Version' | awk '{print $3}' || kubectl version --client --output=yaml 2>/dev/null | grep gitVersion | awk '{print $2}' || echo '(version unknown)')"
 
     local k8s_dir=""
     for dir in k8s kubernetes; do

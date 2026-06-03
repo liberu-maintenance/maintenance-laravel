@@ -13,6 +13,7 @@ spec:
     - Ingress
     - Egress
   ingress:
+    # Allow traffic from NGINX Ingress Controller
     - from:
         - namespaceSelector:
             matchLabels:
@@ -21,23 +22,24 @@ spec:
         - protocol: TCP
           port: 80
         - protocol: TCP
+          port: 443
+        - protocol: TCP
           port: 8000
+    # Allow Reverb WebSocket traffic from ingress
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+      ports:
         - protocol: TCP
           port: 6001
+    # Allow intra-namespace pod-to-pod communication
     - from:
         - podSelector:
             matchLabels:
               app: liberu-maintenance
-      ports:
-        - protocol: TCP
-          port: 8000
-        - protocol: TCP
-          port: 6379
-        - protocol: TCP
-          port: 3306
-        - protocol: TCP
-          port: 6001
   egress:
+    # Allow DNS
     - to:
         - namespaceSelector:
             matchLabels:
@@ -45,11 +47,35 @@ spec:
       ports:
         - protocol: UDP
           port: 53
+        - protocol: TCP
+          port: 53
+    # Allow MySQL
     - to:
         - podSelector:
             matchLabels:
               app: liberu-maintenance
-    - ports:
+              component: mysql
+      ports:
+        - protocol: TCP
+          port: 3306
+    # Allow Redis
+    - to:
+        - podSelector:
+            matchLabels:
+              app: liberu-maintenance
+              component: redis
+      ports:
+        - protocol: TCP
+          port: 6379
+    # Allow intra-namespace pod-to-pod communication
+    - to:
+        - podSelector:
+            matchLabels:
+              app: liberu-maintenance
+    # Allow HTTPS egress for OAuth providers, mail, package registries, etc.
+    - to:
+        - namespaceSelector: {}
+      ports:
         - protocol: TCP
           port: 443
         - protocol: TCP
